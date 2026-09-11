@@ -1,0 +1,29 @@
+name: Build SVG Atelier
+on:
+  push:
+    branches: [atelier/eight-fighters-svg-v5]
+    paths: ['src/**', 'tools/**']
+permissions:
+  contents: write
+concurrency:
+  group: svg-atelier-build
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build readable engine integration and offline HTML
+        run: |
+          python3 tools/build.py
+          node --check game.js
+          for file in src/*.js; do node --check "$file"; done
+      - name: Commit generated game to the feature branch only
+        run: |
+          git add game.js street-fighter-6.html dist/street-fighter-6-atelier.html
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'build: generate SVG Atelier runtime and offline HTML'
+          git push origin HEAD:atelier/eight-fighters-svg-v5
