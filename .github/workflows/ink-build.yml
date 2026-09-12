@@ -1,0 +1,79 @@
+name: Build INK SVG Engine
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ink-svg-engine/source-parts/**'
+      - 'ink-svg-engine/src/**'
+      - 'ink-svg-engine/engine-studio/**'
+      - 'ink-svg-engine/tools/**'
+      - 'ink-svg-engine/docs/**'
+      - 'ink-svg-engine/tests/**'
+      - 'ink-svg-engine/README.md'
+      - 'game.js'
+      - 'street-fighter-6.html'
+      - 'src/atelier-art.js'
+      - 'src/models/**'
+      - '.github/workflows/ink-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Materialize modular INK source
+        shell: bash
+        run: |
+          if compgen -G "ink-svg-engine/source-parts/part-*.txt" > /dev/null; then
+            python - <<'PY'
+          from pathlib import Path
+          import base64
+          import io
+          import tarfile
+
+          repo = Path('.')
+          parts_dir = repo / 'ink-svg-engine' / 'source-parts'
+          encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in sorted(parts_dir.glob('part-*.txt')))
+          payload = base64.b64decode(encoded, validate=True)
+
+          with tarfile.open(fileobj=io.BytesIO(payload), mode='r:gz') as archive:
+              root = repo.resolve()
+              members = archive.getmembers()
+              for member in members:
+                  target = (repo / member.name).resolve()
+                  if root != target and root not in target.parents:
+                      raise RuntimeError(f'unsafe archive path: {member.name}')
+              archive.extractall(repo)
+          print(f'Materialized {len(members)} INK source entries from {len(encoded)} base64 chars')
+          PY
+          fi
+
+      - name: Build standalone editor and combat preview
+        run: python ink-svg-engine/tools/build_ink.py
+
+      - name: Verify generated files
+        run: python ink-svg-engine/tools/verify_build.py
+
+      - name: Commit materialized source and distributions
+        shell: bash
+        run: |
+          rm -rf ink-svg-engine/source-parts
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A ink-svg-engine
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+          else
+            git commit -m "build: materialize INK SVG engine editor and preview [skip ci]"
+            git push origin HEAD:main
+          fi
