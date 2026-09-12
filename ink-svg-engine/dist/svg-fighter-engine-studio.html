@@ -1,0 +1,1273 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>INK / SVG 格斗动画工作台</title>
+<style>:root{--bg:#151b22;--panel:#1d252f;--line:#303a46;--text:#e9edf0;--muted:#8b9aab;--accent:#b7dccb;--accentdark:#486e62;--paper:#ede8dc;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}*{box-sizing:border-box}html,body{margin:0;min-height:100%;font:13px/1.5 Inter,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}button,select,input{font:inherit}button,select{color:inherit;background:#232d39;border:1px solid var(--line);border-radius:5px}button{cursor:pointer;padding:8px 12px;transition:background .15s,border-color .15s}button:hover{background:#354352;border-color:#708878}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #c2eacb;outline-offset:3px}button.primary{background:var(--accent);color:#18372c;border-color:var(--accent);font-weight:650}.quiet{background:transparent}h1,h2,p{margin:0}h2{font-size:16px;font-weight:600;margin:6px 0 17px}h2>span{float:right;color:var(--muted);font:12px var(--mono)}.topbar{height:77px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:15px}.brand{text-decoration:none;color:inherit;display:flex;align-items:center;gap:16px}.mark{font:bold 43px/1 Georgia,serif;letter-spacing:-5px;color:#e3ede5}.mark>span{font-style:italic}.brand-desc{font:9px/1.5 var(--mono);letter-spacing:1.6px;color:var(--muted);padding-left:16px;border-left:1px solid var(--line)}.brand-desc strong{color:#b4c4d1;font-weight:500}.header-center{font:10px var(--mono);letter-spacing:1.2px;color:#d6e5da}.status-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#a6c8ad;margin-right:7px}.build{color:var(--muted);margin-left:21px}.topbar .quiet{font-size:11px;color:#c0ccd5}.quiet span{border:1px solid var(--line);padding:0 4px;margin-left:13px}.workspace{display:grid;grid-template-columns:202px minmax(0,1fr) 270px;max-width:2000px;margin:auto;min-height:calc(100vh - 115px)}.roster{padding:27px 15px 18px 22px;border-right:1px solid var(--line);display:flex;flex-direction:column}.section-eyebrow{font:9px var(--mono);letter-spacing:1.4px;color:#8ca69b}.roster h2{margin-bottom:22px}.roster-item{width:100%;display:flex;align-items:center;gap:11px;text-align:left;position:relative;padding:9px 9px 9px 3px;border:1px solid transparent;background:transparent;margin:0 0 6px;min-height:65px;overflow:hidden}.roster-item.selected{background:#2b3a3b;border-color:#71867c}.roster-item.selected::before{content:'';position:absolute;left:0;top:15px;bottom:15px;width:2px;background:var(--accent)}.roster-item svg{width:49px;height:47px;overflow:visible;flex-shrink:0}.roster-item strong{font:11px var(--mono);letter-spacing:1px;display:block}.roster-item small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.roster-item .num{position:absolute;right:8px;top:8px;font:8px var(--mono);color:#647783}.roster-footer{margin-top:auto;padding-top:23px;color:#a6b8ae;font-size:10px}.roster-footer small{display:block;color:#758796;line-height:1.9;margin-top:12px}main{min-width:0;padding:26px 24px 23px}.main-heading{min-height:102px;display:flex;align-items:flex-start;justify-content:space-between;gap:14px}h1{font-size:29px;font-weight:600;letter-spacing:1px;line-height:1.4;margin:6px 0}#clipDescription{color:#92a2ae;font-size:11px;max-width:650px}.heading-tools{display:flex;gap:8px;padding-top:16px}.heading-tools button{font-size:17px;padding:6px 9px}.heading-tools span{font-size:10px;padding-left:4px}.stage-shell{border:1px solid #4b595b;border-radius:7px;overflow:hidden;background:var(--paper)}.stage-topline{height:44px;display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid #d3d4c8;color:#667b74;background:#e5e4d9}.segmented{display:flex;gap:1px;background:#d9ded5;padding:2px;border-radius:4px}.segmented button{font-size:10px;padding:4px 9px;border:none;background:transparent;color:#687970;border-radius:3px}.segmented button.selected{background:#f4f3eb;color:#365a4e;box-shadow:0 1px 4px #335a4b15}.canvas-label{font:8px var(--mono);letter-spacing:1.2px}#stage{width:100%;height:auto;max-height:calc(100vh - 500px);min-height:310px;display:block;touch-action:none}.watermark{font-size:82px;letter-spacing:-4px;font-weight:700;fill:#3e625b;opacity:.08}.stage-meta{font:10px var(--mono);letter-spacing:1.4px;fill:#5e776f}.stage-bottomline{display:flex;align-items:center;gap:17px;padding:10px 16px;border-top:1px solid #d0d5cc;background:#e5e4d9;color:#52675e;font-size:10px;flex-wrap:wrap}.stage-bottomline label{display:flex;gap:5px;align-items:center}input[type=checkbox]{accent-color:#91b39e;width:12px;height:12px;margin:0;cursor:pointer}#frameBadge{margin-left:auto;font:9px var(--mono);letter-spacing:.8px;color:#6c7a71}.timeline-panel{margin-top:16px;padding:13px 17px 11px;background:var(--panel);border:1px solid var(--line);border-radius:6px}.transport{display:flex;justify-content:space-between;align-items:center}.transport-left{display:flex;gap:7px;align-items:center}.transport button{border:0;background:#293643;padding:3px 9px;font-size:19px;height:28px;min-width:29px}.transport button.play{background:var(--accent);color:#214139;font-size:13px;min-width:38px}.speed{margin-left:10px;font-size:10px;color:var(--muted)}.speed select{margin-left:5px;font:10px var(--mono);padding:4px}.transport-left>label:last-child{font-size:10px;color:var(--muted);margin-left:8px;display:flex;gap:6px;align-items:center}.transport-right{display:flex;align-items:center;gap:12px}#phaseLabel{font-size:10px;color:#b0cdbd;min-width:28px}#timeReadout{font:19px var(--mono);font-weight:400}#timeReadout span{font-size:11px;color:var(--muted);margin-left:4px}.scrubber-area{position:relative;margin-top:17px}.ruler{height:15px;display:flex;justify-content:space-between;font:8px var(--mono);color:#7f91a0}.ruler span{position:relative}.ruler span:after{content:'';display:block;height:6px;border-left:1px solid #546775;position:absolute;bottom:-7px;left:2px}#scrubber{position:relative;width:100%;height:13px;margin:4px 0 8px;cursor:ew-resize;accent-color:#d4ead6;display:block}.phase-track{display:flex;height:21px;gap:2px;overflow:hidden;border-radius:2px}.phase-track span{padding:3px 7px;font:9px var(--mono);white-space:nowrap;overflow:hidden}.phase-startup{background:#425851;color:#c1d4c5}.phase-active{background:#987657;color:#fff0d8}.phase-recovery{background:#394959;color:#b7c8d7}.event-track{height:17px;position:relative;margin-top:3px}.event-key{position:absolute;width:5px;height:5px;transform:rotate(45deg);background:#ddbb80;top:6px}.event-key.pose-key{width:4px;height:4px;background:#759583;top:7px}.timeline-footer{display:flex;justify-content:space-between;gap:10px;color:#798e9b;font-size:9px}.timeline-footer b{font:10px var(--mono);color:#b2c5bd}.key-dot{display:inline-block;transform:rotate(45deg);width:5px;height:5px;background:#91b59e;margin-right:7px}.muted{color:var(--muted);padding:0 5px}kbd{font:9px var(--mono);padding:1px 4px;border:1px solid #40515d;border-radius:3px;color:#afc0bc;background:#223039}.inspector{border-left:1px solid var(--line);padding:27px 22px 20px}.inspector h2{margin-bottom:15px}.inspector select{width:100%;padding:9px;font-size:12px;background:#202c36}.command{font:12px/1.7 var(--mono);color:#c9dbc9;padding:12px 0}.metric-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.metric-grid>div{background:#202a35;border:1px solid #303c48;border-radius:3px;padding:8px 7px}.metric-grid span{font-size:9px;color:var(--muted);display:block}.metric-grid strong{font:21px var(--mono);display:block;margin-top:4px}.metric-grid small{font:9px var(--mono);margin-left:3px;color:#8c9eaa}.tiny-note{font-size:10px;color:#7c909d;line-height:1.8;margin-top:11px}.inspector-divider{height:1px;background:var(--line);margin:23px 0}.slider-label{display:block;font-size:11px;color:#a5b6c0;margin:13px 0}.slider-label output{float:right;color:#d1ddcf;font:10px var(--mono)}input[type=range]{accent-color:#b9d9c2}.slider-label input{display:block;width:100%;height:12px;margin:10px 0 3px;cursor:ew-resize}.edit-actions{display:flex;gap:6px;margin-top:21px}.edit-actions .primary{flex:1;font-size:11px}.edit-actions #undo{font-size:19px;line-height:1;padding:7px 10px}.export-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:13px}.export-actions button{padding:8px 5px;font-size:10px;text-align:left;background:transparent}.architecture-note{border-left:2px solid #56796a;padding-left:10px;margin-top:25px}.architecture-note span{font:8px var(--mono);letter-spacing:.8px;color:#a3bdab}.architecture-note p{font-size:10px;line-height:1.85;color:#728c94;margin-top:5px}.app-footer{height:38px;padding:0 25px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font:9px var(--mono);color:#748a99;gap:10px}.app-footer i{font-style:normal;padding:0 9px}.app-footer b{font-weight:500;color:#bed4c7}#systemStatus{color:#819e90;font-size:8px;letter-spacing:1px}.toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%) translateY(20px);padding:11px 22px;border:1px solid #748f7d;border-radius:5px;background:#233a32;color:#d6e4db;font-size:12px;opacity:0;transition:.2s;pointer-events:none;max-width:80vw;z-index:20}.toast.visible{opacity:1;transform:translateX(-50%) translateY(0)}dialog{width:min(560px,90vw);padding:32px;background:#202b35;color:#c2d0d7;border:1px solid #577168;border-radius:9px;box-shadow:0 15px 90px #0006}dialog::backdrop{background:#090f19a9;backdrop-filter:blur(3px)}dialog h2{font-size:25px;color:#e3ebe4;margin:10px 0 22px}dialog p{font-size:13px;line-height:1.9;margin:14px 0}.dialog-close{position:absolute;top:12px;right:12px;background:transparent;border:0;font-size:22px}.ik-handle{fill:#ecf3db;stroke:#367e6c;stroke-width:2;cursor:grab}.ik-handle:hover{fill:#85c0aa}.ik-label{font:9px var(--mono);fill:#477967;pointer-events:none}[data-ink-mode="silhouette"] [data-ink-layer="art"] path:not([fill="none"]),[data-ink-mode="silhouette"] [data-ink-layer="art"] ellipse,[data-ink-mode="silhouette"] [data-ink-layer="art"] circle{fill:#283f3a!important;stroke:#283f3a!important;opacity:1!important}[data-ink-mode="silhouette"] [data-ink-layer="art"] path[fill="none"]{stroke:none!important}.trail-line{fill:none;stroke:#598575;stroke-width:1.5;stroke-dasharray:3 5;opacity:.35}.trail-tip{fill:#4f8472;opacity:.6}
+@media(min-width:1700px){.workspace{grid-template-columns:225px minmax(0,1fr) 285px}.roster{padding-left:28px}#stage{max-height:calc(100vh - 485px)}main{padding:29px 30px}.inspector{padding:29px 25px}.roster-item{min-height:75px}.roster-item svg{width:61px;height:54px}}
+@media(max-width:1200px){.workspace{grid-template-columns:160px minmax(0,1fr) 225px}.roster{padding:24px 9px 17px 13px}.roster-item{gap:6px}.roster-item svg{width:43px}.roster-item strong{font-size:10px}.inspector{padding:24px 15px}.section-eyebrow{font-size:8px;letter-spacing:.6px}main{padding:24px 17px}.canvas-label{display:none}.stage-bottomline{gap:10px;padding:9px;font-size:9px}.timeline-footer>span:last-child{display:none}.heading-tools span{display:none}.heading-tools{padding-top:13px}h1{font-size:25px}.header-center .build{display:none}}
+@media(max-width:900px){.workspace{grid-template-columns:1fr 230px}.roster{grid-column:1/-1;border-right:0;border-bottom:1px solid var(--line);padding:12px 15px;display:block}.roster>.section-eyebrow,.roster>h2,.roster-footer{display:none}#rosterList{display:flex;gap:5px;overflow-x:auto}.roster-item{min-width:98px;width:auto;min-height:57px;padding:5px;margin:0;gap:7px}.roster-item svg{width:30px;height:42px}.roster-item strong{font-size:9px;letter-spacing:0}.roster-item .num{display:none}.roster-item small{font-size:10px}#stage{max-height:none;min-height:300px}.main-heading{min-height:113px}.topbar{padding:0 18px}.app-footer>span:last-child{display:none}.inspector{padding-top:24px}}
+@media(max-width:640px){.topbar{height:65px;padding:0 14px}.mark{font-size:36px}.brand-desc{font-size:7px;letter-spacing:.8px;padding-left:10px}.brand{gap:10px}.header-center{display:none}.topbar .quiet{font-size:10px;padding:5px 8px}.workspace{display:flex;flex-direction:column}.roster{padding:8px 10px}.roster-item{min-width:93px}main{padding:19px 11px 15px}.main-heading{min-height:110px}.main-heading p{max-width:270px}h1{font-size:25px}.stage-topline{padding:6px 8px;height:41px}.stage-bottomline{font-size:9px;gap:8px}#stage{min-height:290px}#frameBadge{font-size:8px;margin-left:0}.timeline-panel{padding:12px 10px}.transport-left{gap:4px}.transport-left>label:last-child{display:none}.transport button{min-width:25px;padding:3px 7px}.speed{margin-left:5px;font-size:0}.speed select{font-size:10px;margin:0}.transport-right{gap:7px}#phaseLabel{font-size:9px}#timeReadout{font-size:16px}#timeReadout span{font-size:9px}.inspector{padding:23px 17px;border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;column-gap:20px}.inspector>.section-eyebrow,.inspector>h2,.inspector>select,.inspector>.command,.inspector>.tiny-note,.inspector-divider,.metric-grid,.edit-actions,.architecture-note,.export-actions{grid-column:1/-1}.inspector-divider{margin:20px 0}.inspector .slider-label{margin:10px 0}.inspector h2{margin:5px 0 12px}.metric-grid strong{font-size:23px}.app-footer{padding:0 13px;font-size:8px}.app-footer #systemStatus{font-size:7px}.architecture-note{margin-top:22px}dialog{padding:25px}}
+@media(prefers-reduced-motion:reduce){button,.toast{transition:none}}
+</style>
+</head><body>
+<header class="topbar"><a class="brand" href="#"><span class="mark">i<span>n</span>k.</span><span class="brand-desc">VECTOR FIGHTING<br><strong>ANIMATION SYSTEM</strong></span></a><div class="header-center"><span class="status-dot"></span> SVG RUNTIME <span class="build">0.1 / RESEARCH BUILD</span></div><button id="helpButton" class="quiet">使用说明 <span>?</span></button></header>
+<div class="workspace">
+<aside class="roster"><div class="section-eyebrow">01 / CHARACTER ASSETS</div><h2>角色库<span>08</span></h2><div id="rosterList"></div><div class="roster-footer"><span class="status-dot"></span> 纯 SVG · 离线运行<br><small>角色轮廓、骨骼与动作独立编辑。<br>非官方同人研究原型。</small></div></aside>
+<main>
+<div class="main-heading"><div><div class="section-eyebrow" id="characterTag">MAI / ANIMATION STUDY</div><h1 id="clipName">飞翔龙炎阵</h1><p id="clipDescription"></p></div><div class="heading-tools"><button id="mirror" title="镜像角色">⇄ <span>换边</span></button><button id="resetView" title="重置镜头">⌖ <span>复位</span></button></div></div>
+<div class="stage-shell"><div class="stage-topline"><div class="segmented" id="viewModes"><button data-mode="skin" class="selected">轮廓</button><button data-mode="overlay">骨骼叠加</button><button data-mode="silhouette">剪影</button><button data-mode="rig">骨架</button></div><span class="canvas-label">SVG / RETAINED SCENE</span></div>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 650" role="img" aria-label="可编辑的 SVG 格斗角色与动作舞台">
+<defs id="artDefs"><pattern id="smallGrid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#3f5962" stroke-width=".55" opacity=".07"/></pattern><linearGradient id="floorWash" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ddd8ca"/><stop offset="1" stop-color="#eee9df"/></linearGradient></defs>
+<rect width="1040" height="650" fill="#ede8dc"/><rect width="1040" height="650" fill="url(#smallGrid)"/>
+<text x="34" y="98" class="watermark" id="watermark">MAI</text><text x="36" y="124" class="stage-meta">BODY / SILHOUETTE / TIMING</text>
+<path d="M0 554H1040V650H0Z" fill="url(#floorWash)"/><path d="M0 554H1040" stroke="#888e89" opacity=".35"/><path d="M520 545v18M511 554h18" stroke="#667f78" opacity=".45"/>
+<ellipse id="groundShadow" cx="510" cy="554" rx="132" ry="12" fill="#435451" opacity=".11"/>
+<g id="ghosts" pointer-events="none"></g><g id="actorRoot"></g><g id="fxLayer" pointer-events="none"></g><g id="handles"></g>
+<g transform="translate(34 602)"><circle r="3" fill="#3b7970"/><text x="13" y="4" class="stage-meta" id="stageState">编辑视图 · 可拖动手腕与脚踝</text></g>
+<text x="1002" y="612" text-anchor="end" class="stage-meta" id="drawStats">60 Hz SIM / SVG</text>
+</svg>
+<div class="stage-bottomline"><label><input type="checkbox" id="onion"> 前后帧</label><label><input type="checkbox" id="showTrail" checked> 动作轨迹</label><label><input type="checkbox" id="secondary" checked> 衣发跟随</label><label><input type="checkbox" id="editPose"> 拖动骨骼</label><span id="frameBadge">FRAME 000 / 080</span></div></div>
+<section class="timeline-panel"><div class="transport"><div class="transport-left"><button id="restart" aria-label="回到首帧">↤</button><button id="prevFrame" aria-label="上一帧">‹</button><button id="play" class="play" aria-label="播放或暂停">▶</button><button id="nextFrame" aria-label="下一帧">›</button><label class="speed">速度 <select id="speed"><option value=".25">0.25×</option><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><label><input type="checkbox" id="loop" checked> 循环</label></div><div class="transport-right"><span id="phaseLabel">预备</span><strong id="timeReadout">000<span> / 080 f</span></strong></div></div>
+<div class="scrubber-area"><div class="ruler" id="ruler"></div><input type="range" id="scrubber" min="0" max="80" value="0" step="1" aria-label="动作时间轴"><div id="phaseTrack" class="phase-track"></div><div id="eventTrack" class="event-track"></div></div>
+<div class="timeline-footer"><span><i class="key-dot"></i> <b id="keyCount">0</b> 个关键点 <span class="muted">/</span> <b id="eventCount">0</b> 个事件</span><span>暂停后拖动 → <kbd>写入关键帧</kbd> → 导出 JSON</span></div></section>
+</main>
+<aside class="inspector"><div class="section-eyebrow">02 / MOTION LIBRARY</div><h2>动作编排</h2><select id="clipSelect" aria-label="选择招式"></select><div class="command" id="command"></div><div class="metric-grid"><div><span>预备</span><strong id="startupMetric">22<small>f</small></strong></div><div><span>发力段</span><strong id="activeMetric">23<small>f</small></strong></div><div><span>收势</span><strong id="recoveryMetric">35<small>f</small></strong></div></div><p class="tiny-note">这里是动作编排时长，不是官方招式帧数。试玩版仍使用原游戏判定。</p>
+<div class="inspector-divider"></div><div class="section-eyebrow">03 / DEFORMATION</div><h2>形体与姿势</h2>
+<label class="slider-label">头部比例 <output id="headValue">100%</output><input type="range" id="headSize" min="80" max="125" value="100"></label>
+<label class="slider-label">肢体体积 <output id="volumeValue">100%</output><input type="range" id="volume" min="75" max="130" value="100"></label>
+<label class="slider-label">胸廓扭转 <output id="chestValue">0°</output><input type="range" id="chest" min="-20" max="20" value="0"></label>
+<label class="slider-label">身体倾角 <output id="leanValue">0°</output><input type="range" id="lean" min="-55" max="55" value="0"></label>
+<div class="edit-actions"><button id="commitPose" class="primary">＋ 写入关键帧</button><button id="undo" title="撤销上一次关键帧编辑" aria-label="撤销">↶</button></div><div id="editStatus" class="tiny-note">原始动作未修改</div>
+<div class="inspector-divider"></div><div class="section-eyebrow">04 / PORTABLE DATA</div><div class="export-actions"><button id="exportClip">↓ 动作 JSON</button><button id="importClip">↑ 导入 JSON</button><button id="exportSVG">↓ 当前 SVG</button><button id="exportPack">↓ 角色设置</button></div><input id="fileInput" type="file" accept=".json,application/json" hidden>
+<div class="architecture-note"><span>RIG → POSE → SKIN → SVG</span><p>同一姿势驱动骨骼、轮廓与挂点。事件只在模拟步触发，拖动时间轴不会重复触发攻击。</p></div></aside>
+</div>
+<footer class="app-footer"><span>INK ENGINE <b>0.1</b> <i>/</i> 八角色动画系统研究</span><span id="systemStatus">READY · LOCAL SVG RUNTIME</span><span><kbd>Space</kbd> 播放 <kbd>←</kbd><kbd>→</kbd> 逐帧</span></footer>
+<div class="toast" id="toast" role="status"></div>
+<dialog id="helpDialog"><button id="closeHelp" class="dialog-close">×</button><div class="section-eyebrow">INK / QUICK START</div><h2>先看轮廓，再看动作。</h2><p>选择角色与招式，按空格播放。切换「剪影」检查招式能否只凭姿态辨认；「骨骼叠加」会显示参与变形的骨架。</p><p>暂停，开启「拖动骨骼」，拖动四个手腕／脚踝控制点。调整胸廓与倾角，点击「写入关键帧」，再用「动作 JSON」保存。重新导入即可恢复；「角色设置」另外保存头部、肢体粗细、骨长与挂点配置，也能用「导入 JSON」载入。文件不会自动写回 GitHub。</p><p>「前后帧」叠加临近姿势。「当前 SVG」导出的是这个时刻的矢量画面，不是视频。播放状态和命中停顿只影响预览，编辑器不计算战斗伤害。</p><p class="tiny-note">这是动画系统原型，不是官方 3D 模型。服装与发型沿用仓库矢量素材并重新绑定，尚未为每个极端视角手绘替换图。八神庵为同人客串。</p></dialog>
+<script>
+/* ATELIER / vector character art. Original, editable SVG paths; no raster assets.
+   Coordinates: shoulder y=-292, pelvis y=-191, sole y=0. Every attachment is
+   rendered on the same articulated rig used by combat collision. */
+'use strict';
+window.SF6Art = (() => {
+  const INK = '#201e2b';
+  const P = (d, fill, w=1.35, extra='') => `<path d="${d}" fill="${fill}" stroke="${INK}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+  const F = (d, fill, extra='') => `<path d="${d}" fill="${fill}" ${extra}/>`;
+  const L = (d, stroke, w=1.1, extra='') => `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+  const E = (cx,cy,rx,ry,fill,extra='')=>`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${fill}" ${extra}/>`;
+  const G = (content,transform='')=>`<g${transform?` transform="${transform}"`:''}>${content}</g>`;
+  const palette = {
+    ryu:{skin:['#ffe0b1','#cd9975','#8c5549'],cloth:['#f4edda','#cecbbd','#858892'],dark:['#845050','#4d2d3a','#251e2c'],hair:['#675256','#292633','#171924'],trim:'#c93c48',eye:'#663e2c'},
+    ken:{skin:['#ffe3bd','#d4a077','#956051'],cloth:['#dfb787','#ad815d','#725849'],dark:['#51454b','#302c36','#1a1e2b'],hair:['#ffe5a2','#d6a65b','#8f673e'],trim:'#d8453e',eye:'#698380'},
+    chun:{skin:['#ffe6d0','#e2b299','#aa7169'],cloth:['#66d4e5','#2586ab','#194467'],dark:['#f4f5ed','#d1dadd','#7c8d9e'],hair:['#56505b','#211f31','#141a2b'],trim:'#e7c482',eye:'#603c38'},
+    cammy:{skin:['#ffead5','#ddba9f','#a6736b'],cloth:['#94c8d8','#4d819f','#2b4969'],dark:['#4f5b67','#283642','#171e30'],hair:['#fff0b1','#d6b367','#967642'],trim:'#c93647',eye:'#60877d'},
+    luke:{skin:['#ffdcac','#d59b6c','#986151'],cloth:['#ffb274','#ed764e','#a8403c'],dark:['#8fc9e8','#4387bc','#27466e'],hair:['#efc17e','#b0804d','#63483b'],trim:'#e9e8dc',eye:'#588484'},
+    juri:{skin:['#ffe3d7','#dbb0a5','#aa7887'],cloth:['#fff7f1','#c9c4d6','#79738d'],dark:['#635367','#32253f','#181a2a'],hair:['#695164','#2d2237','#191725'],trim:'#e2529f',eye:'#b270bc'},
+    mai:{skin:['#ffe8d0','#e4b19a','#a86865'],cloth:['#ff8580','#d3324a','#7e2338'],dark:['#fff7e9','#e8d7c9','#a98d99'],hair:['#a46343','#5a322e','#292130'],trim:'#ffe2b5',eye:'#805333'},
+    iori:{skin:['#fae1d0','#cfaca1','#917280'],cloth:['#d56670','#a7334b','#5c273c'],dark:['#5e5363','#282533','#171b2a'],hair:['#ec7276','#a62d48','#581e35'],trim:'#e9d8ce',eye:'#73919e'}
+  };
+  const color=(c,k)=>`url(#atelier-${c.id||c}-${k})`;
+  const shade=c=>palette[c.id].skin[2];
+  function configure(chars,defs){
+    for(const c of chars){
+      const p=palette[c.id];
+      Object.assign(c, {legacyArt:false,headScale:c.female?.72:.77,headY:-339,headX:6,headSquash:1,handScale:c.id==='luke'?.87:c.female?.7:.81,footScale:c.female?.83:.92,limbStroke:1.45});
+      c.rigRearShoulder=[c.female?-33:-42,-292]; c.rigFrontShoulder=[c.female?34:42,-290];
+      c.armWidths=c.female?[15.8,10,7.3]:c.id==='luke'?[26,17,12]:c.id==='iori'?[19,12,8.6]:[24,15.5,10];
+      c.legWidths=c.id==='chun'?[34,21,11.5]:c.id==='mai'?[27,16.5,9]:c.id==='cammy'?[28,17,10]:c.id==='iori'?[29,21,12]:c.id==='juri'?[32,22,12]:[32,22,13];
+      for(const k of ['skin','cloth','dark','hair'])defs.insertAdjacentHTML('beforeend',`<linearGradient id="atelier-${c.id}-${k}" x1="0" y1="0" x2=".92" y2=".75"><stop offset="0" stop-color="${p[k][0]}"/><stop offset=".44" stop-color="${p[k][1]}"/><stop offset="1" stop-color="${p[k][2]}"/></linearGradient>`);
+    }
+    defs.insertAdjacentHTML('beforeend','<linearGradient id="atelier-scarlet" x2=".85" y2="1"><stop stop-color="#f86a5f"/><stop offset=".5" stop-color="#bb2e44"/><stop offset="1" stop-color="#601e38"/></linearGradient><linearGradient id="atelier-gold" x2=".6" y2="1"><stop stop-color="#fff0b2"/><stop offset=".47" stop-color="#d9ac69"/><stop offset="1" stop-color="#866140"/></linearGradient>');
+  }
+  function eyes(c,mood){
+    const p=palette[c.id],female=c.female;
+    if(mood==='hurt')return L('M-11-9l8 4-8 3M9-5l12-5-8 8',p.hair[2],1.9)+P('M4 18Q13 13 21 18L18 25 7 24Z','#4d2937',.9)+F('M8 21L18 21 17 24 8 24Z','#cd7780');
+    let o='';
+    const y=mood==='power'?1:0;
+    o+=P(`M-14 ${-10+y}Q-7 ${-15+y}0 ${-9+y}Q-6 ${-4+y}-12 ${-7+y}Z`,'#f8e6da',.8);
+    o+=P(`M8 ${-8+y}Q18 ${-16+y}27 ${-10+y}Q22 ${-3+y}11 ${-5+y}Z`,'#fff4df',.8);
+    o+=E(-4,-9+y,2.1,3.05,p.eye)+E(20,-8+y,2.7,3.7,p.eye)+E(-3.5,-9+y,1.1,2.4,'#24222e')+E(20.5,-8+y,1.35,2.8,'#22232b');
+    o+=E(21,-9.5+y,.75,.9,'#fff3db')+E(-3.4,-10+y,.55,.7,'#fff1dc');
+    o+=L(female?'M-14-10Q-7-15 0-9M8-8Q18-16 27-10l3-2':'M-14-12L-3-11M8-10L27-13',p.hair[2],female?1.5:1.8);
+    o+=L(mood==='power'?'M-15-18L-2-13M8-13L27-20':female?'M-15-19Q-8-22 0-17M9-18Q18-23 28-20':'M-16-22L-2-18M7-18L29-23',p.hair[1],female?1.6:3.2);
+    if(mood==='power')o+=P('M4 18Q12 13 22 16L19 26 8 27Z','#492634',.8)+F('M7 17L20 17 19 20 8 20Z','#fff0d8');
+    else o+=L(c.id==='juri'?'M4 17Q15 23 25 13':c.id==='mai'?'M6 18Q14 22 21 16':'M5 18Q14 16 22 18',c.female?'#985061':'#693e3c',1.1)+L('M10 23L17 23',p.skin[0],1.05);
+    return o;
+  }
+  
+  
+  function hands(c,open=false){
+    const p=palette[c.id],id=c.id,gloved=!['mai','iori','chun','juri'].includes(id),fill=gloved?(id==='luke'?color(c,'dark'):id==='ken'?'#38343d':'url(#atelier-scarlet)'):color(c,'skin');let o='';
+    if(open){
+      o+=P('M-12-10L1-12 10-20 21-26Q26-28 25-23L17-14 33-18Q38-19 37-15L21-8 38-10Q43-10 41-6L23-2 39 0Q44 1 40 4L23 6 32 11Q35 15 31 16L16 10 6 13-9 9Z',color(c,'skin'),1.25);
+      o+=L('M14-11L10-4 16 4M21-7L14-6M23-1L16 0M21 6L17 5',p.skin[2],.85);
+    }else{
+      o+=P('M-11-11L1-12 6-17 20-18Q26-18 29-12L33-3 31 11 21 16 5 13-11 8Z',fill,1.35);
+      o+=F('M3-11L8-15 20-15 26-9 26-3 12-2 4-5Z',gloved?(id==='luke'?'#a2d0e7':'#eb8c78'):p.skin[0],'opacity=".62"');
+      o+=P('M0-2Q3-9 9-5L19 2Q24 5 20 9L11 10 3 5Z',color(c,'skin'),.85)+L('M9-13L10-7M16-15L17-7M23-12L24-6M9 4L17 6',gloved?'#583142':p.skin[2],.9);
+      o+=F('M29 1L29 9 20 14 5 11 6 7 15 10 24 6Z',gloved?'#272536':p.skin[2],'opacity=".4"');
+    }
+    const cuff=id==='chun'?'#322938':id==='mai'?p.dark[0]:id==='iori'?p.trim:id==='juri'?'#382337':fill;
+    o+=P('M-17-12L-3-12-3 10-17 9Z',cuff,1.1)+L('M-14-7L-6-7M-14-1L-6 0',id==='mai'?'#cda79a':id==='luke'?'#d9eced':'#a7857b',.95);
+    if(id==='chun'){o+=P('M-16-12L-12-23-8-12M-18 7L-24 12-14 10',p.trim,.95)+L('M-15-10L-6-10M-16 7L-6 8',p.trim,1.5);}
+    if(id==='iori')o+=P('M-16-13L-12-19-3-16-2-11Z','#5d4157',.8);
+    return o;
+  }
+  function feet(c){
+    const id=c.id,p=palette[id],bare=['ryu','juri','luke'].includes(id),mai=id==='mai';let o='';
+    if(bare||mai){o+=P('M-10-17L8-16 12-5 22 1 35 5Q43 7 42 15L38 19Q9 24-16 14L-17 5Z',color(c,'skin'),1.2)+F('M-16 9Q6 18 38 13L40 17Q11 25-16 15Z',p.skin[2],'opacity=".7"')+L('M32 6L32 14M26 5L27 15M20 3L21 14M14 1L15 12M-8-7Q0-1 7-5',p.skin[2],.85);
+      if(mai)o+=P('M-12-24L9-24 11-4 23 2 17 12 2 6-13 0Z',color(c,'dark'),1)+L('M-11-19L8-18M-11-14L9-13M-11-9L10-8M6 2L14 7',p.dark[2],.9);
+      if(id==='juri')o+=P('M-12-23L9-23 11-8-13-8Z',color(c,'dark'),1)+L('M-10-20L9-17M-11-13L10-11',p.trim,2);
+      if(id==='luke')o+=P('M-13-25L10-25 11-12-14-12Z','#577487',1)+L('M-11-21L9-19M-12-15L10-14','#bccacf',1.2);
+    }else{
+      const C=id==='chun'?color(c,'dark'):id==='ken'?'#856753':id==='iori'?'#242333':color(c,'dark');
+      o+=P('M-14-27L10-28 13-9 23-1 34 2Q43 4 45 14L41 22Q12 26-19 18L-20 8Z',C,1.4)+P('M-19 13Q11 21 44 12L44 20Q14 29-20 21Z',id==='chun'?'#687885':'#24212d',1)+F('M-9-23L5-24 8-7-11-4Z',id==='chun'?'#fff9e9':id==='iori'?'#625160':'#be9a77');
+      o+=L('M-8-18L7-19M-7-12L8-13M-6-6L11-7M22 2L22 13M27 4L37 8',id==='chun'?'#a4a8a6':id==='iori'?'#978b96':'#d2b993',1.2);
+      if(id==='cammy')o+=P('M-13-28L9-28 12-13-13-12Z','url(#atelier-scarlet)',1)+L('M-10-23L7-23M-10-18L8-18','#f39487',1);
+    }return o;
+  }
+  function fan(){let o=P('M15 0L34-75Q58-74 75-57 96-38 101-11 88 19 59 53 35 67Z','#fff0d4',1.3)+P('M34-75Q65-72 84-47 99-29 101-11L89-6Q87-32 69-48 53-61 31-61Z','url(#atelier-scarlet)',1);
+    for(const [x,y]of[[34,-75],[52,-69],[69,-57],[84,-40],[96,-21],[99,-5],[88,19],[74,38],[55,56],[35,67]])o+=L(`M15 0L${x} ${y}`,'#aa8a6b',1.2);
+    o+=L('M36-58Q68-48 85-24M42 42L60 32','#d15858',1.5)+P('M9-4L25-6 25 6 11 9Z','#d7b782',1)+E(18,1,2,2,'#694e47');return G(o);
+  }
+  function attachments(c){
+    const id=c.id,p=palette[id];let head='',coat='',trail='';
+    if(id==='ryu'){head=P('M-14-354Q-50-366-88-343L-114-332-98-352Q-54-379-16-364Z','url(#atelier-scarlet)',1.2)+P('M-15-361Q-59-343-77-350L-98-360-87-344Q-51-328-12-353Z','#a92d45',1)+L('M-26-360Q-66-362-98-341','#ff9c7d',1);coat=P('M-5-181L-18-128-4-135 8-177Z','#3d3542',1)+P('M9-179L38-145 40-130 51-143 21-185Z','#4e424c',1)+L('M-10-144L-4-144M-12-137L-6-137','#c4a772',1.5);}
+    if(id==='ken'){trail=P('M-44-223L-65-125-56-98-34-119-6-188Z',color(c,'cloth'),1.4)+P('M30-218L51-201 75-99 57-113 46-111 11-191Z',color(c,'cloth'),1.4)+F('M-42-210L-52-127-45-116-19-180Z',p.cloth[2],'opacity=".5"')+L('M-40-194L-52-124M43-187L61-124',p.cloth[0],1.4);}
+    if(id==='chun'){head=P('M-15-369Q-38-342-67-322L-80-323-60-337-22-374Z',p.dark[0],1)+P('M21-370Q35-346 27-319L20-307 22-330 12-365Z',p.dark[0],1);coat=P('M-27-208L-42-149-28-93-15-115 3-187Z',color(c,'cloth'),1.2)+P('M18-208L39-183 43-123 28-89 18-128-3-191Z',color(c,'cloth'),1.2)+L('M-29-195L-34-149-27-110M25-191L34-134 28-105',p.trim,2)+P('M-6-210L-12-157 0-139 8-184 6-210Z',color(c,'dark'),1);}
+    if(id==='juri')coat=P('M-6-193L-30-144-18-131 12-188Z',color(c,'dark'),1)+P('M8-191L24-145 39-134 32-162 16-199Z',color(c,'dark'),1)+L('M-13-155L-17-143M23-161L27-148',p.trim,2);
+    if(id==='mai'){
+      head=P('M-10-377Q-50-403-60-377Q-55-352-66-326-80-297-56-276L-38-272Q-57-298-43-328-24-351-27-370L-9-367Z',color(c,'hair'),1.4)+F('M-35-377Q-46-380-44-365L-48-332Q-70-301-51-283-68-299-57-320-34-348-35-377Z',p.hair[0],'opacity=".65"')+L('M-48-371Q-45-353-53-334M-53-304Q-55-290-45-281',p.hair[2],1.5);
+      coat=P('M-20-214Q-43-233-57-211L-35-194-24-200-3-211 17-212 38-195 53-207Q40-231 16-216Z',color(c,'dark'),1.3)+P('M-9-208L-19-153-31-124-19-101 2-127 11-168 8-209Z',color(c,'cloth'),1.3)+L('M-5-199L-9-156-22-124-17-115',p.cloth[0],1.5);
+      trail=P('M-24-209Q-80-205-62-162-42-136-57-102L-78-71-55-77Q-12-119-41-155-61-187-19-194Z',color(c,'dark'),1.3)+E(-72,-73,12,12,p.dark[0])+L('M-70-81L-70-65M-77-75L-65-69',p.dark[2],.9);
+    }
+    if(id==='iori')coat=P('M-29-220L-37-169-54-134-25-143 0-194 12-149 35-137 30-205Z','#f3e4da',1.2)+F('M-22-207L-30-169-40-147-25-153-9-190Z','#c7b3b5')+L('M-21-198L-29-158M18-197L23-154','#947e8e',1.1);
+    return {head,coat,trail};
+  }
+  function attach(f){const a=attachments(f.ch);f.headTails.innerHTML=a.head;f.coatTails.innerHTML=a.coat;f.trailing.innerHTML=a.trail;if(f.fan){f.fan.innerHTML=fan();f.frontArm.fist.innerHTML=hands(f.ch);f.frontArm.palm.innerHTML=hands(f.ch);}}
+  // Continuous anatomy surfaces. Four tones and structural creases explain the
+  // deltoid/biceps/elbow and thigh/knee/calf without tube joints or bitmap skins.
+  function limb(l,a,b,c,f,ctx){
+    const {sa,pt,vadd,vmul,vsub,vnorm,vperp,lerp2,limbSurface,limbContour,limbCelShade,morphSVG,rigLimbWidths}=ctx;
+    const ch=f.ch,id=ch.id,p=palette[id],leg=l.type==='leg',widths=rigLimbWidths(ch,leg,l.rear),[w0,w1,w2]=widths;
+    const stamp=[...a,...b,...c,...widths].map(n=>Math.round(n*100)/100).join(',');if(l._atelierStamp===stamp)return;
+    l._atelierStamp=stamp;
+    const skin=leg?['mai','luke'].includes(id):!['ken','cammy','iori'].includes(id),base=skin?color(ch,'skin'):leg?(id==='chun'?color(ch,'dark'):id==='cammy'?color(ch,'dark'):id==='ken'?'url(#atelier-scarlet)':color(ch,'cloth')):(id==='ken'?color(ch,'cloth'):id==='iori'?color(ch,'dark'):color(ch,'cloth'));
+    const surface=limbSurface(a,b,c,...widths),n=vperp(vnorm(vsub(b,a))),m=vperp(vnorm(vsub(c,b))),Q=(v,n,t)=>pt(vadd(v,vmul(n,t))),cont=limbContour(a,b,c,...widths,surface);
+    sa(l.contour,'d',cont);sa(l.contour,'fill',base);sa(l.contour,'stroke',INK);sa(l.contour,'stroke-width',1.35);
+    sa(l.shade,'d',limbCelShade(surface));sa(l.shade,'fill',skin?p.skin[2]:p.dark[2]);sa(l.shade,'opacity',l.rear?.44:.27);
+    const highlight=`M${Q(lerp2(a,b,.13),n,w0*.38)}Q${Q(lerp2(a,b,.43),n,w0*.72)} ${Q(lerp2(a,b,.8),n,w1*.46)}L${Q(lerp2(a,b,.79),n,w1*.16)}Q${Q(lerp2(a,b,.42),n,w0*.25)} ${Q(lerp2(a,b,.16),n,w0*.03)}Z`;
+    sa(l.light,'d',highlight);sa(l.light,'fill',skin?p.skin[0]:'#fff1cd');sa(l.light,'opacity',l.rear?.15:.32);
+    const q=lerp2(b,c,.08),mid=lerp2(a,b,.68),lower=lerp2(b,c,.25);
+    let detail=`M${Q(mid,n,-w1*.6)}Q${Q(lerp2(a,b,.87),n,-w1*.85)} ${Q(b,n,-w1*.24)}M${Q(q,m,-w1*.45)}Q${Q(lerp2(b,c,.12),m,0)} ${Q(lerp2(b,c,.1),m,w1*.43)}M${Q(lower,m,w1*.4)}Q${Q(lerp2(b,c,.48),m,w1*.63)} ${Q(lerp2(b,c,.77),m,w2*.2)}`;
+    sa(l.details,'d',detail);sa(l.details,'stroke',skin?p.skin[2]:p.dark[2]);sa(l.details,'opacity',.65);sa(l.details,'stroke-width',.95);
+    sa(l.rim,'d',`M${Q(lerp2(a,b,.1),n,w0*.94)}Q${Q(lerp2(a,b,.37),n,w0)} ${Q(lerp2(a,b,.67),n,w1*.92)}`);sa(l.rim,'stroke','#d9edf2');sa(l.rim,'opacity',l.rear?.16:.38);sa(l.rim,'stroke-width',1);
+    let cloth='';
+    const sleeve=(start,end,W0,W1,W2,fill)=>P(limbContour(start,lerp2(start,end,.5),end,W0,W1,W2),fill,1.1);
+    if(!leg){
+      if(id==='luke'){
+        cloth+=F(limbContour(lerp2(b,c,.14),lerp2(b,c,.45),lerp2(b,c,.8),w1*.97,w1*.8,w2*1.1),p.skin[0],'opacity=".2"');
+        cloth+=L(`M${Q(lerp2(b,c,.26),m,w1*.45)}l-7 6 4 6-8 7M${Q(lerp2(b,c,.55),m,w1*.6)}l-6 5 3 4`,'#5e5253',1.6);
+      }
+      if(id==='ryu'&&l.rear)cloth+=sleeve(a,lerp2(a,b,.38),w0+1,w0,w0*.84,color(ch,'dark'));
+      if(id==='cammy')cloth+=sleeve(lerp2(b,c,.23),c,w1*1.08,w1*.98,w2+2,'url(#atelier-scarlet)')+L(`M${Q(lerp2(b,c,.45),m,w1*.68)}L${Q(lerp2(b,c,.82),m,w2*.73)}`,'#ff9d88',2);
+      if(id==='iori')cloth+=sleeve(lerp2(b,c,.87),c,w2+4,w2+4,w2+4,p.trim)+L(`M${Q(lerp2(a,b,.8),n,-w1*.5)}L${Q(b,n,w1*.5)}M${Q(lerp2(b,c,.14),m,-w1*.5)}L${Q(lerp2(b,c,.34),m,w1*.25)}`,p.dark[0],1.1);
+      if(id==='ken')cloth+=L(`M${Q(lerp2(a,b,.25),n,w0*.5)}L${Q(lerp2(a,b,.7),n,w1*.54)}M${Q(lerp2(b,c,.15),m,-w1*.7)}L${Q(lerp2(b,c,.3),m,w1*.5)}M${Q(lerp2(b,c,.85),m,-w2)}L${Q(lerp2(b,c,.85),m,w2)}`,p.cloth[2],1.4);
+      if(id==='chun'||id==='mai')cloth+=sleeve(lerp2(b,c,.82),c,w2+2,w2+1.7,w2+2,id==='chun'?'#383045':color(ch,'dark'))+L(`M${Q(lerp2(b,c,.86),m,-w2-1)}L${Q(lerp2(b,c,.86),m,w2+1)}`,id==='chun'?p.trim:p.dark[2],1.4);
+    }else{
+      if(id==='luke'){
+        const end=lerp2(a,b,.81);cloth+=sleeve(a,end,w0+1,w0*.96,w1+4,color(ch,'cloth'));
+        cloth+=L(`M${Q(lerp2(a,b,.15),n,w0*.55)}L${Q(lerp2(a,b,.7),n,w1*.73)}M${Q(end,n,-w1-4)}Q${Q(lerp2(a,b,.84),n,0)} ${Q(end,n,w1+4)}`,p.trim,2.6);
+        cloth+=G(F('M-8-8L8-8 4-1 10-1-2 9 0 1-7 1Z','#f9ead4'),`translate(${pt(lerp2(a,b,.48))})`);
+      }
+      if(id==='chun')cloth+=sleeve(lerp2(b,c,.43),c,w1*.86,w1*.74,w2+2,color(ch,'dark'))+L(`M${Q(lerp2(b,c,.48),m,-w1*.78)}Q${Q(lerp2(b,c,.54),m,0)} ${Q(lerp2(b,c,.48),m,w1*.78)}`,p.trim,1.8);
+      if(id==='cammy')cloth+=sleeve(lerp2(b,c,.49),c,w1*.92,w1*.79,w2+2,'#262b3a')+L(`M${Q(lerp2(a,b,.07),n,w0*.68)}Q${Q(lerp2(a,b,.6),n,w1*.94)} ${Q(lerp2(b,c,.12),m,w1*.72)}`,'#69827f',2.5);
+      if(id==='juri'){if(l.rear)sa(l.contour,'fill',color(ch,'dark'));cloth+=L(`M${Q(lerp2(a,b,.14),n,w0*.55)}Q${Q(lerp2(a,b,.52),n,w0*.54)} ${Q(b,n,w1*.5)}Q${Q(lerp2(b,c,.3),m,w1*.5)} ${Q(lerp2(b,c,.72),m,w2*.7)}`,p.trim,3);}
+      if(id==='ryu'||id==='ken'||id==='iori')cloth+=L(`M${Q(lerp2(a,b,.26),n,w0*.15)}L${Q(lerp2(a,b,.76),n,w1*.3)}M${Q(lerp2(b,c,.1),m,-w1*.7)}L${Q(lerp2(b,c,.26),m,w1*.25)}M${Q(lerp2(b,c,.24),m,-w1*.52)}L${Q(lerp2(b,c,.37),m,w1*.36)}M${Q(lerp2(b,c,.9),m,-w2)}Q${Q(lerp2(b,c,.87),m,0)} ${Q(lerp2(b,c,.9),m,w2)}`,id==='ryu'?'#7c7d82':p.cloth[2],1.1);
+      if(id==='mai')cloth+=sleeve(lerp2(b,c,.72),c,w2+2.2,w2+1.6,w2+1,color(ch,'dark'))+L(`M${Q(lerp2(b,c,.79),m,-w2-1)}L${Q(lerp2(b,c,.79),m,w2+1)}M${Q(lerp2(b,c,.9),m,-w2-1)}L${Q(lerp2(b,c,.9),m,w2+1)}`,p.dark[2],.9);
+    }
+    morphSVG(l.cloth,cloth);
+  }
+  return {configure,head:null,torso:null,hands,feet,fan,attach,limb,palette,vector:{P,F,L,E,G,color,shade,eyes,palette}};
+})();
+
+</script>
+<script>
+/* Shared vector anatomy / individually drawn head designs. */
+(() => {
+'use strict';
+const {P,F,L,E,G,color,shade,eyes,palette}=SF6Art.vector;
+SF6Art.head=function head(c,back=false){
+    const p=palette[c.id],id=c.id,skin=color(c,'skin'),hair=color(c,'hair'),female=c.female;
+    if(back)return P('M-16 12L-19 48Q4 55 21 43L20 7Z',skin)+P('M-31-34Q3-57 31-30L34 2Q30 33 5 38L-24 18Z',hair)+L('M-21-32Q-9-6-17 17M-2-43Q-5-13 5 18M18-34Q28-9 19 23',p.hair[0],1.2,'opacity=".6"')+(id==='ryu'?P('M-31-17Q0-21 33-16L34-7Q2-14-32-6Z','url(#atelier-scarlet)',1):'')+(id==='chun'?P('M-33-23Q-51-51-33-57-14-62-18-37Z',hair)+P('M26-32Q19-60 37-55 56-45 42-25Z',hair):'');
+    let o=P('M-16 13L-18 43-30 54Q1 66 27 49L17 38 19 10Z',skin,1.2);
+    o+=F('M-16 16L6 31 17 25 17 38Q8 42-3 38L-16 32Z',p.skin[2],'opacity=".5"')+L('M-12 38L-8 50M13 37L10 49',p.skin[2],1,'opacity=".5"');
+    o+=P(female?'M-26-30Q-15-47 10-43Q32-38 31-15L30-2 36 4 29 8 27 22Q21 32 7 38L-7 32-21 17-26-3Z':'M-28-31Q-15-48 12-42L29-32 32-16 31-3 38 4 31 9 28 26 13 38-4 35-23 19-28-4Z',skin,1.4);
+    o+=F('M-25-12L-14-7-13 10-2 28 9 35-4 32-22 17Z',p.skin[2],'opacity=".3"')+F('M12-3L13 7 23 7 18 10 10 7Z',p.skin[2],'opacity=".75"')+F('M20 11L27 7 26 22 17 28 10 26Z',p.skin[0],'opacity=".34"');
+    o+=P('M-23-4Q-37-12-33 3L-27 13-21 12-18 2Z',skin,1)+L('M-28-1Q-23-5-23 5L-27 6',p.skin[2],1);
+    o+=L('M11-4L9 6 14 8M25 4L28 4',p.skin[2],1);
+    for(const mood of ['rest','power','hurt'])o+=`<g data-face-state="${mood}" opacity="${mood==='rest'?1:0}">${eyes(c,mood)}</g>`;
+    if(id==='ryu'){
+      o+=P('M-24-31L-34-39-26-41-32-53-16-49-11-60 1-51 13-58 20-48 31-47 37-36 29-22 21-28 13-28 7-23-1-28-11-24-19-8-25-3Z',hair,1.5);
+      o+=L('M-24-43L-12-36-7-49M2-45L10-34 15-47M21-42L26-33',p.hair[0],1.6);
+      o+=P('M-27-23Q-1-31 32-24L31-14Q2-20-28-12Z','url(#atelier-scarlet)',1.1)+L('M-24-21Q3-27 29-21','#ff9a7b',1.1);
+      o+=F('M-24 12L-12 22-4 21 3 27 10 26 16 26 25 18 26 25 14 38-1 36-17 24Z','#47373a')+L('M-13 23L-8 29M-4 26L1 33M6 30L9 34M15 28L15 33M20 23L19 29','#846255',1);
+      o+=L('M-16-3L-13 0M28-3L30 0','#784e45',.8);
+    }else if(id==='ken'){
+      o+=P('M-28 17L-42 24-38 9-44 0-39-16-47-25-33-30-36-40-24-44-20-51-4-50 3-56 13-48 29-47 31-36 40-25 33-15 36-5 25 4 23-14 17-23 9-16 3-28-4-18-10-28-17-15-20 5Z',hair,1.5);
+      o+=L('M-31-36L-18-33-16-20M-20-43L-5-38-1-28M4-45L16-36 22-25M22-42L29-31 29-19M-31-7L-32 10M-38-25L-29-19',p.hair[0],2);
+      o+=L('M-14 23L-11 28M-8 27L-6 31M0 31L3 33M18 29L17 32M23 23L22 27',p.skin[2],.9);
+    }else if(id==='chun'){
+      o+=P('M-26-13Q-40-38-19-49Q8-64 32-37L34-21 28-14 22-22 15-28 10-21 2-26-4-22-11-30-19-16-20 8-26 6Z',hair);
+      o+=P('M-27-32Q-47-29-46-45-49-59-34-64-22-69-18-54L-16-40Z',hair)+P('M24-39Q22-62 36-62 53-59 48-41L36-29Z',hair);
+      o+=P('M-42-54Q-29-62-21-48L-21-38-28-36Q-28-55-42-54Z',color(c,'dark'),1)+P('M26-51Q35-61 44-51L44-44Q34-51 28-40Z',color(c,'dark'),1);
+      o+=L('M-29-32Q-14-49 6-46M-23-30Q-14-40-9-42M9-44L23-32',p.hair[0],1.2);
+      o+=E(-23,14,2.1,2.6,'#e5c69d');
+    }else if(id==='cammy'){
+      o+=P('M-28 27L-40 21-35 3-42-7-35-17Q-37-51-10-54Q13-61 32-40L41-14 36 6 27 22 21 24 25 10 26-10 19-29 9-34-1-18-10-9-14 5-20 8-16-21-26-10Z',hair,1.4);
+      o+=F('M-30-28Q-18-45 4-43L-12-34-20-10-25 6-29-2Z',p.hair[0],'opacity=".7"')+L('M9-44L25-35 32-14M-16-42L-26-20-30 10M-7-29L-16-15',p.hair[2],1.15);
+      o+=L('M19 2L25 9M18 4L24 11','#ad766c',1.2);
+    }else if(id==='luke'){
+      o+=P('M-28-5L-30-20-38-27-32-36-33-43-19-43-12-55-2-48 6-57 14-47 26-46 32-35 28-22 21-23 15-31 5-25-1-34-10-26-17-25-20-8Z',hair,1.4);
+      o+=L('M-26-35L-14-34-9-44M-1-43L5-34 10-45M15-39L23-33',p.hair[0],2.5)+L('M23 4L28 8M20 7L25 11',p.skin[2],1);
+      o+=L('M-14 24L-10 29M-5 28L-2 31M18 28L17 31',p.skin[2],1);
+    }else if(id==='juri'){
+      o+=P('M-27-6Q-40-33-18-45Q1-55 21-45L34-28 30-10 22-24 17-20 10-33 5-24-2-30-12-16-21-2-25 18-29 8Z',hair);
+      o+=P('M-22-37Q-41-43-46-65L-36-76Q-39-55-17-52L-10-44Z',hair)+P('M15-45Q33-62 27-80L41-68Q45-47 29-34Z',hair);
+      o+=P('M-36-59L-28-52-25-55-35-64Z',p.trim,1)+P('M30-61L36-56 39-60 32-67Z',p.trim,1);
+      o+=L('M-24-31L-12-36-5-31M2-41L16-35 23-26',p.hair[0],1.6)+E(-24,15,2,2.2,'#d8b6b4');
+    }else if(id==='mai'){
+      o+=P('M-26 13L-32-7Q-40-32-21-49Q0-59 25-44L34-27 31-9 22-21 15-26 9-20 6-33-3-26-10-13-16-10-21 12Z',hair,1.3);
+      o+=P('M-16-46Q-30-59-16-66-6-68-1-53L4-48Z',hair)+P('M-22-55L-2-55 0-49-20-49Z',p.trim,.9);
+      o+=L('M-28-24Q-26-42-9-46M-23-19L-12-33-7-42M3-46L18-38 26-24',p.hair[0],1.5)+E(-23,14,2.4,2.8,'#e4c58e');
+    }else if(id==='iori'){
+      o+=P('M-29 20L-36 7-38-7-36-24Q-32-51-10-56Q20-65 31-40L36-22 26 3 12 18 7 12 13-10 5-2 10-20 1-10-7-27-14-10-21-10-25 11Z',hair,1.4);
+      o+=F('M-24-34Q-2-55 24-36L9-33-3-39-18-22Z',p.hair[0],'opacity=".5"')+L('M-29-26L-15-40-5-44M3-49L20-39 25-29 16-7M-20-17L-26 1',p.hair[2],1.3);
+    }
+    return o;
+  };
+})();
+
+</script>
+<script>
+/* Shared vector anatomy / individually drawn torso designs. */
+(() => {
+'use strict';
+const {P,F,L,E,G,color,shade,eyes,palette}=SF6Art.vector;
+SF6Art.torso=function torso(c,back=false){
+    const p=palette[c.id],id=c.id,S=color(c,'skin'),C=color(c,'cloth'),D=color(c,'dark');let o='';
+    const body=c.female?'M-18-318Q-30-305-37-290L-32-270Q-28-250-21-230L-26-213-33-196Q0-178 35-195L29-216 23-232 32-267 38-291Q25-310 18-319Z':'M-19-321L-43-306Q-58-292-50-269L-38-245-35-214-34-188Q1-175 36-190L36-218 42-248 51-271Q60-293 41-307L18-321Z';
+    o+=P(body,back?(id==='ryu'?S:id==='luke'?D:id==='mai'?S:C):S,1.55);
+    if(back){
+      o+=F('M0-310L-8-282-5-245 0-206 7-245 5-285Z',p.skin[2],'opacity=".22"')+L('M-27-298Q-9-283-13-266M25-298Q10-283 14-266M-16-240L-21-214M19-240L23-214',id==='ryu'||id==='mai'?p.skin[2]:p.dark[2],1.4);
+      if(id==='iori')o+=P('M-19-267Q-30-287-11-295 7-303 20-288Q2-299-7-280-12-264 4-255-11-253-19-267Z',p.trim,.9);
+      if(id==='mai')o+=P('M-22-311L-15-315 6-248 24-306 30-302 15-227-18-228Z',C)+P('M-26-228Q0-220 26-227L28-209Q0-201-30-210Z',D)+P('M-24-199L-43-173-24-180 2-191 22-176 39-182 25-204Z',C);
+      if(id==='chun')o+=L('M-17-307Q2-288 23-307M-27-221Q0-206 31-221',p.trim,2);
+      if(id==='ken'||id==='cammy')o+=L('M-32-272L31-272M-27-238L26-238',p.cloth[2],1.5);
+      return o;
+    }
+    // Neck/clavicle and rib cage planes, not floating shoulder discs.
+    o+=F('M-17-316L-5-300 2-291 10-306 17-316 19-299 2-283-21-300Z',p.skin[2],'opacity=".33"')+L('M-31-294Q-16-303-2-293M8-293Q26-303 38-292',p.skin[2],1.15);
+    if(id==='ryu'){
+      o+=F('M-38-289Q-18-299-2-284L-2-261Q-20-254-38-269Z',p.skin[0],'opacity=".55"')+F('M5-286Q25-298 40-280L34-260Q18-253 5-263Z',p.skin[0],'opacity=".48"');
+      o+=L('M-35-264Q-14-251 0-261M7-260Q24-249 38-263M2-280L0-262M0-252L-2-213M-23-246L-5-241M7-243L24-247M-22-229L-6-225M6-226L23-232M-24-209L-10-199M12-203L26-216',p.skin[2],1.7);
+      o+=F('M34-286L45-268 33-241 30-211 13-190 33-189 39-218 45-254Z',p.skin[2],'opacity=".46"');
+      o+=P('M-39-313L-18-321-23-301-25-275-9-249 14-227 28-200 8-191-11-213-29-229-43-253-55-282Z',D,1.55);
+      o+=F('M-31-310L-36-280-27-253-8-231 8-218-9-238-23-273-21-306Z',p.dark[0],'opacity=".58"')+L('M-41-296L-44-279-33-250M-27-245L-3-222M-18-243L13-216',p.dark[2],1.6);
+      o+=P('M-36-203Q0-192 37-204L40-184Q3-170-39-184Z',color(c,'cloth'),1.25)+P('M-38-193Q0-182 39-196L39-184Q4-173-40-182Z','#34313a',1.25)+P('M-6-191L9-193 17-182 7-174-7-178Z','#57515a',1.2);
+    }else if(id==='ken'){
+      o+=P('M-19-309Q3-277 25-308L38-280 29-220 32-182-31-182-32-238-39-285Z',D,1.25)+L('M-13-292Q1-279 18-292M-20-257Q4-245 27-258M-22-225L23-219',p.dark[0],1.4);
+      o+=P('M-44-311L-17-324-12-306-22-276-18-222-8-191-34-175-52-181-48-228-52-269-59-287Z',C,1.55)+P('M23-321L47-308 56-282 48-249 53-181 36-176 13-188 16-237 11-277 8-298Z',C,1.55);
+      o+=P('M-17-324L-7-312-16-291-12-280-28-264-34-282Z','#d9b890',1.1)+P('M22-322L37-303 22-282 24-270 12-278 5-300Z','#d7af81',1.1);
+      o+=L('M-44-303L-43-272-33-245-30-203M42-294L37-270 39-218M-46-228L-26-236M29-234L45-230',p.cloth[2],1.5)+L('M-46-201L-33-207M32-202L46-197','#f5d3a1',1.2);
+      o+=P('M-30-185L27-184 31-172-31-173Z','#813a40',1)+P('M-3-185L11-184 11-174-3-174Z','#c6a776',1);
+    }else if(id==='chun'){
+      o+=P('M-18-320L-6-315 5-315 20-320 25-302 35-291 27-270 23-245 27-215 34-196Q9-181-33-198L-27-219-22-246-30-271-36-291-23-304Z',C,1.3);
+      o+=P('M-17-320L-13-306 1-301 18-311 20-320 7-315-6-315Z',C,1)+L('M-17-319L-13-306 1-301 18-311 20-319M0-301Q18-287 22-270L15-250Q12-225 24-204M-31-199Q0-185 32-198',p.trim,2.25);
+      o+=F('M-29-281L-17-269-9-260-17-240-16-216-28-209-22-247Z',p.cloth[2],'opacity=".52"')+F('M2-286Q16-280 18-271L12-261 2-265Z',p.cloth[0],'opacity=".5"');
+      o+=L('M-10-278Q-5-285 1-277Q-6-274-10-278M-11-276Q-22-262-8-258-2-255-8-250M5-227Q-11-240-13-225-17-212-3-216-7-226-13-223M4-211Q10-221 16-215',p.trim,1.5);
+      o+=P('M-28-218Q-1-207 27-220L28-209Q1-199-30-208Z',D,1.05)+L('M-24-213Q0-204 25-215','#fff6e6',1.35);
+    }else if(id==='cammy'){
+      o+=P('M-17-307L-5-295 12-295 26-306 31-280 25-257Q3-245-27-258L-31-280Z',D,1.2)+F('M-23-277Q0-265 27-279L25-262Q4-254-23-264Z','#485967');
+      o+=F('M-21-250L-15-229-19-211 5-202 24-214 19-236 23-250 10-242-5-244Z',p.skin[0],'opacity=".28"')+L('M-15-240Q-3-235 4-239M5-239L6-219M10-218L19-222',p.skin[2],1.2);
+      o+=P('M-23-319L-39-307-46-286-39-264-27-259-23-280-9-286-9-308Z',C,1.5)+P('M18-319L39-306 47-282 36-260 25-257 21-280 12-286 8-306Z',C,1.5);
+      o+=P('M-22-319L-11-316-5-300-14-289-26-304Z',p.cloth[0],1)+P('M19-319L8-315 4-303 13-289 27-306Z',p.cloth[0],1)+L('M-37-299L-34-275M34-297L33-275',p.cloth[2],1.2);
+      o+=P('M-28-212Q1-202 29-214L34-188Q0-172-34-190Z',D,1.5)+L('M-30-204Q0-193 31-207','#89959b',2)+P('M5-204L16-204 16-192 5-192Z','#b7b7aa',1);
+    }else if(id==='luke'){
+      o+=P('M-22-317L-11-302Q3-291 20-314L31-310 41-281 31-227 36-200Q2-187-37-201L-34-243-41-280-32-309Z','#ecebdf',1.4);
+      o+=P('M-30-311L-39-286-30-253-33-206-18-198-14-249-9-290-17-312Z',D,1)+P('M23-312L15-290 20-250 16-197 33-201 32-247 41-282 32-310Z',D,1);
+      o+=F('M-8-280L9-281 15-270-5-269Z',p.dark[1])+F('M-8-263L14-264 10-253-11-252Z',p.dark[1])+F('M-13-246L9-247 6-236-17-235Z',p.dark[1]);
+      o+=L('M-21-289L-25-256M29-286L26-260M-6-221L7-222',p.dark[2],1.2)+P('M-37-205Q1-192 36-205L36-182Q1-170-38-183Z',C,1.5)+P('M-36-201Q2-192 35-203L35-193Q1-182-37-193Z',D,1.1);
+      o+=L('M-2-192L-8-171M2-192L11-176','#f6e9c7',1.6);
+    }else if(id==='juri'){
+      o+=P('M-22-311L-13-303-8-285 9-286 18-311 28-302 24-274 19-257-16-255-28-272-29-298Z',D,1.2);
+      o+=L('M-20-307L-12-282Q1-270 19-284L22-305M-23-272Q-6-258 18-270',p.trim,2.35);
+      o+=F('M-19-249L-11-235-13-214 5-203 24-213 18-237 21-252 8-246-4-246Z',p.skin[0],'opacity=".35"')+L('M-13-235L-3-230M12-232L17-238M2-229L1-216',p.skin[2],1.15);
+      o+=P('M-29-214Q-1-202 28-215L36-185Q10-171-37-189Z',C,1.5)+P('M-30-213Q2-201 29-215L31-202Q1-187-33-200Z',D,1)+L('M-28-208Q2-197 29-208',p.trim,2.5);
+      o+=P('M-8-202L5-205 14-191 6-182-7-186Z',D,1.1);
+    }else if(id==='mai'){
+      o+=P('M-22-319L-12-318 2-291 17-319 26-314 31-287 29-265 18-232 25-211 32-196Q6-179-33-195L-26-211-17-231-27-263-33-287Z',C,1.5);
+      o+=P('M-21-320L-12-318 4-284 17-319 25-315 12-272 3-258-9-279Z',p.dark[0],1.05)+F('M-12-310L3-282 13-308 9-284 3-272Z',S);
+      o+=F('M-29-279Q-21-259-13-253L-17-231-24-216-12-203-30-201-24-218-16-232Z',p.cloth[2],'opacity=".57"')+F('M17-271Q25-280 27-288L26-271 16-246 10-244Z',p.cloth[0],'opacity=".6"');
+      o+=L('M-28-269Q-16-262-8-272M11-271Q21-263 29-274M-13-246Q3-234 16-247',p.cloth[2],1.2);
+      o+=P('M-24-231Q2-223 24-234L27-211Q4-202-29-213Z',D,1.2)+L('M-24-225Q1-217 25-229M-26-218Q1-210 26-221',p.dark[2],.9);
+      o+=P('M-7-227L7-229 13-215 5-207-9-211Z',p.dark[0],1)+L('M-4-224L4-219-5-213','#caa9a2',.9);
+      // Hand-painted flower embroidery on the front skirt.
+      for(const [x,y,s] of [[17,-198,.68],[-18,-204,.52]])o+=G(F('M0-7Q6-16 9-8L6-2Q17-4 14 4L7 5Q9 16 1 13L-2 6Q-13 10-13 2L-6-1Q-13-10-5-12Z','#ffe4bc')+E(1,1,2.3,2.3,'#e4b789'),`translate(${x} ${y}) scale(${s})`);
+    }else if(id==='iori'){
+      o+=P('M-21-321L-4-304 12-306 24-319 36-293 30-253 33-205Q2-191-33-205L-32-253-43-291Z',p.trim,1.3);
+      o+=P('M-29-321L-43-310-49-288-40-259-33-227-27-214-13-219-10-265-3-299Z',D,1.4)+P('M23-321L43-310 50-283 40-255 36-221 17-216 9-254 6-295Z',D,1.4);
+      o+=P('M-25-323L-7-312-2-299-14-280-27-303Z','#3d3443',1)+P('M23-324L34-310 20-282 7-296 6-309Z','#473948',1);
+      o+=L('M-35-303L-31-276-21-239M35-300L29-277 27-242',p.dark[0],1.25);
+      o+=P('M-30-217Q2-208 33-218L35-187Q2-176-35-188Z',C,1.4)+P('M-34-211Q1-199 34-210L35-196Q1-185-36-197Z','#312536',1)+P('M5-205L20-205 19-191 5-192Z','#c6aa9d',1)+F('M9-201L16-201 15-195 9-195Z','#544050');
+      o+=P('M0-296L4-294 10-266 3-264Z','#e2c4a2',.7)+E(5,-263,2,2,'#e2c4a2');
+    }
+    return o;
+  };
+})();
+
+</script>
+<script>
+/* INK / SVG fighting-animation runtime, v0.1.0
+ * Independent implementation. No Spine/Rive runtime, raster skin or dependency.
+ * Simulation is integer-frame; evaluation and drawing are separate and seekable.
+ */
+'use strict';
+globalThis.INK = (() => {
+  const VERSION = '0.1.0';
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const rad = a => a * Math.PI / 180;
+  const vec = {
+    add: (a,b) => [a[0]+b[0],a[1]+b[1]], sub: (a,b) => [a[0]-b[0],a[1]-b[1]],
+    mul: (a,k) => [a[0]*k,a[1]*k], length: a => Math.hypot(a[0],a[1]),
+    normal: a => { const d=Math.hypot(...a); return d<1e-9?[1,0]:[a[0]/d,a[1]/d]; },
+    mix: (a,b,t) => [lerp(a[0],b[0],t),lerp(a[1],b[1],t)]
+  };
+  const mat = {
+    identity: () => [1,0,0,1,0,0],
+    compose(x=0,y=0,angle=0,sx=1,sy=1) {const c=Math.cos(rad(angle)),s=Math.sin(rad(angle));return [c*sx,s*sx,-s*sy,c*sy,x,y];},
+    multiply(a,b) {return [a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];},
+    point: (m,p) => [m[0]*p[0]+m[2]*p[1]+m[4],m[1]*p[0]+m[3]*p[1]+m[5]],
+    inverse(m) {const d=m[0]*m[3]-m[1]*m[2];if(Math.abs(d)<1e-12)throw Error('Singular bind matrix');return [m[3]/d,-m[1]/d,-m[2]/d,m[0]/d,(m[2]*m[5]-m[3]*m[4])/d,(m[1]*m[4]-m[0]*m[5])/d];},
+    svg: m => 'matrix('+m.map(n=>Math.round(n*10000)/10000).join(' ')+')'
+  };
+  const finite = (v,label='value') => {if(typeof v!=='number'||!Number.isFinite(v))throw TypeError(label+' must be finite');return v;};
+  const copy = o => Object.fromEntries(Object.entries(o).map(([k,v])=>[k,Array.isArray(v)?v.slice():v]));
+  const blend = (a,b,t) => {const p=copy(a);for(const k in b){const bv=b[k],av=a[k]??(Array.isArray(bv)?bv.map(()=>0):0);p[k]=Array.isArray(bv)?bv.map((v,i)=>lerp(av[i],v,t)):lerp(av,bv,t);}return p;};
+
+  /** Two-bone IK with an explicit pole sign. No history-dependent bend flips.
+   * Equal root/target is defined rather than yielding zero-length NaNs.
+   * `margin` exists for the existing game's historical reach convention.
+   */
+  function twoBone(root,target,l1,l2,side=1,margin=0) {
+    for (const [label, point] of [['root',root],['target',target]]) {
+      if (!Array.isArray(point) || point.length!==2) throw TypeError(label+' must be a two-vector');
+      point.forEach(value=>finite(value,label));
+    }
+    finite(l1);finite(l2);finite(side);finite(margin);
+    side=side<0?-1:1;
+    if(l1<=0||l2<=0)throw RangeError('Bone length must be positive');
+    if(margin<0||Math.abs(l1-l2)+margin*3>=l1+l2-margin)throw RangeError('Invalid reach margin');
+    const delta=vec.sub(target,root),u=vec.normal(delta);
+    const d=clamp(vec.length(delta),Math.abs(l1-l2)+Math.max(1e-7,margin*3),l1+l2-Math.max(1e-7,margin));
+    const a=(l1*l1-l2*l2+d*d)/(2*d),h=Math.sqrt(Math.max(0,l1*l1-a*a));
+    return [root.slice(),[root[0]+u[0]*a-u[1]*h*side,root[1]+u[1]*a+u[0]*h*side],[root[0]+u[0]*d,root[1]+u[1]*d]];
+  }
+  function bodyMatrix(p) {return mat.multiply(mat.compose(0,-181+(p.bob||0),p.lean||0),mat.compose(0,181));}
+  function bodyPoint(p,q) {return mat.point(bodyMatrix(p),q);}
+  const basePose = {lean:0,bob:0,head:0,chest:0,pelvis:0,spin:0,turn:0,depth:1,floor:0,rootShift:0,open:0,fan:0,fanAngle:0,ffoot:0,rfoot:0,reachScale:1,reachFoot:0,frontArmProjection:1,rearArmProjection:1,frontLegProjection:1,rearLegProjection:1,rw:[-8,-286],fw:[89,-298],ra:[-86,-16],fa:[103,-16]};
+  /** Generic forward-kinematics graph. Asset data, not character names, defines
+   * the graph. Parents precede children; cycles and singular transforms fail fast.
+   */
+  class Skeleton {
+    constructor(bones) {
+      if(!Array.isArray(bones)||!bones.length||bones.length>256)throw TypeError('Skeleton requires 1…256 bones');
+      this.bones=[];this.index=Object.create(null);this.world=[];
+      for(const data of bones){
+        if(typeof data.name!=='string'||!data.name||this.index[data.name]!==undefined)throw Error('Unique bone name required');
+        const parent=data.parent==null?-1:this.index[data.parent];if(parent===undefined)throw Error('Parent must precede child');
+        const b={name:data.name,parent,x:data.x||0,y:data.y||0,rotation:data.rotation||0,sx:data.sx??1,sy:data.sy??1};
+        for(const k of ['x','y','rotation','sx','sy'])finite(b[k]);if(Math.abs(b.sx*b.sy)<1e-9)throw Error('Singular bone scale');
+        this.index[b.name]=this.bones.length;this.bones.push(b);
+      }this.update();this.bind=this.world.map(m=>m.slice());this.inverseBind=this.bind.map(mat.inverse);
+    }
+    update(pose={}) {
+      for(let i=0;i<this.bones.length;i++){const b=this.bones[i],v={...b,...(pose[b.name]||{})};for(const k of ['x','y','rotation','sx','sy'])finite(v[k]);if(Math.abs(v.sx*v.sy)<1e-9)throw Error('Singular animated scale');const local=mat.compose(v.x,v.y,v.rotation,v.sx,v.sy);this.world[i]=b.parent<0?local:mat.multiply(this.world[b.parent],local);}return this.world;
+    }
+    point(name,point=[0,0]) {const i=this.index[name];if(i===undefined)throw Error('Unknown bone '+name);return mat.point(this.world[i],point);}
+  }
+  class Rig {
+    constructor(profile) {this.profile=profile;}
+    solve(p) {return Rig.solveAnimation(this.profile,p);}
+    static torsoMatrices(p) {
+      const body=bodyMatrix(p),hip=mat.multiply(body,mat.compose(0,-191,p.pelvis||0));
+      const middle=mat.multiply(hip,mat.compose(0,-55,(p.chest||0)*.35-(p.pelvis||0)*.5));
+      const chest=mat.multiply(middle,mat.compose(0,-49,(p.chest||0)*.65-(p.pelvis||0)*.5));
+      return [hip,middle,chest];
+    }
+    static solveAnimation(c,p) {
+      const matrices=Rig.torsoMatrices(p),t=mat.multiply(mat.inverse(bodyMatrix(p)),mat.multiply(matrices[2],mat.compose(0,295)));
+      const adjusted={...c,rigRearShoulder:mat.point(t,c.rigRearShoulder||[-42,-292]),rigFrontShoulder:mat.point(t,c.rigFrontShoulder||[42,-290])};
+      const r=Rig.solveLegacy(adjusted,p),thigh=(c.rigLengths||[])[2]||(c.id==='chun'?100:96),shin=(c.rigLengths||[])[3]||98;
+      if(p.pelvis){r.rearLeg=twoBone(mat.point(matrices[0],[-26,0]),p.ra,thigh,shin,p.rearLegPole??1,1);r.frontLeg=twoBone(mat.point(matrices[0],[26,0]),p.fa,thigh,shin,p.frontLegPole??-1,1);}
+      // Artist-authored 2.5D projection, not anatomical stretch. Shorten the
+      // projected bones at an edge-on pose instead of bending a straight limb
+      // into a knee-to-chest fold. Gameplay's compatibility rig bypasses this.
+      const lengths=c.rigLengths||[c.id==='iori'?67:c.female?64:68,c.id==='iori'?76:c.female?67:71,thigh,shin];
+      for(const [name,target] of [['rearArm',p.rw],['frontArm',p.fw],['rearLeg',p.ra],['frontLeg',p.fa]]) {
+        const k=clamp(p[name+'Projection']??1,.12,1);
+        if(k===1)continue;
+        const leg=name.includes('Leg'),i=leg?2:0,side=p[name+'Pole']??(name==='frontLeg'?-1:1);
+        r[name]=twoBone(r[name][0],target,lengths[i]*k,lengths[i+1]*k,side,.1);
+      }
+      return r;
+    }
+    static solveLegacy(c,p) {
+      const male=!c.female,as=c.id==='iori'?40:male?43:35;
+      const ua=c.id==='iori'?67:male?68:64,la=c.id==='iori'?76:male?71:67;
+      const thigh=c.id==='chun'?100:96;
+      const lengths=c.rigLengths||[ua,la,thigh,98];
+      const r={rearArm:twoBone(c.rigRearShoulder||[-as,-291],p.rw,lengths[0],lengths[1],p.rearArmPole??1,1),frontArm:twoBone(c.rigFrontShoulder||[as,-288],p.fw,lengths[0],lengths[1],p.frontArmPole??1,1),rearLeg:twoBone(bodyPoint(p,[-26,-191]),p.ra,lengths[2],lengths[3],p.rearLegPole??1,1),frontLeg:twoBone(bodyPoint(p,[26,-191]),p.fa,lengths[2],lengths[3],p.frontLegPole??-1,1)};
+      const reach=p.reachScale||1;if(Math.abs(reach-1)>1e-5){const l=p.reachFoot?r.frontLeg:r.frontArm;l[1]=vec.mix(l[0],l[1],reach);l[2]=vec.mix(l[0],l[2],reach);}return r;
+    }
+    static sockets(p,rig) {
+      const o={};for(const [name,chain] of Object.entries(rig))o[name]=chain.map(q=>name.includes('Arm')?bodyPoint(p,q):q.slice());
+      const matrices=Rig.torsoMatrices(p),chest=matrices[2];o.pelvis=mat.point(matrices[0],[0,0]);o.chest=mat.point(chest,[0,3]);o.neck=mat.point(chest,[5,-29]);o.head=mat.point(chest,[6,-46]);return o;
+    }
+    static world(p,q,{x=0,y=0,scale=1,facing=1}={}) {
+      const m=mat.multiply(mat.compose(x,y,0,scale*facing*(p.depth||1),scale),mat.multiply(mat.compose(p.rootShift||0,(p.floor||0)-180,p.spin||0),mat.compose(0,180)));
+      return mat.point(m,q);
+    }
+  }
+
+  function easing(u,curve='smooth') {
+    u=clamp(u);if(curve==='hold')return u===1?1:0;if(curve==='linear')return u;
+    if(curve==='strike')return 1-(1-u)**3;if(curve==='load')return u*u*u;
+    if(Array.isArray(curve)) {
+      const [x1,y1,x2,y2]=curve;
+      const bez=(t,a,b)=>3*(1-t)**2*t*a+3*(1-t)*t*t*b+t*t*t;
+      let lo=0,hi=1,t=u;for(let i=0;i<18;i++){if(bez(t,x1,x2)<u)lo=t;else hi=t;t=(lo+hi)/2;}return bez(t,y1,y2);
+    }
+    return u*u*(3-2*u);
+  }
+  function validateClip(data) {
+    if(!data||typeof data!=='object'||data.version!==1)throw TypeError('Clip version must be 1');
+    if(typeof data.id!=='string'||!data.id||data.id.length>120||['__proto__','constructor','prototype'].includes(data.id))throw TypeError('Clip id required');
+    if(!Number.isInteger(data.duration)||data.duration<1||data.duration>3600)throw RangeError('Clip duration 1…3600 frames');
+    if(!data.tracks||typeof data.tracks!=='object'||Array.isArray(data.tracks)||Object.keys(data.tracks).length>64)throw TypeError('Invalid tracks');
+    for(const [channel,keys] of Object.entries(data.tracks)){
+      if(['__proto__','prototype','constructor'].includes(channel))throw TypeError('Unsafe channel');
+      if(!Object.hasOwn(basePose,channel)&&!['rootX','rootY','squash','fanOpen','rearArmPole','frontArmPole','rearLegPole','frontLegPole'].includes(channel))throw TypeError('Unknown channel '+channel);
+      if(!Array.isArray(keys)||!keys.length||keys.length>4096)throw RangeError('Invalid keys');
+      let last=-1,shape;
+      for(const key of keys){
+        if(!Array.isArray(key)||key.length<2)throw TypeError('Invalid keyframe');
+        const [time,value,curve]=key;finite(time);if(time<0||time>data.duration||time<=last)throw RangeError('Keys must be strictly ordered within clip');last=time;
+        const sz=Array.isArray(value)?value.length:0;if(sz&&!Array.isArray(basePose[channel]))throw TypeError('Scalar channel expected');
+        if(Array.isArray(basePose[channel])&&sz!==2)throw TypeError('Two-vector channel expected');
+        if(shape!==undefined&&shape!==sz)throw TypeError('Track shape changed');shape=sz;
+        for(const v of sz?value:[value])if(Math.abs(finite(v))>10000)throw RangeError('Excessive key value');
+        if(curve!==undefined){if(Array.isArray(curve)){if(curve.length!==4)throw TypeError('Bezier needs four values');curve.forEach(v=>finite(v));if(curve[0]<0||curve[0]>1||curve[2]<0||curve[2]>1)throw RangeError('Bezier x must be 0…1');}else if(!['smooth','linear','strike','load','hold'].includes(curve))throw TypeError('Unknown curve');}
+      }
+    }
+    if(data.phases){for(const name of ['startup','active','recovery']){const q=data.phases[name];if(!Array.isArray(q)||q.length!==2||!q.every(Number.isFinite)||q[0]<0||q[1]<q[0]||q[1]>data.duration)throw TypeError('Invalid phase '+name);}}
+    if(data.events!==undefined&&!Array.isArray(data.events))throw TypeError('Events must be an array');
+    if((data.events||[]).length>512)throw RangeError('Too many events');
+    const sockets=['rearArm','frontArm','rearLeg','frontLeg','pelvis','chest','neck','head'];
+    if(data.meta!==undefined){
+      if(!data.meta||typeof data.meta!=='object'||Array.isArray(data.meta))throw TypeError('Invalid clip metadata');
+      if(data.meta.socket!==undefined&&!sockets.includes(data.meta.socket))throw TypeError('Unknown attachment socket');
+    }
+    for(const e of data.events||[]){
+      if(!e||!Number.isInteger(e.frame)||e.frame<0||e.frame>=data.duration||typeof e.type!=='string'||e.type.length>80)throw TypeError('Invalid event');
+      if(e.socket!==undefined&&!sockets.includes(e.socket))throw TypeError('Unknown event socket');
+      if(e.amplitude!==undefined&&Math.abs(finite(e.amplitude))>1000)throw RangeError('Excessive impulse amplitude');
+      for(const key of ['decay','frequency'])if(e[key]!==undefined&&(finite(e[key])<0||e[key]>10))throw RangeError('Invalid impulse '+key);
+    }
+    return data;
+  }
+  class Clip {
+    constructor(data) {validateClip(data);this.data=JSON.parse(JSON.stringify(data));this.id=data.id;this.duration=data.duration;this.tracks=this.data.tracks;this.events=(this.data.events||[]).slice().sort((a,b)=>a.frame-b.frame);}
+    sample(frame,base=basePose) {
+      const p=copy(base),t=clamp(frame,0,this.duration);
+      for(const [channel,keys] of Object.entries(this.tracks)){
+        let value=keys[0][1];if(t>=keys.at(-1)[0])value=keys.at(-1)[1];
+        else for(let i=1;i<keys.length;i++){if(t<=keys[i][0]){const a=keys[i-1],b=keys[i],u=easing((t-a[0])/(b[0]-a[0]),b[2]);value=Array.isArray(a[1])?a[1].map((v,j)=>lerp(v,b[1][j],u)):lerp(a[1],b[1],u);break;}}
+        p[channel]=Array.isArray(value)?value.slice():value;
+      }return p;
+    }
+    /** Seek never dispatches events or damage. */
+    eventsBetween(from,to) {return this.events.filter(e=>e.frame>from&&e.frame<=to);}
+    toJSON() {return JSON.parse(JSON.stringify(this.data));}
+  }
+  class Player {
+    constructor(clip,base=basePose) {this.clip=clip;this.base=copy(base);this.frame=0;this.cycle=0;this.frozen=0;this.eventCursor=-1;this.ended=false;this.transition=null;}
+    play(clip,blendFrames=0) {const old=this.sample(0);this.clip=clip;this.frame=0;this.cycle=0;this.eventCursor=-1;this.ended=false;this.frozen=0;this.transition=blendFrames>0?{from:old,length:blendFrames}:null;}
+    freeze(frames) {this.frozen=Math.max(this.frozen,Math.max(0,Math.floor(frames)));}
+    seek(frame) {this.frame=clamp(Math.floor(frame),0,this.clip.duration);this.eventCursor=this.frame;this.ended=this.frame===this.clip.duration;this.frozen=0;this.transition=null;}
+    step() {
+      if(this.frozen>0){this.frozen--;return [];}if(this.ended)return [];
+      // Frame denotes the entered pose. A contact event at f therefore freezes
+      // pose f, not f+1. Initial frame-zero events dispatch on the first tick.
+      const next=Math.min(this.frame+1,this.clip.duration);
+      const events=this.clip.eventsBetween(this.eventCursor,next).map(e=>({...e,cycle:this.cycle}));
+      this.eventCursor=next;this.frame=next;
+      if(this.frame>=this.clip.duration){
+        if(this.clip.data.loop){this.frame=0;this.eventCursor=-1;this.cycle++;}
+        else this.ended=true;
+      }
+      return events;
+    }
+    sample(alpha=0) {let p=this.clip.sample(this.frame+(this.frozen>0?0:clamp(alpha,0,.99999)),this.base);if(this.transition&&this.frame<this.transition.length)p=blend(this.transition.from,p,easing(this.frame/this.transition.length));return p;}
+    snapshot() {return {clip:this.clip.id,frame:this.frame,cycle:this.cycle,frozen:this.frozen,eventCursor:this.eventCursor,ended:this.ended,transition:this.transition?JSON.parse(JSON.stringify(this.transition)):null};}
+    restore(s,registry) {const c=registry[s.clip];if(!c)throw Error('Missing clip '+s.clip);if(!Number.isInteger(s.frame)||s.frame<0||s.frame>c.duration)throw Error('Invalid snapshot frame');this.clip=c;for(const k of ['frame','cycle','frozen','eventCursor','ended','transition'])this[k]=s[k];}
+  }
+  class FixedClock {
+    constructor(hz=60,maxSteps=8) {finite(hz);if(hz<=0||hz>1000||!Number.isInteger(maxSteps)||maxSteps<1||maxSteps>1000)throw RangeError('Invalid fixed clock settings');this.hz=hz;this.maxSteps=maxSteps;this.dt=1000/hz;this.accumulator=0;this.last=null;this.dropped=0;}
+    reset() {this.accumulator=0;this.last=null;}
+    advance(now,step,speed=1) {
+      finite(now);finite(speed);if(this.last===null){this.last=now;return 0;}const elapsed=Math.max(0,now-this.last);this.last=now;
+      this.accumulator+=Math.min(elapsed,250)*Math.max(0,speed);let n=0;
+      while(this.accumulator+1e-7>=this.dt&&n<this.maxSteps){step();this.accumulator-=this.dt;n++;}
+      if(this.accumulator>=this.dt){this.dropped+=Math.floor(this.accumulator/this.dt);this.accumulator%=this.dt;}
+      return clamp(this.accumulator/this.dt);
+    }
+  }
+
+  /** Compile SVG to absolute M/L/Q/C/Z. Smooth shorthand is resolved ONCE.
+   * SVG arc commands are deliberately rejected with an actionable error: author
+   * curves as cubics rather than silently distorting imported arc flags.
+   */
+  function compilePath(d) {
+    if(typeof d!=='string'||d.length>250000)throw TypeError('Invalid SVG path');
+    const tokens=d.match(/[a-zA-Z]|[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?/g)||[];
+    if(d.replace(/[\s,]/g,'')!==tokens.join(''))throw TypeError('Invalid SVG path character');
+    if(tokens.length&&!/^[Mm]$/.test(tokens[0]))throw TypeError('SVG path must start with moveto');
+    const sizes={M:2,L:2,H:1,V:1,C:6,S:4,Q:4,T:2,Z:0};let i=0,cmd='',x=0,y=0,sx=0,sy=0,last='',control=null;const commands=[],values=[];
+    const emit=(c,v)=>{commands.push({op:c,start:values.length,count:v.length});values.push(...v);};
+    while(i<tokens.length){
+      if(/^[a-zA-Z]$/.test(tokens[i]))cmd=tokens[i++];
+      const op=cmd.toUpperCase(),relative=cmd!==op;if(!(op in sizes))throw Error('Unsupported SVG command '+cmd+'; convert arcs to cubic paths before binding');
+      if(op==='Z'){emit('Z',[]);x=sx;y=sy;last='Z';control=null;cmd='';continue;}
+      const n=sizes[op];if(i+n>tokens.length)throw Error('Incomplete path command');
+      const v=tokens.slice(i,i+n).map(Number);if(v.some(n=>!Number.isFinite(n)))throw Error('Invalid path number');i+=n;
+      const at=(j)=>[v[j]+(relative?x:0),v[j+1]+(relative?y:0)];let end;
+      if(op==='M'||op==='L'){end=at(0);emit(op,end);if(op==='M'){[sx,sy]=end;cmd=relative?'l':'L';}control=null;}
+      else if(op==='H'){end=[v[0]+(relative?x:0),y];emit('L',end);control=null;}
+      else if(op==='V'){end=[x,v[0]+(relative?y:0)];emit('L',end);control=null;}
+      else if(op==='C'){const a=at(0),b=at(2);end=at(4);emit('C',[...a,...b,...end]);control=b;}
+      else if(op==='Q'){const a=at(0);end=at(2);emit('Q',[...a,...end]);control=a;}
+      else if(op==='S'){const a=last==='C'||last==='S'?[2*x-control[0],2*y-control[1]]:[x,y],b=at(0);end=at(2);emit('C',[...a,...b,...end]);control=b;}
+      else if(op==='T'){const a=last==='Q'||last==='T'?[2*x-control[0],2*y-control[1]]:[x,y];end=at(0);emit('Q',[...a,...end]);control=a;}
+      [x,y]=end;last=op;
+    }
+    return {commands,values:new Float64Array(values)};
+  }
+  function pathString(path,values=path.values) {let d='';for(const c of path.commands){d+=c.op;for(let i=0;i<c.count;i++)d+=(i?' ':'')+(Math.round(values[c.start+i]*100)/100);}return d;}
+  class WeightedPath {
+    constructor(d,weightsAt,bindMatrices) {
+      this.path=compilePath(d);this.out=new Float64Array(this.path.values.length);this.bindInverse=bindMatrices.map(mat.inverse);this.weights=[];
+      for(let i=0;i<this.path.values.length;i+=2){const q=[this.path.values[i],this.path.values[i+1]],w=weightsAt(q),total=w.reduce((s,v)=>s+v,0);if(w.length!==bindMatrices.length||w.some(v=>!Number.isFinite(v)||v<0)||Math.abs(total-1)>1e-5)throw Error('Skin weights must be nonnegative and sum to one');this.weights.push(w.map((weight,j)=>({weight,bind:mat.point(this.bindInverse[j],q)})));}
+    }
+    deform(worldMatrices) {
+      for(let i=0;i<this.weights.length;i++){let x=0,y=0;for(let j=0;j<this.weights[i].length;j++){const w=this.weights[i][j];if(!w.weight)continue;const m=worldMatrices[j];x+=(m[0]*w.bind[0]+m[2]*w.bind[1]+m[4])*w.weight;y+=(m[1]*w.bind[0]+m[3]*w.bind[1]+m[5])*w.weight;}this.out[i*2]=x;this.out[i*2+1]=y;}
+      return pathString(this.path,this.out);
+    }
+  }
+  /** Optional artist-authored corrective contours. Unlike arbitrary SVG
+   * crossfades, each target must share the exact normalized path topology.
+   */
+  class MorphPath {
+    constructor(rest,targets={}) {
+      this.rest=compilePath(rest);this.targets=Object.create(null);this.out=new Float64Array(this.rest.values.length);
+      const signature=p=>p.commands.map(c=>c.op+':'+c.count).join('|');
+      for(const [name,d]of Object.entries(targets)){const p=compilePath(d);if(signature(p)!==signature(this.rest))throw Error('Morph topology mismatch: '+name);this.targets[name]=p.values;}
+    }
+    sample(weights={}) {
+      let sum=0;for(const [key,w]of Object.entries(weights)){finite(w);if(w<0||!this.targets[key])throw Error('Invalid morph target/weight');sum+=w;}if(sum>1.000001)throw Error('Morph weights must sum to at most one');
+      for(let i=0;i<this.out.length;i++){let v=this.rest.values[i]*(1-sum);for(const [key,w]of Object.entries(weights))v+=this.targets[key][i]*w;this.out[i]=v;}return pathString(this.rest,this.out);
+    }
+  }
+  /** An analytic damped accessory track: random access and reverse seeking are
+   * deterministic. It is cosmetic, never a source for hitboxes or resources. */
+  function followThrough(frame,impulses=[],idleAmplitude=0) {
+    let result=Math.sin(frame*.052)*idleAmplitude;
+    for(const {frame:at,amplitude=8,decay=.065,frequency=.31} of impulses){const t=frame-at;if(t>=0)result+=amplitude*Math.exp(-decay*t)*Math.sin(frequency*t);}
+    return clamp(result,-38,38);
+  }
+  return {VERSION,clamp,lerp,rad,vec,mat,finite,copy,blend,twoBone,bodyMatrix,bodyPoint,basePose,Rig,Skeleton,easing,Clip,Player,FixedClock,validateClip,compilePath,pathString,WeightedPath,MorphPath,followThrough};
+})();
+if(typeof module!=='undefined'&&module.exports)module.exports=globalThis.INK;
+
+</script>
+<script>
+/* INK asset pack. Costume/hair designs adapt the repository's editable SVGs.
+ * New anatomical contours, hands, facial planes and deformation bindings.
+ * Runtime code knows nothing about these names or palettes.
+ */
+'use strict';
+(() => {
+ const {clamp,lerp}=INK;
+ const NS='http://www.w3.org/2000/svg';
+ const profiles=[
+  {id:'ryu',name:'RYU',cn:'隆',female:false,accent:'#73bdce',arm:[21.8,9.8,8.1],leg:[30,15.5,10.7],headScale:.88,style:'沉肩 · 蓄势 · 贯穿'},
+  {id:'ken',name:'KEN',cn:'肯',female:false,accent:'#ed9167',arm:[22,10.9,8.8],leg:[29,16.2,11.5],headScale:.87,style:'前压 · 蹬地 · 火焰回旋'},
+  {id:'chun',name:'CHUN-LI',cn:'春丽',female:true,accent:'#57c7bb',arm:[12.8,6.7,5.8],leg:[29,15.8,9.2],headScale:.85,style:'开掌 · 换轴 · 腿部连打'},
+  {id:'cammy',name:'CAMMY',cn:'嘉米',female:true,accent:'#79b8d0',arm:[14,7.3,6.1],leg:[24.8,13.8,9.2],headScale:.85,style:'低姿 · 拉伸 · 轴向突进'},
+  {id:'luke',name:'LUKE',cn:'卢克',female:false,accent:'#e9b96e',arm:[24,12.8,9.8],leg:[29,15.4,10.5],headScale:.89,style:'转肩 · 拳峰 · 反冲'},
+  {id:'juri',name:'JURI',cn:'蛛俐',female:true,accent:'#be90d6',arm:[12.4,6.8,5.8],leg:[27,16.5,9],headScale:.84,style:'偏轴 · 挂腿 · 弧形切割'},
+  {id:'mai',name:'MAI',cn:'不知火舞',female:true,accent:'#e78591',arm:[13.4,7,5.8],leg:[24.7,13.3,8.4],headScale:.84,style:'扇面 · 身体旋转 · 翻身踢'},
+  {id:'iori',name:'IORI',cn:'八神庵',female:false,accent:'#a28bcc',arm:[17.8,9.4,7.7],leg:[27,17.5,10.3],headScale:.87,style:'前伏 · 爪切 · 紫焰 / 同人客串'}
+ ];
+ for(const p of profiles){p.rigRearShoulder=[p.female?-33:-42,-292];p.rigFrontShoulder=[p.female?34:42,-290];}
+ const byID=Object.fromEntries(profiles.map(p=>[p.id,p]));
+ const P=(d,f,w=1.4,extra='')=>`<path d="${d}" fill="${f}" stroke="#302735" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+ const F=(d,f,extra='')=>`<path d="${d}" fill="${f}" ${extra}/>`;
+ const L=(d,f,w=1,extra='')=>`<path d="${d}" fill="none" stroke="${f}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+ const ellipse=(x,y,rx,ry,f)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${f}"/>`;
+ function face(c,mood='rest',profile=false){
+  const p=SF6Art.palette[c.id],female=c.female,angry=mood==='power',hurt=mood==='hurt';
+  if(hurt)return L('M-12-6l9 3-8 3M9-5l12-3-8 7',p.hair[2],1.5)+P('M5 16Q13 12 20 16L18 21 8 22Z','#64383f',.7);
+  let s='';
+  if(!profile){
+   s+=P(female?'M-14-7Q-8-12-2-7Q-8-3-13-5Z':'M-15-7L-7-10-2-6-7-4-13-5Z','#fff6e6',.8);
+   s+=ellipse(-5,-6,1.6,2.1,p.eye)+ellipse(-4.8,-6,0.7,1.7,'#242630');
+  }
+  s+=P(female?'M7-6Q16-14 26-8Q19-1 11-3Z':'M7-7L18-11 26-8 22-3 11-3Z','#fff8ee',.95);
+  s+=ellipse(19,-6,2.4,3,p.eye)+ellipse(19.7,-6,1.05,2.2,'#242630')+ellipse(20.4,-7.1,.65,.7,'#ffffff');
+  s+=L(female?'M7-6Q17-14 26-8l2-2':'M7-7L18-11 26-8',p.hair[2],female?1.6:1.8);
+  s+=L(angry?'M-16-17L-2-12M7-12L28-20':female?'M-16-16Q-8-20-1-15M9-16Q18-20 27-17':'M-16-17L-2-15M7-15L28-19',p.hair[1],female?1.4:2.8);
+  s+=L('M10-4L8 4 13 6M21 5L24 5',p.skin[2],.9);
+  s+=F('M15-1L16 4 22 5 17 7 12 5Z',p.skin[2],'opacity=".42"');
+  if(angry)s+=P('M4 15Q12 11 21 15L19 24 8 25Z','#59333d',.8)+F('M7 15L19 15 18 18 8 18Z','#fff4e8');
+  else s+=L(c.id==='juri'?'M4 16Q14 22 24 13':female?'M6 15Q13 18 20 14':'M5 16L12 15 20 16',female?'#a35565':'#7b4a44',1.1)+L('M10 20L16 20',p.skin[0],1);
+  return s;
+ }
+ function head(c,view='front') {
+  const p=SF6Art.palette[c.id],female=c.female,skin=`url(#atelier-${c.id}-skin)`,hair=`url(#atelier-${c.id}-hair)`;
+  if(view==='back')return SF6Art.head(c,true);
+  const side=view==='profile';
+  let s=P('M-13 13L-16 39-23 46Q1 56 25 44L15 34 17 11Z',skin,1.1);
+  s+=F('M-12 20L3 31 15 23 15 34 7 41-9 35Z',p.skin[2],'opacity=".4"');
+  s+=P(side?'M-24-27Q-8-49 16-37Q28-32 29-16L27-4 34 3 27 7 24 20 9 31-7 28-23 15Z':female?'M-24-26Q-13-44 9-40Q28-37 29-18L28-5 33 2 28 7 25 20Q18 29 8 32L-5 29-19 15-24-4Z':'M-27-26Q-15-43 10-40L26-31 29-17 28-4 34 3 28 8 26 22 12 33-3 31-20 17-26-5Z',skin,1.3);
+  s+=F('M-23-15L-13-6-13 8-5 23 7 31-4 28-19 14Z',p.skin[2],'opacity=".28"');
+  s+=F('M17 11L26 7 24 19 17 24 11 22Z',p.skin[0],'opacity=".33"');
+  s+=P('M-23-4Q-32-11-31 1L-25 10-21 8-19-1Z',skin,.9)+L('M-27-3Q-21-4-23 4L-26 4',p.skin[2],.8);
+  for(const mood of ['rest','power','hurt'])s+=`<g data-expression="${mood}"${mood==='rest'?'':' visibility="hidden"'}>${face(c,mood,side)}</g>`;
+  // Keep each character's individually authored hair contour, not the old face.
+  const tmp=document.createElementNS(NS,'g');tmp.innerHTML=SF6Art.head(c);
+  let after=false;for(const node of tmp.children){if(after)s+=node.outerHTML;if(node.getAttribute('data-face-state')==='hurt')after=true;}
+  return s;
+ }
+ function hand(c,open=false) {
+  const p=SF6Art.palette[c.id],gloves=['ryu','ken','cammy','luke'].includes(c.id),base=gloves?(c.id==='ken'?'#51434a':c.id==='luke'?'#5683aa':'#cb4252'):`url(#atelier-${c.id}-skin)`,light=gloves?'#f18c82':p.skin[0],shade=gloves?'#773440':p.skin[2];
+  if(open){return P('M-9-8L3-11 14-17 25-18Q28-17 26-14L17-11 32-13Q36-12 33-9L20-6 36-7Q40-5 35-3L20 0 32 1Q36 3 32 5L17 5 24 10Q25 14 21 13L8 7-1 11-9 7Z',base,1.15)+L('M7-7L13-1 7 5M19-6L24-7M18 0L26 1',shade,.8);}
+  return P('M-9-9L2-12 10-16 22-15 30-10 31-1 25 7 13 11 2 9-9 6Z',base,1.15)+F('M4-10L12-13 24-12 27-8 16-8 12-3 3-4Z',light,'opacity=".65"')+P('M3-5Q8-12 13-6L18 0 13 7 6 5 2 0Z',base,.85)+L('M15-12L16-7M22-11L23-6M27-8L28-3M17 5L23 4',shade,.85);
+ }
+ function torso(c,back=false) {
+  let s=SF6Art.torso(c,back);
+  if(c.id==='ryu'&&!back){
+   const p=SF6Art.palette[c.id];
+   // Pectoral planes, rib cage and obliques use continuous anatomy, not squares.
+   s=s.replace(/<path[^>]+d="M-7-291[^>]+>/g,'');
+   s+=L('M4-298Q15-307 34-292M3-296Q-1-283 1-268M3-266Q20-258 35-269M8-259Q13-250 28-252M12-244L26-240M18-231L28-228',p.skin[2],1.25,'opacity=".8"');
+  }
+  return s;
+ }
+ function pack(c) {
+  const p=byID[c.id]||profiles[0],proxy={ch:c,headTails:document.createElementNS(NS,'g'),coatTails:document.createElementNS(NS,'g'),trailing:document.createElementNS(NS,'g')};SF6Art.attach(proxy);
+  return {profile:{...p,...c,arm:(c.arm||p.arm).slice(),leg:(c.leg||p.leg).slice(),headScale:c.headScale??p.headScale},torso:torso(c),torsoBack:torso(c,true),heads:{front:head(c),profile:head(c,'profile'),back:head(c,'back')},hands:{fist:hand(c),palm:hand(c,true)},foot:SF6Art.feet(c),fan:SF6Art.fan(c),hair:proxy.headTails.innerHTML,coat:proxy.coatTails.innerHTML,trail:proxy.trailing.innerHTML};
+ }
+ INK.assets={profiles,byID,pack,head,hand,torso,P,F,L};
+})();
+
+</script>
+<script>
+/* Retained SVG renderer. DOM is retained after mount / first-draw decal initialization.
+ * Paths are analytical anatomical pieces plus three-influence torso skinning.
+ * Face/hand/back views are attachment swaps, not faded copies of a face.
+ */
+'use strict';
+(() => {
+ const {clamp,lerp,rad,mat,vec,Rig,WeightedPath,followThrough}=INK;
+ const NS='http://www.w3.org/2000/svg',INKLINE='#302735';
+ function node(tag,attrs={},parent=null){const n=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(parent)parent.appendChild(n);return n;}
+ function assign(n,k,v,stats){if(k==='visibility'){if(n.hasAttribute('visibility'))n.removeAttribute('visibility');k='display';v=v==='hidden'?'none':'inline';}v=String(v);if(!n._inkAttrs)n._inkAttrs={};if(n._inkAttrs[k]===v)return;n._inkAttrs[k]=v;n.setAttribute(k,v);if(stats)stats.writes++;}
+ function setTransform(n,m,s){assign(n,'transform',mat.svg(m),s);}
+ function transform(text=''){
+  let m=mat.identity();for(const[,name,v]of text.matchAll(/(matrix|translate|rotate|scale|skewX|skewY)\s*\(([^)]*)\)/g)){
+   const a=v.trim().split(/[\s,]+/).map(Number);let q;
+   if(name==='matrix')q=a;
+   if(name==='translate')q=mat.compose(a[0],a[1]||0);
+   if(name==='scale')q=mat.compose(0,0,0,a[0],a[1]??a[0]);
+   if(name==='rotate')q=mat.multiply(mat.compose(a[1]||0,a[2]||0,a[0]),mat.compose(-(a[1]||0),-(a[2]||0)));
+   if(name==='skewX')q=[1,0,Math.tan(rad(a[0])),1,0,0];if(name==='skewY')q=[1,Math.tan(rad(a[0])),0,1,0,0];
+   m=mat.multiply(m,q);
+  }return m;
+ }
+ const bind=[mat.compose(0,-191),mat.compose(0,-246),mat.compose(0,-295)];
+ function torsoWeights(q){const y=q[1];if(y>=-246){const t=INK.easing(clamp((-191-y)/55));return[1-t,t,0];}const t=INK.easing(clamp((-246-y)/49));return[0,1-t,t];}
+ function ellipsePath(cx,cy,rx,ry){const k=.55228475;return `M${cx+rx} ${cy}C${cx+rx} ${cy+ry*k} ${cx+rx*k} ${cy+ry} ${cx} ${cy+ry}C${cx-rx*k} ${cy+ry} ${cx-rx} ${cy+ry*k} ${cx-rx} ${cy}C${cx-rx} ${cy-ry*k} ${cx-rx*k} ${cy-ry} ${cx} ${cy-ry}C${cx+rx*k} ${cy-ry} ${cx+rx} ${cy-ry*k} ${cx+rx} ${cy}Z`;}
+ class SkinGroup {
+  constructor(parent,markup){
+   this.group=node('g',{'data-ink-part':'weighted-torso'},parent);this.paths=[];const tmp=node('g');tmp.innerHTML=markup;
+   const walk=(n,m,inherited={})=>{
+    const current=mat.multiply(m,transform(n.getAttribute?.('transform')||'')),attrs={...inherited};
+    for(const a of n.attributes||[])if(!['transform','d','cx','cy','rx','ry','r','x','y'].includes(a.name))attrs[a.name]=a.value;
+    let d=n.getAttribute?.('d');if(['ellipse','circle'].includes(n.tagName)){const num=(a,def=0)=>+(n.getAttribute(a)||def);d=ellipsePath(num('cx'),num('cy'),num('rx',num('r')),num('ry',num('r')));}
+    if(d){const path=INK.compilePath(d);for(let i=0;i<path.values.length;i+=2){const q=mat.point(current,[path.values[i],path.values[i+1]]);path.values[i]=q[0];path.values[i+1]=q[1];}
+     const dom=node('path',attrs,this.group),skin=new WeightedPath(INK.pathString(path),torsoWeights,bind);this.paths.push({dom,skin,rest:INK.pathString(path)});
+    }else for(const c of n.children||[])walk(c,current,attrs);
+   };for(const c of tmp.children)walk(c,mat.identity());
+  }
+  render(p,stats){
+   if(!p.chest&&!p.pelvis){
+    setTransform(this.group,INK.bodyMatrix(p),stats);if(!this.rigid){for(const {dom,rest}of this.paths)assign(dom,'d',rest,stats);this.rigid=true;}return;
+   }
+   this.rigid=false;assign(this.group,'transform','',stats);const matrices=Rig.torsoMatrices(p);
+   for(const {dom,skin}of this.paths)assign(dom,'d',skin.deform(matrices),stats);
+  }
+ }
+ function segmentShape(length,top,bottom,bulge=1,lower=false){
+  const L=length,w=top,b=bottom,peak=w*bulge;
+  return `M${-w*.67} ${-w*.3}C${-w*1.03} ${-w*.1} ${-peak} ${L*.15} ${-peak*.92} ${L*.33}C${-peak*.86} ${L*.59} ${-b*.96} ${L*.82} ${-b} ${L}Q0 ${L+b*.74} ${b} ${L}C${b*1.04} ${L*.77} ${peak*(lower?.83:1.07)} ${L*.51} ${peak*(lower?.96:1.05)} ${L*.28}Q${w*.91} ${-w*.36} ${w*.57} ${-w*.39}Q0 ${-w*.78} ${-w*.67} ${-w*.3}Z`;
+ }
+ function segmentShadow(L,w,b,lower){return `M${-w*.68} ${w*.06}Q${-w*.9} ${L*.2} ${-w*.76} ${L*.44}L${-b*.84} ${L*.95}Q${-b*.35} ${L*1.02} ${b*.2} ${L*.96}L${-b*.28} ${L*.72}Q${-w*.32} ${L*.38} ${-w*.1} ${L*.18}Z`;}
+ function segmentLight(L,w,b){return `M${w*.16} ${w*.04}Q${w*.69} ${L*.03} ${w*.73} ${L*.28}Q${w*.67} ${L*.47} ${w*.4} ${L*.6}L${w*.2} ${L*.48}Q${w*.38} ${L*.25} ${w*.16} ${w*.04}Z`;}
+ function boneMatrix(a,b,outer=mat.identity()) {const d=vec.sub(b,a);return mat.multiply(outer,mat.compose(a[0],a[1],Math.atan2(d[1],d[0])*180/Math.PI-90));}
+ function material(c,leg,rear){
+  const id=c.id,p=SF6Art.palette[id];let skin=leg?['mai','luke'].includes(id):!['ken','cammy','iori'].includes(id),key='skin';
+  if(!skin)key=leg?(id==='chun'||id==='cammy'||(id==='juri'&&rear)?'dark':id==='iori'?'cloth':'cloth'):(id==='iori'?'dark':'cloth');
+  const colors=p[key],base=id==='ken'&&leg?'#cc4c50':`url(#atelier-${id}-${key})`;
+  return {base,shade:skin?p.skin[2]:colors[2],light:skin?p.skin[0]:colors[0],skin};
+ }
+
+ let serial=0;
+ // One uninterrupted anatomical envelope. Bone-local shading is clipped into it;
+ // knees and elbows are not two outlined cylinders meeting at a visible seam.
+ function envelope(chain,widths,outer,flex=0){
+  const [a,b,c]=chain,[w,e,z]=widths,u=vec.normal(vec.sub(b,a)),v=vec.normal(vec.sub(c,b));
+  const normal=t=>[-t[1],t[0]],n0=normal(u),n1=normal(v),nj=vec.normal(vec.add(n0,n1));
+  const cross=[{q:vec.sub(a,vec.mul(u,w*.45)),n:n0,w:w*.58}];
+  for(const t of [0,.2,.5,.78])cross.push({q:vec.mix(a,b,t),n:n0,w:lerp(w,e,t)+(Math.sin(t*Math.PI)*w*(.075+flex*.06))});
+  cross.push({q:b,n:nj,w:e});
+  for(const t of [.2,.5,.8,1])cross.push({q:vec.mix(b,c,t),n:n1,w:lerp(e,z,t)+Math.sin(t*Math.PI)*e*.16});
+  cross.push({q:vec.add(c,vec.mul(v,z*.45)),n:n1,w:z*.6});
+  const pts=[...cross.map(q=>mat.point(outer,vec.add(q.q,vec.mul(q.n,q.w)))),...cross.slice().reverse().map(q=>mat.point(outer,vec.sub(q.q,vec.mul(q.n,q.w*.95))))];
+  let d='M'+pts[0].join(' ');const N=pts.length;for(let i=0;i<N;i++){const a=pts[(i-1+N)%N],b=pts[i],c=pts[(i+1)%N],e=pts[(i+2)%N];d+='C'+vec.add(b,vec.mul(vec.sub(c,a),.15)).join(' ')+' '+vec.sub(c,vec.mul(vec.sub(e,b),.15)).join(' ')+' '+c.join(' ');}return d+'Z';
+ }
+ class Limb {
+  constructor(parent,c,leg,rear,profile){
+   this.c=c;this.leg=leg;this.rear=rear;this.widths=leg?profile.leg:profile.arm;this.material=material(c,leg,rear);
+   this.group=node('g',{'data-ink-part':(rear?'rear-':'front-')+(leg?'leg':'arm')},parent);
+   this.surface=node('path',{fill:this.material.base,stroke:INKLINE,'stroke-width':1.25,'stroke-linejoin':'round'},this.group);this.clip=node('clipPath',{id:'ink-limb-'+(++serial),clipPathUnits:'userSpaceOnUse'},this.group);this.clipShape=node('path',{},this.clip);this.details=node('g',{'clip-path':'url(#'+this.clip.id+')'},this.group);
+   this.pieces=[0,1].map(()=>{const group=node('g',{},this.details);return {group,outline:node('path',{fill:this.material.base,stroke:'none','stroke-width':0,'stroke-linejoin':'round'},group),shade:node('path',{fill:this.material.shade,opacity:rear?.46:.28},group),light:node('path',{fill:this.material.light,opacity:rear?.17:.52},group),line:node('path',{fill:'none',stroke:this.material.shade,'stroke-width':1,'stroke-linecap':'round',opacity:.68},group),cloth:node('g',{},group)};});
+   this.joint=node('ellipse',{fill:this.material.base},this.group);
+   this.crease=node('path',{fill:'none',stroke:this.material.shade,'stroke-width':.95,'stroke-linecap':'round',opacity:.7},this.group);
+   this.end=node('g',{},this.group);
+   if(leg)this.end.innerHTML=SF6Art.feet(c);else{
+    this.fist=node('g',{},this.end);this.fist.innerHTML=INK.assets.hand(c);this.palm=node('g',{},this.end);this.palm.innerHTML=INK.assets.hand(c,true);
+    if(c.id==='mai'&&!rear){this.fan=node('g',{},this.end);this.fan.innerHTML=SF6Art.fan(c);this.end.insertBefore(this.fan,this.fist);}
+   }
+   this.decalsReady=false;
+  }
+  decals(lengths){
+   if(this.decalsReady)return;this.decalsReady=true;const c=this.c,id=c.id,p=SF6Art.palette[id],[w,e,a]=this.widths,[u,l]=lengths,{P,F,L}=INK.assets;
+   const band=(top,bottom,width,fill)=>P(`M${-width} ${top}Q0 ${top+4} ${width} ${top}L${width*.78} ${bottom}Q0 ${bottom+4} ${-width*.78} ${bottom}Z`,fill,1);
+   let upper='',lower='';
+   if(!this.leg){
+    if(id==='ryu'&&this.rear)upper+=P(segmentShape(u*.36,w+2,w*.81),`url(#atelier-${id}-dark)`,1.2)+L(`M${-w*.6} 2L${-w*.7} ${u*.19}`,'#bd8c78',1.3);
+    if(id==='cammy')lower+=P(segmentShape(l*.92,e*1.43,a*1.05,1.05,true),'#cb4153',1.2)+L(`M${e*.35} 3L${e*.44} ${l*.56}`,'#ff9e90',2.2);
+    if(['mai','chun','iori'].includes(id)){lower+=band(l*.81,l,a+2,id==='chun'?'#3e3446':p.trim)+L(`M${-a-1} ${l*.91}L${a+1} ${l*.91}`,p.dark[2],.9);if(id==='chun')for(const x of [-a*.7,0,a*.7])lower+=P(`M${x-1.5} ${l*.88}l2-3 2 4-2 2Z`,p.trim,.45);}
+    if(id==='luke')lower+=L(`M${e*.4} ${l*.22}l-6 7 3 5-5 7M${e*.44} ${l*.52}l-5 5 2 5`,p.skin[2],1.7);
+    if(['ken','iori'].includes(id)){upper+=L(`M${-w*.36} ${u*.38}L${-e*.2} ${u*.87}M${e*.1} ${u*.7}l8-7`,p.dark[2],1.2);lower+=L(`M${-e*.6} ${l*.2}l9 8-6 4M${a*.6} ${l*.88}L${-a*.7} ${l*.88}`,p.dark[2],1.1);}
+   }else{
+    if(id==='luke')upper+=P(segmentShape(u*.72,w+1.5,e+5),`url(#atelier-luke-cloth)`,1.2)+L(`M${-w*.43} 2L${-e*.8} ${u*.63}M${-e-4} ${u*.72}Q0 ${u*.77} ${e+4} ${u*.72}`,p.trim,2.5);
+    if(id==='cammy')lower+=band(l*.38,l,e*.89,'#292d3c')+L(`M${e*.4} ${l*.51}L${a*.47} ${l*.94}`,'#6c727f',1.4);
+    if(id==='chun')lower+=band(l*.48,l,e*.81,'#e9e4d9')+L(`M${-e*.72} ${l*.49}Q0 ${l*.57} ${e*.72} ${l*.49}`,p.trim,1.7);
+    if(id==='mai')lower+=band(l*.76,l,a+2,'#f7e9d8')+L(`M${-a-1} ${l*.8}L${a+1} ${l*.84}M${-a-1} ${l*.9}L${a+1} ${l*.94}`,'#b99994',1);
+    if(id==='juri'){upper+=L(`M${w*.66} ${u*.08}Q${w*.7} ${u*.4} ${e*.65} ${u*.92}`,p.trim,2.4);lower+=L(`M${e*.61} 0Q${e*.8} ${l*.4} ${a*.66} ${l*.82}`,p.trim,2.4);}
+    if(['ryu','ken','iori'].includes(id)){upper+=L(`M${w*.21} ${u*.22}Q${w*.38} ${u*.5} ${e*.12} ${u*.91}M${-e*.7} ${u*.78}l7 12`,p.cloth[2],1.15);lower+=L(`M${-e*.6} ${l*.14}l8 9-8 10M${a*.8} ${l*.8}l-9 9M${-a*.8} ${l*.93}Q0 ${l*.97} ${a*.8} ${l*.93}`,p.cloth[2],1.05);}
+   }
+   this.pieces[0].cloth.innerHTML=upper;this.pieces[1].cloth.innerHTML=lower;
+  }
+  render(chain,p,stats,style={}) {
+   const[a,b,c]=chain,outer=this.leg?mat.identity():INK.bodyMatrix(p),ab=vec.sub(b,a),bc=vec.sub(c,b),lengths=[vec.length(ab),vec.length(bc)];
+   const dot=clamp((ab[0]*bc[0]+ab[1]*bc[1])/(lengths[0]*lengths[1]),-1,1),flex=(1-dot)*.5;
+   const volume=style.volume??1,baseWidths=this.widths.map(w=>w*volume*(this.rear?.94:1));
+   const[w,e,z]=baseWidths;
+   this.decals(lengths);
+   const contour=envelope(chain,baseWidths,outer,flex);assign(this.surface,'d',contour,stats);assign(this.clipShape,'d',contour,stats);
+   for(let i=0;i<2;i++){
+    const part=this.pieces[i],L=lengths[i],top=i?e*(this.leg?1.05:1.14):w,bottom=i?z:e;
+    const bulge=i?(this.leg?1.19:this.c.id==='luke'?1.47:1.24):(this.material.skin?1+flex*.1:1.015);
+    setTransform(part.group,boneMatrix(i?b:a,i?c:b,outer),stats);
+    assign(part.outline,'d',segmentShape(L,top,bottom,bulge,!!i),stats);
+    assign(part.shade,'d',segmentShadow(L,top,bottom,!!i),stats);assign(part.light,'d',segmentLight(L,top,bottom),stats);
+    assign(part.line,'d',this.material.skin?`M${top*.35} ${L*.36}Q${top*.47} ${L*.56} ${bottom*.23} ${L*.76}`:'',stats);
+   }
+   const joint=mat.point(outer,b),ang=Math.atan2(bc[1],bc[0])*180/Math.PI;
+   assign(this.joint,'cx',joint[0],stats);assign(this.joint,'cy',joint[1],stats);assign(this.joint,'rx',e*.82,stats);assign(this.joint,'ry',e*.71,stats);
+   // Only skin joints need a patch; trousers retain their authored fold.
+   assign(this.joint,'visibility','hidden',stats);
+   const n=[-bc[1]/lengths[1],bc[0]/lengths[1]],q0=mat.point(outer,[b[0]+n[0]*e*.55,b[1]+n[1]*e*.55]),q1=mat.point(outer,[b[0]-n[0]*e*.4,b[1]-n[1]*e*.4]);
+   assign(this.crease,'d',`M${q0}Q${joint[0]+3} ${joint[1]+2} ${q1}`,stats);
+   const at=mat.point(outer,c),rot=this.leg?((this.rear?p.rfoot:p.ffoot)||clamp((ang-90)*.24,-26,30)):ang+(p.lean||0);
+   const scale=this.leg?(this.c.female?.79:.88):(this.c.female?.7:this.c.id==='luke'?.88:.82);
+   setTransform(this.end,mat.compose(at[0],at[1],rot,scale,scale),stats);
+   if(!this.leg){const open=p.open>.45;assign(this.palm,'visibility',open?'visible':'hidden',stats);assign(this.fist,'visibility',open?'hidden':'visible',stats);
+    if(this.fan){const openness=clamp(p.fan??.9,.07,1);assign(this.fan,'transform',`translate(16 0) rotate(${-18+(1-openness)*9+(p.fanAngle||0)}) scale(1 ${openness}) translate(-16 0)`,stats);assign(this.fan,'visibility',p.fan===0?'hidden':'visible',stats);}
+   }
+  }
+ }
+ class Renderer {
+  constructor(parent,character){
+   if(!parent?.ownerSVGElement&&parent?.tagName!=='svg')throw TypeError('Renderer requires an SVG parent');
+   this.assets=INK.assets.pack(character);this.c=this.assets.profile;this.stats={writes:0,frames:0,mountNodes:0};this.style={volume:1,head:1};
+   this.group=node('g',{'data-ink-character':character.id,'data-ink-mode':'skin'},parent);
+   this.art=node('g',{'data-ink-layer':'art'},this.group);
+   const a=this.assets;
+   this.trail=node('g',{'data-ink-part':'cloth-followthrough'},this.art);this.trail.innerHTML=a.trail;
+   this.rearLeg=new Limb(this.art,this.c,true,true,this.c);this.frontLeg=new Limb(this.art,this.c,true,false,this.c);
+   this.hair=node('g',{'data-ink-part':'hair-followthrough'},this.art);this.hair.innerHTML=a.hair;
+   this.rearArm=new Limb(this.art,this.c,false,true,this.c);
+   this.torso=new SkinGroup(this.art,a.torso);this.torsoBack=new SkinGroup(this.art,a.torsoBack);
+   this.coat=node('g',{'data-ink-part':'coat-followthrough'},this.art);this.coat.innerHTML=a.coat;
+   this.strap=node('path',{fill:'none',stroke:'#a23c56','stroke-width':5,'stroke-linecap':'round'},this.art);
+   this.head=node('g',{'data-ink-part':'head-slot'},this.art);this.heads={};
+   for(const [name,markup]of Object.entries(a.heads)){this.heads[name]=node('g',{'data-ink-attachment':name},this.head);this.heads[name].innerHTML=markup;}
+   this.expressions=[...this.head.querySelectorAll('[data-expression]')];
+   this.frontArm=new Limb(this.art,this.c,false,false,this.c);
+   this.debug=node('g',{'data-ink-layer':'rig','pointer-events':'none'},this.group);
+   this.bones=Array.from({length:11},()=>node('line',{stroke:'#3a8f87','stroke-width':1.35,'stroke-dasharray':'4 3'},this.debug));
+   this.joints=Array.from({length:15},()=>node('circle',{r:3.4,fill:'#f6fbeb',stroke:'#238b81','stroke-width':1.4},this.debug));
+   this.debug.setAttribute('display','none');this._order='';this.mode='skin';this.destroyed=false;
+   this.stats.mountNodes=this.group.querySelectorAll('*').length;
+  }
+  setMode(mode){if(!['skin','rig','silhouette','overlay'].includes(mode))throw Error('Unknown mode');this.mode=mode;assign(this.group,'data-ink-mode',mode,this.stats);assign(this.art,'visibility',mode==='rig'?'hidden':'visible',this.stats);assign(this.debug,'visibility',['rig','overlay'].includes(mode)?'visible':'hidden',this.stats);}
+  setStyle(style){if(style.volume!==undefined)this.style.volume=clamp(style.volume,.75,1.3);if(style.head!==undefined)this.style.head=clamp(style.head,.8,1.25);}
+  render(p,{rig=null,frame=0,expression='rest',impulses=[],secondary=true}={}) {
+   if(this.destroyed)throw Error('Renderer already destroyed');const start=performance.now();this.stats.writes=0;this.stats.frames++;
+   const signature=JSON.stringify([p,rig,secondary?frame:0,expression,impulses,this.style,this.mode]);if(signature===this.signature){this.stats.cpuMs=performance.now()-start;return this.stats;}this.signature=signature;
+   const inputRig=rig||Rig.solveAnimation(this.c,p),r={...inputRig},s=this.stats,back=p.turn>.64;
+   // The legacy game can hand us a collapsed chain when target == shoulder.
+   // Repair the drawing only; authoritative gameplay geometry remains untouched.
+   for(const [name,chain]of Object.entries(r))if(vec.length(vec.sub(chain[1],chain[0]))<1e-5||vec.length(vec.sub(chain[2],chain[1]))<1e-5){const leg=name.includes('Leg'),male=!this.c.female,upper=leg?(this.c.id==='chun'?100:96):this.c.id==='iori'?67:male?68:64,lower=leg?98:this.c.id==='iori'?76:male?71:67;r[name]=INK.twoBone(chain[0],chain[2],upper,lower,leg&&name.startsWith('front')?-1:1,1);}
+   this.inputRig=inputRig;
+   for(const name of ['rearLeg','frontLeg','rearArm','frontArm'])this[name].render(r[name],p,s,this.style);
+   this.torso.render(p,s);this.torsoBack.render(p,s);
+   assign(this.torso.group,'visibility',back?'hidden':'visible',s);assign(this.torsoBack.group,'visibility',back?'visible':'hidden',s);
+   const rearInFront=!back&&p.rw[0]>-37&&p.rw[1]<-258;const order=(back?'back':'front')+(rearInFront?'guard':'');if(order!==this._order){this._order=order;
+    const ordered=back?[this.trail,this.frontLeg.group,this.rearLeg.group,this.hair,this.frontArm.group,this.torso.group,this.torsoBack.group,this.coat,this.head,this.rearArm.group]:[this.trail,this.rearLeg.group,this.frontLeg.group,this.hair,this.rearArm.group,this.torso.group,this.torsoBack.group,this.coat,this.head,this.frontArm.group];
+    for(const n of ordered)this.art.appendChild(n);this.art.insertBefore(this.strap,this.torso.group);if(rearInFront)this.art.insertBefore(this.rearArm.group,this.head);
+   }
+   if(this.c.id==='iori'){const a=vec.mix(r.rearLeg[0],r.rearLeg[1],.69),b=vec.mix(r.frontLeg[0],r.frontLeg[1],.69);assign(this.strap,'d',`M${a}Q${(a[0]+b[0])/2} ${Math.max(a[1],b[1])+55} ${b}`,s);}
+   const body=INK.bodyMatrix(p),h=Rig.sockets(p,r).head,headScale=this.c.headScale*this.style.head;
+   setTransform(this.head,mat.compose(h[0],h[1],(p.lean||0)+(p.head||0)+(p.chest||0),headScale,headScale),s);
+   const view=back?'back':p.turn>.27?'profile':'front';for(const[k,n]of Object.entries(this.heads))assign(n,'visibility',k===view?'visible':'hidden',s);
+   for(const e of this.expressions)assign(e,'visibility',e.dataset.expression===expression?'visible':'hidden',s);
+   const lag=secondary?followThrough(frame,impulses,1.15):0;
+   setTransform(this.hair,mat.multiply(body,mat.multiply(mat.compose(-14,-365,lag*.7+(p.head||0)*.4),mat.compose(14,365))),s);
+   setTransform(this.coat,mat.multiply(body,mat.multiply(mat.compose(0,-205,lag*.8-(p.lean||0)*.12),mat.compose(0,205))),s);
+   setTransform(this.trail,mat.multiply(mat.compose(0,(p.bob||0)*.6),mat.multiply(mat.compose(0,-200,lag-(p.lean||0)*.19),mat.compose(0,200))),s);
+   if(['rig','overlay'].includes(this.mode)){
+    const sockets=Rig.sockets(p,r),lines=[],points=[];for(const name of ['rearLeg','frontLeg','rearArm','frontArm']){const q=sockets[name];lines.push([q[0],q[1]],[q[1],q[2]]);points.push(...q);}
+    lines.push([sockets.pelvis,sockets.chest],[sockets.chest,sockets.neck],[sockets.neck,sockets.head]);points.push(sockets.pelvis,sockets.chest,sockets.head);
+    lines.forEach(([a,b],i)=>{assign(this.bones[i],'x1',a[0],s);assign(this.bones[i],'y1',a[1],s);assign(this.bones[i],'x2',b[0],s);assign(this.bones[i],'y2',b[1],s);});
+    points.forEach((q,i)=>{assign(this.joints[i],'cx',q[0],s);assign(this.joints[i],'cy',q[1],s);});
+   }
+   this.lastPose=p;this.lastRig=r;this.stats.cpuMs=performance.now()-start;return this.stats;
+  }
+  destroy(){this.group.remove();this.destroyed=true;this.heads={};this.expressions=[];}
+ }
+ INK.SVG={NS,node,assign,transform};INK.SkinGroup=SkinGroup;INK.Renderer=Renderer;
+})();
+
+</script>
+<script>
+/* INK authoring studies. Timings are animation studies, not Capcom frame data.
+ * Full-body keys remain sparse and editable; no sampled video or raster sprites.
+ * Artwork, choreography and gameplay resource rules are deliberately separate.
+ */
+'use strict';
+(() => {
+ const {copy,basePose,Clip}=INK;
+ const neutral={
+  ryu:{lean:-3,head:1,rw:[-1,-291],fw:[102,-298],ra:[-100,-16],fa:[108,-16]},
+  ken:{lean:-5,head:3,rw:[-9,-277],fw:[112,-304],ra:[-116,-16],fa:[91,-16]},
+  chun:{lean:-4,head:2,rw:[-19,-299],fw:[127,-290],ra:[-92,-16],fa:[105,-16],open:1},
+  cammy:{lean:7,head:-4,rw:[9,-314],fw:[86,-323],ra:[-79,-16],fa:[120,-16]},
+  luke:{lean:4,head:-2,rw:[9,-289],fw:[107,-321],ra:[-97,-16],fa:[114,-16]},
+  juri:{lean:-9,head:9,rw:[-53,-239],fw:[76,-232],ra:[-77,-16],fa:[68,-110],open:1},
+  mai:{lean:-6,head:3,rw:[-23,-285],fw:[113,-313],ra:[-104,-16],fa:[82,-16],fan:.92,fanAngle:-9},
+  iori:{lean:12,head:-8,rw:[-65,-204],fw:[116,-290],ra:[-122,-16],fa:[107,-16],open:1}
+ };
+ const poses={
+  guard:{lean:-7,fw:[78,-317],rw:[-8,-297]},
+  chamber:{lean:-14,head:7,fw:[73,-318],rw:[-35,-301],fa:[71,-156],ra:[-82,-16],ffoot:15},
+  recoil:{lean:-11,fw:[38,-259],rw:[-12,-288],bob:13,chest:-10},
+  wave:{lean:16,head:-9,fw:[166,-275],rw:[104,-271],ra:[-125,-16],fa:[117,-16],chest:8,open:1},
+  rise:{lean:-18,head:-8,fw:[66,-412],rw:[-10,-273],fa:[72,-159],ra:[-69,-80],ffoot:-12,chest:-7},
+  round:{lean:-35,head:22,fw:[73,-279],rw:[-89,-283],fa:[179,-323],ra:[-79,-16],ffoot:75,chest:-8},
+  elbow:{lean:37,head:-19,fw:[52,-335],rw:[-82,-267],fa:[132,-78],ra:[-112,-126],chest:11,fan:0},
+  low:{lean:18,bob:50,fw:[87,-281],rw:[-30,-282],fa:[119,-16],ra:[-108,-16]},
+  claw:{lean:29,head:-17,fw:[157,-253],rw:[-104,-306],fa:[139,-16],ra:[-130,-16],open:1,chest:12}
+ };
+ const K=(name,extra={})=>({...poses[name],...extra});
+ const library={},catalog=[];
+ function author(character,key,name,command,duration,contact,endActive,frames,meta={}){
+  const base={...copy(basePose),...copy(neutral[character]),rootX:0,rootY:0};
+  let final={...copy(base),rootX:frames.at(-1)?.[1]?.rootX||0};const finalSpin=frames.at(-1)?.[1]?.spin;
+  if(finalSpin)final.spin=Math.round(finalSpin/360)*360;
+  // Air-only studies begin in their authored aerial pose, not a one-frame teleport.
+  const keys=[[0,(meta.kind==='dive'||meta.kind==='body-dive')?copy(frames[0][1]):{}],...frames,[duration,final]];
+  const channels=new Set(Object.keys(base));for(const [,p]of keys)for(const k in p)channels.add(k);
+  const tracks={};for(const ch of channels){if(!(ch in basePose)&&!['rootX','rootY'].includes(ch))continue;tracks[ch]=keys.map(([t,p,curve])=>[t,copy({...base,...p})[ch]??0,curve||'smooth']);}
+  const events=[{frame:contact,type:'contact',socket:meta.socket||'frontArm',label:name},{frame:contact,type:'impulse',amplitude:meta.kind==='spin'?14:9}];
+  for(const f of meta.extraHits||[])events.push({frame:f,type:'contact',socket:meta.socket||'frontArm',label:name});
+  const maiLegacy={'kachousen':'kachosen','hishou-ryuuenjin':'ryuenbu','hissatsu-shinobi-bachi':'shinobibachi','ryuuenbu':'hissatsu','kagerou-no-mai':'SA1','musasabi-no-mai':'musabi'};
+  if(character==='mai'){meta.legacyMoveBase=maiLegacy[key];meta.reference='https://prtimes.jp/main/html/rd/p/000004811.000013450.html';}
+  const data={version:1,id:character+':'+key,character,name,command,duration,loop:false,phases:{startup:[0,contact],active:[contact,endActive],recovery:[endActive,duration]},meta:{...meta,source:'INK authored motion study; not official frame data'},tracks,events};
+  const clip=new Clip(data);library[data.id]=clip;catalog.push(data);return clip;
+ }
+ // Ryu: grounded two-palm release, rising fist, level rotating leg.
+ author('ryu','hadoken','波动拳','↓↘→ + P',56,16,25,[
+  [8,{lean:-15,bob:12,chest:-10,head:7,fw:[-2,-247],rw:[-9,-258],open:1,rootX:-9}],
+  [13,{lean:-9,bob:9,fw:[36,-249],rw:[12,-254],open:1,rootX:-6},'hold'],
+  [16,K('wave',{rootX:17,bob:4}),'strike'],[21,K('wave',{rootX:23,fw:[173,-276],chest:11})],
+  [31,{lean:7,head:-4,fw:[133,-269],rw:[88,-276],open:1,rootX:19}],[43,K('guard',{rootX:6})]
+ ],{kind:'projectile',note:'双手后收 → 蹬地送掌 → 保持掌根，再回防'});
+ author('ryu','shoryu','升龙拳','→↓↘ + P',65,14,38,[
+  [7,{lean:19,bob:36,chest:10,fw:[45,-238],rw:[0,-297],rootX:-2}],
+  [14,K('rise',{rootY:-22,rootX:26}),'strike'],[23,K('rise',{rootY:-127,rootX:63,turn:.31,fa:[43,-201],ra:[-55,-120]})],
+  [35,K('rise',{rootY:-136,rootX:70,fw:[57,-383],chest:0})],
+  [45,K('chamber',{rootY:-62,rootX:68})],[52,K('low',{bob:22,rootX:64})]
+ ],{kind:'uppercut',note:'下沉蓄势 → 拳峰上穿 → 抱膝腾空 → 压低着地'});
+ author('ryu','tatsu','龙卷旋风脚','↓↙← + K',74,18,49,[
+  [9,K('chamber',{bob:5,turn:.2})],[18,{lean:-13,fa:[203,-212],ra:[-42,-119],fw:[66,-313],rw:[-83,-296],ffoot:88,rootY:-33,rootX:18},'strike'],
+  [27,{lean:-13,fa:[-200,-219],ra:[44,-120],fw:[-66,-313],rw:[83,-296],ffoot:-88,turn:1,depth:.83,rootY:-42,rootX:67}],
+  [36,{lean:-13,fa:[204,-215],ra:[-43,-119],fw:[66,-313],rw:[-83,-296],ffoot:88,rootY:-38,rootX:111}],
+  [46,{lean:-13,fa:[-197,-219],ra:[42,-121],fw:[-66,-313],rw:[83,-296],ffoot:-88,turn:1,depth:.83,rootY:-29,rootX:147}],
+  [55,K('chamber',{rootX:155,rootY:-8})],[63,K('low',{bob:18,rootX:155})]
+ ],{kind:'spin',socket:'frontLeg',extraHits:[36],note:'支撑脚离地，腿保持水平；躯干前后视图交替'});
+ // Ken: step-and-turn, high flame arc, a distinct down-then-up exchange.
+ author('ken','dragonlash','龙尾脚','→↓↘ + K',70,25,40,[
+  [8,K('chamber',{lean:-18,rootX:-5,turn:.15})],[16,{lean:-27,head:16,fw:[40,-317],rw:[-85,-285],fa:[101,-352],ra:[-56,-171],rootY:-47,rootX:40,turn:.55}],
+  [25,K('round',{fa:[201,-269],ra:[-64,-112],rootY:-58,rootX:97,turn:.25}),'strike'],
+  [35,K('round',{fa:[223,-152],ra:[-73,-111],lean:-17,rootY:-28,rootX:138})],
+  [46,K('chamber',{rootX:152})],[55,{lean:12,bob:17,fw:[96,-303],rw:[-13,-285],fa:[121,-16],ra:[-110,-16],rootX:156}]
+ ],{kind:'kick',socket:'frontLeg',note:'抬腿过顶 → 腾空绕轴 → 脚跟下压，而非平踢'});
+ author('ken','shoryu','升龙拳','→↓↘ + P',67,13,39,[
+  [6,{lean:20,bob:28,fw:[22,-248],rw:[-9,-290],chest:14}],
+  [13,K('rise',{lean:-6,rootX:26,rootY:-17,turn:.2}),'strike'],
+  [23,K('rise',{lean:-21,rootX:78,rootY:-114,turn:.76,depth:.9,fa:[96,-208],ra:[-68,-170]})],
+  [36,K('rise',{lean:-15,rootX:95,rootY:-148,turn:.23,chest:13})],
+  [48,K('chamber',{rootX:110,rootY:-50})],[56,K('low',{bob:19,rootX:112})]
+ ],{kind:'uppercut',note:'前冲起拳 → 肩胯换向 → 上升火焰；与隆的紧凑姿势区分'});
+ author('ken','jinrai','迅雷脚','↓↘→ + K',72,19,48,[
+  [9,K('chamber',{lean:-18,fw:[58,-303],rootX:5})],
+  [19,K('round',{fa:[219,-177],rootX:26}),'strike'],
+  [29,K('chamber',{rootX:37,fa:[78,-124]})],
+  [39,{lean:-19,bob:32,head:10,fw:[76,-294],rw:[-91,-297],fa:[226,-29],ra:[-99,-16],ffoot:78,rootX:48},'strike'],
+  [52,K('chamber',{rootX:55})],[61,K('guard',{rootX:52})]
+ ],{kind:'kick',socket:'frontLeg',extraHits:[39],note:'中段回旋 → 折膝换轴 → 下段追击（编排示范）'});
+ // Chun-Li: palms stay stable while the leg snaps between discrete held accents.
+ author('chun','legs','百裂脚','↓↘→ + K',78,17,51,[
+  [8,K('chamber',{open:1,fw:[117,-282],rw:[-12,-284]})],
+  [17,{lean:-19,head:12,fw:[117,-284],rw:[-12,-286],open:1,fa:[222,-198],ra:[-83,-16],ffoot:82},'strike'],
+  [22,K('chamber',{open:1,fw:[117,-284],rw:[-12,-286]})],
+  [27,{lean:-20,fw:[118,-284],rw:[-12,-286],open:1,fa:[209,-278],ra:[-82,-16],ffoot:79},'strike'],
+  [32,K('chamber',{open:1,fw:[117,-284],rw:[-12,-286]})],
+  [37,{lean:-17,fw:[117,-284],rw:[-12,-286],open:1,fa:[227,-161],ra:[-82,-16],ffoot:82},'strike'],
+  [42,K('chamber',{open:1,fw:[117,-284],rw:[-12,-286]})],
+  [47,{lean:-21,fw:[117,-284],rw:[-12,-286],open:1,fa:[211,-253],ra:[-83,-16],ffoot:79},'strike'],
+  [58,K('chamber',{open:1})],[66,{open:1,fa:[108,-16]}]
+ ],{kind:'flurry',socket:'frontLeg',extraHits:[27,37,47],note:'四次伸腿各自收膝；高度和停顿不同，不用随机残影代替踢腿'});
+ author('chun','bird','旋转鹤脚蹴','蓄 ↓ · ↑ + K',91,22,62,[
+  [9,K('low',{bob:35,open:1})],
+  [17,{lean:0,spin:112,rootY:-22,fw:[73,-388],rw:[-73,-386],fa:[181,-189],ra:[-177,-198],open:1}],
+  [22,{spin:180,rootY:-35,fw:[72,-397],rw:[-72,-397],fa:[216,-180],ra:[-215,-181],ffoot:90,rfoot:-90,open:1},'strike'],
+  [27,{spin:180,turn:.51,depth:.65,rootY:-36,rootX:15,fw:[5,-397],rw:[-5,-397],fa:[-1,-180],ra:[1,-181],ffoot:90,rfoot:-90,frontLegProjection:.14,rearLegProjection:.14,open:1}],
+  [32,{spin:180,turn:1,depth:.9,rootY:-37,rootX:29,fw:[-72,-397],rw:[72,-397],fa:[-216,-185],ra:[215,-176],ffoot:-90,rfoot:90,open:1}],
+  [37,{spin:180,turn:.5,depth:.65,rootY:-36,rootX:44,fw:[5,-397],rw:[-5,-397],fa:[-1,-180],ra:[1,-181],ffoot:-90,rfoot:90,frontLegProjection:.14,rearLegProjection:.14,open:1}],
+  [43,{spin:180,rootY:-35,rootX:59,fw:[72,-397],rw:[-72,-397],fa:[216,-180],ra:[-215,-181],ffoot:90,rfoot:-90,open:1}],
+  [49,{spin:180,turn:.5,depth:.65,rootY:-32,rootX:72,fw:[5,-397],rw:[-5,-397],fa:[-1,-180],ra:[1,-181],ffoot:90,rfoot:-90,frontLegProjection:.14,rearLegProjection:.14,open:1}],
+  [54,{spin:180,turn:1,depth:.9,rootY:-30,rootX:82,fw:[-72,-397],rw:[72,-397],fa:[-215,-180],ra:[216,-181],ffoot:-90,rfoot:90,open:1}],
+  [64,{spin:300,rootY:-12,rootX:88,fw:[72,-339],rw:[-48,-331],fa:[95,-142],ra:[-89,-139],open:1}],
+  [74,K('low',{spin:360,bob:21,rootX:93,open:1})],[83,{spin:360,rootX:86,open:1}]
+ ],{kind:'spin',socket:'frontLeg',extraHits:[43],note:'倒立横向张腿；经过侧视压缩姿势，再切到背面，不把直腿折成抱膝'});
+ author('chun','tensho','天升脚','↓↓ + K',72,17,43,[
+  [8,K('chamber',{bob:24,open:1})],
+  [17,{lean:-31,head:19,fw:[104,-292],rw:[-50,-286],fa:[93,-374],ra:[-71,-114],ffoot:75,rootY:-24,rootX:15,open:1},'strike'],
+  [28,{lean:-15,head:8,fw:[99,-308],rw:[-83,-285],fa:[102,-173],ra:[-6,-377],rfoot:83,rootY:-108,rootX:31,open:1},'strike'],
+  [38,{lean:-23,fw:[106,-295],rw:[-62,-296],fa:[108,-358],ra:[-65,-169],ffoot:76,rootY:-131,rootX:42,open:1},'strike'],
+  [49,K('chamber',{rootY:-67,rootX:44,open:1})],[60,K('low',{bob:20,rootX:46,open:1})]
+ ],{kind:'uppercut',socket:'frontLeg',extraHits:[28,38],note:'左右脚交替上踢；双手用于平衡，不套用上勾拳姿势'});
+ // Cammy: long axis, inversion and diagonal root motion are separate silhouettes.
+ author('cammy','arrow','螺旋箭','↓↘→ + K',74,22,49,[
+  [9,K('low',{lean:24,bob:33})],
+  [16,{lean:41,fw:[37,-316],rw:[-53,-314],fa:[173,-122],ra:[129,-161],rootY:-23,rootX:28}],
+  [22,{lean:61,head:-23,fw:[28,-326],rw:[-65,-299],fa:[246,-88],ra:[218,-135],ffoot:24,rootY:-24,rootX:59,turn:.12},'strike'],
+  [32,{lean:61,head:-23,fw:[-36,-318],rw:[60,-302],fa:[246,-100],ra:[218,-124],ffoot:24,rootY:-21,rootX:117,turn:1,depth:.88}],
+  [42,{lean:61,head:-23,fw:[28,-326],rw:[-65,-299],fa:[246,-88],ra:[218,-135],ffoot:24,rootY:-16,rootX:176,turn:.12}],
+  [53,K('low',{lean:26,bob:27,rootX:207})],[64,K('guard',{rootX:195})]
+ ],{kind:'drill',socket:'frontLeg',note:'身体拉成低平轴线；前后躯干切换表现螺旋'});
+ author('cammy','spike','加农钉','→↓↘ + K',69,15,38,[
+  [7,K('low',{lean:26,bob:21})],
+  [15,{lean:-40,head:21,fw:[43,-285],rw:[-80,-296],fa:[90,-383],ra:[-57,-164],ffoot:75,rootY:-12,rootX:22},'strike'],
+  [24,{lean:-25,head:10,spin:-73,fw:[32,-294],rw:[-70,-303],fa:[78,-409],ra:[-91,-220],rootY:-113,rootX:54,ffoot:70}],
+  [35,{lean:0,spin:-192,fw:[56,-307],rw:[-46,-302],fa:[102,-251],ra:[-70,-227],rootY:-143,rootX:67,turn:.67}],
+  [45,K('chamber',{spin:-310,rootY:-81,rootX:79})],
+  [56,K('low',{spin:-360,bob:25,rootX:85})],[63,{spin:-360,rootX:76}]
+ ],{kind:'uppercut',socket:'frontLeg',note:'上踢形成一条线，后空翻落地；不是拳头朝上的升龙'});
+ author('cammy','strike','加农打击','空中 ↓↙← + K',66,18,36,[
+  [1,K('chamber',{rootY:-130})],[9,{lean:-6,fw:[53,-321],rw:[-35,-322],fa:[55,-242],ra:[-75,-215],rootY:-153,rootX:0}],
+  [18,{lean:18,head:-17,fw:[43,-330],rw:[-86,-302],fa:[181,-44],ra:[-39,-173],rootY:-134,rootX:40,ffoot:5},'strike'],
+  [29,{lean:23,head:-19,fw:[39,-332],rw:[-87,-300],fa:[194,-38],ra:[-41,-166],rootY:-65,rootX:119,ffoot:8}],
+  [38,K('low',{lean:23,bob:26,rootX:170})],[50,K('guard',{rootX:165})]
+ ],{kind:'dive',socket:'frontLeg',note:'脚先沿斜线下刺，后脚折起；没有把身体俯冲和踢击混为一招'});
+ // Luke: large forearms, delayed release and shoulder recoil.
+ author('luke','sand','沙尘爆破','↓↘→ + P',52,14,23,[
+  [7,{lean:-9,chest:-13,fw:[-6,-302],rw:[1,-322],bob:8,rootX:-10}],
+  [14,{lean:22,chest:13,head:-14,fw:[177,-283],rw:[-4,-320],fa:[125,-16],ra:[-118,-16],rootX:18},'strike'],
+  [19,{lean:16,chest:7,fw:[163,-286],rw:[2,-320],rootX:24}],
+  [28,{lean:3,fw:[111,-292],rw:[4,-320],rootX:19}],[39,K('guard',{rootX:6})]
+ ],{kind:'projectile',note:'单拳后拉 → 肩部发射 → 大臂先停、前臂回收'});
+ author('luke','flash','闪光拳','↓↙← + P（可蓄力）',72,29,39,[
+  [10,{lean:-12,bob:10,chest:-14,fw:[-11,-282],rw:[5,-319],rootX:-10}],
+  [24,{lean:-14,bob:13,chest:-16,fw:[-16,-287],rw:[4,-322],rootX:-14},'hold'],
+  [29,{lean:26,chest:15,head:-18,fw:[184,-278],rw:[-22,-306],fa:[141,-16],ra:[-130,-16],rootX:27},'strike'],
+  [35,{lean:29,chest:18,fw:[176,-271],rw:[-36,-303],rootX:39}],
+  [46,{lean:5,chest:-4,fw:[104,-287],rw:[7,-319],rootX:29}],[58,K('guard',{rootX:15})]
+ ],{kind:'punch',note:'明显蓄力保持 → 很短的释放 → 较长的收势，不能全段匀速插值'});
+ author('luke','rising','升龙拳','→↓↘ + P',65,16,36,[
+  [9,{lean:23,bob:32,fw:[14,-242],rw:[7,-319],chest:14}],
+  [16,K('rise',{fw:[91,-375],rw:[8,-307],lean:1,chest:13,rootY:-12,rootX:23}),'strike'],
+  [25,K('rise',{fw:[70,-410],rw:[-5,-311],lean:-12,chest:-5,rootY:-102,rootX:58})],
+  [36,K('rise',{fw:[80,-383],rw:[4,-312],rootY:-117,rootX:73})],
+  [45,K('chamber',{rootY:-62,rootX:78})],[55,K('low',{bob:24,rootX:80})]
+ ],{kind:'uppercut',note:'拳击压膝 → 短勾拳抬升 → 单拳延展，不复制隆的双肩角度'});
+ // Juri: bent resting leg, off-axis torso, slicing feet.
+ author('juri','saiha','岁破冲','↓↘→ + LK',66,20,34,[
+  [10,K('chamber',{lean:-23,fa:[66,-182],fw:[66,-235],rw:[-78,-272],open:1,head:15})],
+  [20,{lean:-25,head:19,bob:28,fw:[45,-244],rw:[-100,-276],fa:[222,-38],ra:[-85,-16],ffoot:75,open:1,rootX:19},'strike'],
+  [28,{lean:-18,head:12,bob:20,fw:[61,-235],rw:[-94,-281],fa:[192,-53],ra:[-80,-16],ffoot:64,open:1,rootX:22}],
+  [40,K('chamber',{lean:-12,open:1,head:14,rootX:17})],[53,{fa:[68,-110],rootX:7,open:1}]
+ ],{kind:'groundwave',socket:'frontLeg',note:'擦地扫出脚刃，波沿地面走；收回到单腿悬起的站姿'});
+ author('juri','gooh','五黄杀','↓↘→ + HK',77,25,46,[
+  [9,K('chamber',{lean:-23,fw:[43,-236],rw:[-76,-268],open:1})],
+  [18,{lean:-36,head:23,fw:[45,-244],rw:[-99,-299],fa:[101,-374],ra:[-78,-71],ffoot:80,rootY:-19,rootX:13,open:1}],
+  [25,{lean:-13,head:13,fw:[57,-251],rw:[-103,-286],fa:[221,-218],ra:[-86,-114],ffoot:74,rootY:-38,rootX:47,open:1},'strike'],
+  [37,{lean:11,head:6,fw:[77,-261],rw:[-108,-313],fa:[217,-81],ra:[-99,-50],ffoot:65,rootY:-10,rootX:78,open:1}],
+  [49,K('chamber',{rootX:81,open:1,head:15})],[63,{rootX:59,open:1}]
+ ],{kind:'kick',socket:'frontLeg',note:'脚抬过头 → 斧劈下落；背部和头部反向平衡'});
+ author('juri','tensen','天穿轮','→↓↘ + P',80,19,47,[
+  [9,K('chamber',{lean:-25,bob:14,open:1})],
+  [19,{lean:-27,head:17,fa:[108,-376],ra:[-76,-140],fw:[57,-265],rw:[-101,-299],ffoot:82,rootY:-22,rootX:23,open:1},'strike'],
+  [28,{spin:-110,lean:-7,fa:[203,-282],ra:[-79,-212],fw:[54,-275],rw:[-91,-281],rootY:-110,rootX:51,open:1,turn:.7}],
+  [39,{spin:-254,lean:3,fa:[179,-224],ra:[-91,-213],fw:[56,-288],rw:[-84,-290],rootY:-121,rootX:65,open:1}],
+  [48,K('chamber',{spin:-360,rootY:-72,rootX:70,open:1})],
+  [61,K('low',{spin:-360,bob:23,rootX:73,open:1})],[71,{spin:-360,rootX:55,open:1}]
+ ],{kind:'spin',socket:'frontLeg',note:'以腿为刃的腾空轮转，躯干压缩后再展开'});
+ // Mai's motion families intentionally distinguish the SF6 versions.
+ author('mai','kachousen','花蝶扇','↓↘→ + P',62,20,30,[
+  [9,{lean:-16,bob:7,fw:[13,-278],rw:[-68,-284],fan:1,fanAngle:-35,chest:-8}],
+  [16,{lean:-8,fw:[44,-321],rw:[-62,-279],fan:1,fanAngle:-54},'hold'],
+  [20,{lean:17,head:-10,chest:9,fw:[164,-292],rw:[-68,-290],fa:[112,-16],ra:[-123,-16],fan:0,rootX:10},'strike'],
+  [29,{lean:8,fw:[129,-272],rw:[-49,-295],fan:0,rootX:13}],[42,{lean:-1,fw:[79,-289],rw:[-25,-293],fan:.18,rootX:6}],[53,{fan:.75}]
+ ],{kind:'fan',note:'展开扇面蓄势 → 手腕送扇 → 空手收回；扇从手中离开'});
+ author('mai','hishou-ryuuenjin','飞翔龙炎阵','→↓↘ + K',80,22,45,[
+  [9,K('chamber',{bob:26,lean:8,fa:[99,-135],fw:[76,-307],rw:[-42,-288],fan:0})],
+  [16,K('chamber',{bob:12,lean:-9,fa:[107,-257],fan:0,rootY:-4})],
+  [22,{lean:-31,head:16,fw:[63,-280],rw:[-79,-281],fa:[93,-390],ra:[-81,-141],ffoot:77,fan:0,rootY:-37,rootX:22},'strike'],
+  [31,{lean:0,spin:-120,fw:[69,-287],rw:[-60,-302],fa:[142,-320],ra:[-91,-216],fan:0,turn:.65,rootY:-131,rootX:49}],
+  [42,{lean:3,spin:-265,fw:[56,-313],rw:[-52,-297],fa:[116,-191],ra:[-70,-178],fan:0,rootY:-131,rootX:57}],
+  [53,K('chamber',{spin:-360,fan:.1,rootY:-54,rootX:59})],[65,K('low',{spin:-360,bob:21,fan:.4,rootX:62})],[73,{spin:-360,rootX:45}]
+ ],{kind:'uppercut',socket:'frontLeg',note:'膝起 → 火焰上踢 → 后空翻。不是拿扇子打升龙拳'});
+ author('mai','hissatsu-shinobi-bachi','必杀忍蜂','↓↘→ + K',83,31,53,[
+  [9,K('low',{bob:20,fan:0})],
+  [17,{lean:8,spin:-96,fw:[72,-383],rw:[-40,-352],fa:[125,-239],ra:[-86,-252],fan:0,rootY:-21,rootX:11}],
+  [25,{lean:7,spin:-275,fw:[65,-326],rw:[-46,-304],fa:[127,-208],ra:[-110,-181],fan:0,rootY:-28,rootX:42}],
+  [31,K('elbow',{spin:-360,rootY:-28,rootX:75}),'strike'],
+  [45,K('elbow',{spin:-360,lean:43,fa:[148,-73],ra:[-114,-138],rootY:-25,rootX:166})],
+  [56,K('low',{spin:-360,bob:17,fan:.2,rootX:211})],[70,{spin:-360,rootX:176,fan:.7}]
+ ],{kind:'rush',socket:'frontArm',note:'翻身起动 → 收臂露肘 → 水平撞击；不是伸拳冲刺'});
+ author('mai','ryuuenbu','龙炎舞','↓↙← + P',76,20,49,[
+  [9,{lean:-12,fw:[17,-316],rw:[-68,-273],fan:1,fanAngle:-27,turn:.3,chest:-10}],
+  [20,{lean:15,fw:[165,-283],rw:[-91,-279],fan:1,fanAngle:24,turn:.21,chest:12},'strike'],
+  [29,{lean:5,fw:[63,-347],rw:[-108,-267],fan:1,turn:.73,depth:.86}],
+  [39,{lean:12,fw:[-105,-283],rw:[100,-296],fan:1,turn:1,depth:.83,fa:[102,-16],ra:[-118,-16]}],
+  [49,{lean:17,fw:[145,-246],rw:[-91,-315],fan:1,fanAngle:32,turn:.16,chest:11}],
+  [61,{lean:-3,fw:[84,-284],rw:[-26,-294],fan:.77}]
+ ],{kind:'fire',extraHits:[39],note:'地面旋身扫炎，扇沿周身画弧；与上升翻踢分开'});
+ // Canonical IDs are intentionally different from the old game's mislabeled
+ // internal aliases. `meta.legacyMoveBase` records the explicit migration map.
+ author('mai','musasabi-no-mai','鼯鼠之舞','空中 ↓↙← + P',74,20,39,[
+  [1,{lean:-7,fw:[78,-313],rw:[-31,-301],fa:[62,-222],ra:[-71,-209],fan:0,rootY:-142}],
+  [10,{lean:22,head:-13,fw:[18,-304],rw:[-71,-279],fa:[51,-221],ra:[-67,-228],fan:0,rootY:-154,rootX:8}],
+  [20,{lean:65,head:-27,chest:7,fw:[24,-289],rw:[-63,-274],fa:[101,-218],ra:[34,-263],fan:0,rootY:-129,rootX:54},'strike'],
+  [31,{lean:67,head:-28,chest:6,fw:[26,-289],rw:[-69,-275],fa:[113,-213],ra:[42,-265],fan:0,rootY:-62,rootX:126}],
+  [41,K('low',{lean:28,bob:39,fw:[92,-257],rw:[-41,-267],fan:0,rootX:168})],
+  [55,K('guard',{rootX:163,fan:.55})],[64,{rootX:158,fan:.92}]
+ ],{kind:'body-dive',socket:'chest',note:'在空中收腿 → 身体先行斜冲 → 屈膝着地；不是嘉米的伸腿俯踢'});
+ author('mai','kagerou-no-mai','阳炎之舞','↓↘→ ↓↘→ + P',104,33,70,[
+  [11,{lean:-2,bob:25,fw:[11,-265],rw:[-25,-267],fa:[78,-16],ra:[-78,-16],fan:.08}],
+  [24,{lean:-4,bob:7,fw:[41,-350],rw:[-42,-344],fan:.1,open:1},'load'],
+  [33,{lean:-8,head:-11,fw:[59,-403],rw:[-62,-391],fa:[83,-16],ra:[-79,-16],fan:.18,open:1,chest:-8},'strike'],
+  [50,{lean:-9,head:-12,fw:[82,-367],rw:[-90,-354],fan:1,open:1}],
+  [70,{lean:2,fw:[128,-302],rw:[-108,-298],fan:1,turn:.24,open:1}],
+  [86,{lean:-4,fw:[105,-294],rw:[-43,-292],fan:1}]
+ ],{kind:'install',note:'原地结印 → 双臂打开 → 周身火柱。战斗资源由原游戏规则负责'});
+ // Iori remains a visibly labelled crossover study, not an SF6 roster claim.
+ author('iori','yamibarai','暗拂','↓↘→ + P',69,23,35,[
+  [10,{lean:15,bob:24,chest:-12,fw:[-13,-244],rw:[-108,-290],open:1,rootX:-7}],
+  [18,{lean:26,bob:38,fw:[46,-214],rw:[-119,-313],open:1,rootX:4}],
+  [23,{lean:34,bob:42,head:-21,fw:[156,-211],rw:[-114,-306],fa:[136,-16],ra:[-137,-16],open:1,chest:13,rootX:21},'strike'],
+  [35,{lean:23,bob:26,fw:[137,-224],rw:[-86,-292],open:1,rootX:24}],[50,{lean:13,fw:[100,-271],rw:[-69,-216],open:1,rootX:12}]
+ ],{kind:'groundwave',note:'同人客串：后拉火焰 → 低身甩地 → 手爪回收'});
+ author('iori','aoihana','葵花','↓↙← + P',92,20,60,[
+  [10,{lean:18,bob:20,fw:[-21,-242],rw:[-99,-301],open:1,chest:-11}],
+  [20,K('claw',{rootX:28}),'strike'],
+  [30,{lean:16,fw:[35,-347],rw:[-104,-246],open:1,rootX:43}],
+  [40,K('claw',{fw:[163,-226],rootX:68,bob:23}),'strike'],
+  [50,{lean:-8,fw:[83,-377],rw:[-104,-262],open:1,rootX:78,rootY:-12}],
+  [60,K('claw',{fw:[147,-188],lean:41,bob:46,rootX:114}),'strike'],
+  [74,{lean:21,bob:18,fw:[95,-241],rw:[-92,-235],open:1,rootX:103}],[85,{rootX:73}]
+ ],{kind:'claw',extraHits:[40,60],note:'同人客串：横爪 → 反手爪 → 举臂下砸，三次蓄势分开'});
+ author('iori','oniYaki','鬼烧','→↓↘ + P',81,20,49,[
+  [9,{lean:22,bob:31,fw:[25,-234],rw:[-86,-288],open:1,chest:13}],
+  [20,{lean:-18,head:-6,fw:[88,-386],rw:[-103,-301],fa:[75,-160],ra:[-83,-104],open:1,rootY:-29,rootX:27,chest:-12},'strike'],
+  [31,{lean:-10,fw:[-72,-380],rw:[102,-293],fa:[-78,-181],ra:[83,-157],open:1,turn:1,depth:.86,rootY:-116,rootX:55}],
+  [43,{lean:-17,fw:[83,-382],rw:[-100,-298],fa:[79,-173],ra:[-89,-139],open:1,turn:.08,rootY:-126,rootX:66}],
+  [54,K('chamber',{rootY:-61,rootX:74,open:1})],[65,K('low',{bob:22,rootX:77,open:1})],[75,{rootX:58}]
+ ],{kind:'uppercut',note:'同人客串：爪形手掌牵引紫焰，前后身回转而非直拳'});
+ INK.motion={library,catalog,neutral,author,base(id){return{...copy(basePose),...copy(neutral[id]||neutral.ryu),rootX:0,rootY:0};}};
+})();
+
+</script>
+<script>
+/* Authoring UI. No network calls, eval, animation-library or runtime dependency. */
+'use strict';
+(() => {
+ const $=id=>document.getElementById(id),{copy,clamp,mat,Clip,Player,FixedClock,Rig}=INK,{node,assign}=INK.SVG;
+ const profiles=INK.assets.profiles.map(c=>({...c}));SF6Art.configure(profiles,$('artDefs'));
+ const registry={...INK.motion.library},clock=new FixedClock(60,8),stage=$('stage');
+ let selected=profiles.find(c=>c.id==='mai'),active=registry['mai:hishou-ryuuenjin'],player=new Player(active),renderer=null,ghostRenderers=[],playing=false,mode='skin',facing=1,overrides={},undoStack=[],lastPose=null,zoom=1.19,lastFrame=-1,toastTimer=null,loopDelay=0;
+ const rows={},controls={},ghostRoots=[],fxPaths=[],eventLog=[];
+ const trail=node('path',{class:'trail-line'},$('fxLayer'));const contactDot=node('circle',{r:6,fill:'none',stroke:'#d29857','stroke-width':2,opacity:0},$('fxLayer'));
+ const projectile=node('g',{},$('fxLayer'));projectile.innerHTML='<path fill="#9ebeb0" opacity=".28" d="M-40-22Q-15-44 31-20L54 0 31 20Q-15 44-40 22L-17 0Z"/><path fill="#f9ffeb" stroke="#6f9e88" stroke-width="1.5" d="M-18-14Q12-26 32 0Q12 26-18 14L-6 0Z"/>';
+ const tossedFan=node('g',{},$('fxLayer'));tossedFan.innerHTML=SF6Art.fan(selected);
+ for(let i=0;i<2;i++)ghostRoots.push(node('g',{opacity:i?.1:.065},$('ghosts')));
+ const handNames={rw:'后手',fw:'前手',ra:'后脚',fa:'前脚'};
+ for(const key of Object.keys(handNames)){
+  const g=node('g',{'data-handle':key},$('handles')),circle=node('circle',{r:8,class:'ik-handle',tabindex:0,'aria-label':handNames[key]+'控制点'},g),label=node('text',{x:12,y:4,class:'ik-label'},g);label.textContent=handNames[key];controls[key]={g,circle};
+  circle.addEventListener('pointerdown',e=>beginDrag(e,key));
+ }
+ for(const [i,c]of profiles.entries()){
+  const b=document.createElement('button');b.className='roster-item';b.dataset.character=c.id;b.setAttribute('aria-label','选择'+c.cn);const pic=node('svg',{viewBox:'-46 -55 98 105'});pic.innerHTML=INK.assets.head(c);b.append(pic);const names=document.createElement('span');const n=document.createElement('strong');n.textContent=c.name;const cn=document.createElement('small');cn.textContent=c.cn;names.append(n,cn);const num=document.createElement('span');num.className='num';num.textContent=String(i+1).padStart(2,'0');b.append(names,num);$('rosterList').append(b);rows[c.id]=b;b.addEventListener('click',()=>selectCharacter(c.id));
+ }
+ function notify(text){$('toast').textContent=text;$('toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('visible'),3200);}
+ function rebuildActor(){
+  renderer?.destroy();for(const r of ghostRenderers)r.destroy();renderer=new INK.Renderer($('actorRoot'),selected);renderer.setMode(mode);renderer.setStyle(selected.previewStyle||{volume:1,head:1});
+  ghostRenderers=ghostRoots.map(root=>{const r=new INK.Renderer(root,selected);r.setMode('silhouette');r.setStyle(renderer.style);return r;});
+  for(const [id,row]of Object.entries(rows)){row.classList.toggle('selected',id===selected.id);row.setAttribute('aria-pressed',String(id===selected.id));}
+  $('watermark').textContent=selected.name;$('characterTag').textContent=selected.name+' / ANIMATION STUDY';
+  $('volume').value=Math.round(renderer.style.volume*100);$('headSize').value=Math.round(renderer.style.head*100);$('headValue').textContent=$('headSize').value+'%';$('volumeValue').textContent=$('volume').value+'%';
+ }
+ function updateOptions(){const s=$('clipSelect');s.replaceChildren();for(const clip of Object.values(registry).filter(c=>c.data.character===selected.id)){const o=document.createElement('option');o.value=clip.id;o.textContent=clip.data.name||clip.id;s.append(o);}s.value=active.id;}
+ function selectCharacter(id){const c=profiles.find(c=>c.id===id);if(!c)throw Error('Unknown character');selected=c;rebuildActor();const first=Object.values(registry).find(c=>c.data.character===id);selectClip(first.id);}
+ function selectClip(id){const clip=registry[id];if(!clip)throw Error('Unknown clip');if(clip.data.character!==selected.id){selected=profiles.find(c=>c.id===clip.data.character);rebuildActor();}active=clip;player=new Player(active);overrides={};undoStack=[];playing=false;loopDelay=0;clock.reset();updateOptions();updateTimeline();draw(0);updatePlayButton();}
+ function phases(){const d=active.duration,s=clamp(Number(active.data.phases?.startup?.[1]??d*.25),1,d-1),e=clamp(Number(active.data.phases?.active?.[1]??d*.6),s,d);return{s,e,d};}
+ function updateTimeline(){
+  const {s,e,d}=phases();$('clipName').textContent=active.data.name||active.id;$('clipDescription').textContent=active.data.meta?.note||'导入的独立动画数据';$('command').textContent=active.data.command||'自定义编排';
+  $('startupMetric').innerHTML=Math.round(s)+'<small>f</small>';$('activeMetric').innerHTML=Math.round(e-s)+'<small>f</small>';$('recoveryMetric').innerHTML=Math.round(d-e)+'<small>f</small>';
+  $('scrubber').max=d;const tracks=$('phaseTrack');tracks.replaceChildren();for(const[n,v,label]of [['startup',s,'预备'],['active',e-s,'发力 / 命中'],['recovery',d-e,'收势']]){const span=document.createElement('span');span.className='phase-'+n;span.style.width=(v/d*100)+'%';span.textContent=label;tracks.append(span);}
+  $('ruler').replaceChildren();for(let i=0;i<=8;i++){const t=document.createElement('span');t.textContent=String(Math.round(i*d/8)).padStart(2,'0');$('ruler').append(t);}
+  $('eventTrack').replaceChildren();const unique=[...new Set(Object.values(active.tracks).flatMap(keys=>keys.map(k=>k[0])))];for(const f of unique){const dot=document.createElement('i');dot.className='event-key pose-key';dot.style.left=clamp(f/d*100,0,99)+'%';dot.title='姿势帧 '+f;$('eventTrack').append(dot);}
+  for(const event of active.events.filter(e=>e.type==='contact')){const dot=document.createElement('i');dot.className='event-key';dot.style.left=event.frame/d*100+'%';dot.title='命中标记 '+event.frame;$('eventTrack').append(dot);}
+  $('keyCount').textContent=unique.length;$('eventCount').textContent=active.events.length;$('editStatus').textContent=undoStack.length?'已编辑 '+undoStack.length+' 次 · 导出后保存':'原始动作未修改';
+ }
+ function stageMatrix(p){return mat.multiply(mat.compose(458+(p.rootX||0)*zoom,554+(p.rootY||0)*zoom,0,zoom*facing*(p.depth||1),zoom),mat.multiply(mat.compose(p.rootShift||0,(p.floor||0)-180,p.spin||0),mat.compose(0,180)));}
+ function fullPose(p){return Object.assign(p,copy(overrides));}
+ function sample(t){return active.sample(t,INK.motion.base(selected.id));}
+ function socket(p){const rig=Rig.solveAnimation(selected,p),all=Rig.sockets(p,rig),name=active.data.meta?.socket||'frontArm';const target=all[name]||all.frontArm;return mat.point(stageMatrix(p),Array.isArray(target[0])?target[2]:target);}
+ function draw(alpha=0){
+  const p=fullPose(player.sample(alpha)),frame=clamp(player.frame+(player.frozen?0:alpha),0,active.duration),{s,e,d}=phases();lastPose=p;
+  const transform=mat.svg(stageMatrix(p));assign($('actorRoot'),'transform',transform);const impulses=active.events.filter(e=>e.type==='impulse');
+  renderer.render(p,{frame,impulses,secondary:$('secondary').checked,expression:frame>=s&&frame<e?'power':'rest'});
+  const ghost=$('onion').checked;assign($('ghosts'),'visibility',ghost?'visible':'hidden');
+  if(ghost)ghostRenderers.forEach((r,i)=>{const t=clamp(frame+(i?7:-7),0,d),p=sample(t);assign(ghostRoots[i],'transform',mat.svg(stageMatrix(p)));r.render(p,{frame:t,secondary:false});});
+  assign($('groundShadow'),'cx',458+(p.rootX||0)*zoom);assign($('groundShadow'),'rx',132*clamp(1+(p.rootY||0)/500,.38,1));assign($('groundShadow'),'opacity',clamp(.11+(p.rootY||0)/2000,.025,.11));
+  const showHandles=$('editPose').checked&&!playing;assign($('handles'),'visibility',showHandles?'visible':'hidden');if(showHandles){const sockets=Rig.sockets(p,renderer.lastRig),lookup={rw:sockets.rearArm[2],fw:sockets.frontArm[2],ra:sockets.rearLeg[2],fa:sockets.frontLeg[2]};for(const[k,q]of Object.entries(lookup)){const at=mat.point(stageMatrix(p),q);assign(controls[k].g,'transform',`translate(${at})`);}}
+  const traces=$('showTrail').checked;assign(trail,'visibility',traces?'visible':'hidden');if(traces){const points=[];for(let t=Math.max(0,frame-12);t<=frame;t+=1)points.push(socket(sample(t)));assign(trail,'d',points.length?'M'+points.map(p=>p.join(' ')).join('L'):'');}
+  const recent=active.events.filter(a=>a.type==='contact'&&frame>=a.frame&&frame<a.frame+5).at(-1);if(recent&&traces){const q=socket(sample(recent.frame));assign(contactDot,'cx',q[0]);assign(contactDot,'cy',q[1]);assign(contactDot,'r',4+(frame-recent.frame)*2);assign(contactDot,'opacity',(1-(frame-recent.frame)/5)*.65);}else assign(contactDot,'opacity',0);
+  const kind=active.data.meta?.kind,age=frame-s,isShot=['projectile','groundwave','fan'].includes(kind)&&age>=0&&age<31;assign(projectile,'visibility',isShot&&kind!=='fan'&&traces?'visible':'hidden');assign(tossedFan,'visibility',isShot&&kind==='fan'&&traces?'visible':'hidden');
+  if(isShot&&traces){const q=socket(sample(s)),x=q[0]+(age*13+24)*facing,y=kind==='groundwave'?541:q[1];assign(projectile,'transform',`translate(${x} ${y}) scale(${facing} .67)`);assign(projectile,'opacity',clamp((31-age)/8));assign(tossedFan,'transform',`translate(${x} ${y}) rotate(${age*23}) scale(.6)`);assign(tossedFan,'opacity',clamp((31-age)/8));}
+  $('scrubber').value=player.frame;$('frameBadge').textContent='FRAME '+String(player.frame).padStart(3,'0')+' / '+String(d).padStart(3,'0');$('timeReadout').innerHTML=String(player.frame).padStart(3,'0')+'<span> / '+String(d).padStart(3,'0')+' f</span>';$('phaseLabel').textContent=player.frozen?'命中停顿':player.frame<s?'预备':player.frame<e?'发力':'收势';
+  if(!document.querySelector('.slider-label input:active')){$('chest').value=p.chest||0;$('lean').value=p.lean||0;}$('chestValue').textContent=Math.round(p.chest||0)+'°';$('leanValue').textContent=Math.round(p.lean||0)+'°';
+  $('stageState').textContent=showHandles?'编辑视图 · 拖动四个手脚控制点':player.frozen?'命中停顿 · 模拟与画面同步冻结':playing?'播放 · 固定 60 Hz 事件时间轴':'暂停 · 逐帧检查形体和动作';
+  if(player.frame!==lastFrame||!playing){$('drawStats').textContent=renderer.group.querySelectorAll('*').length+' SVG NODES / '+renderer.stats.cpuMs.toFixed(2)+' ms UPDATE';lastFrame=player.frame;}
+ }
+ function setPlaying(value){playing=value;overrides={};clock.reset();loopDelay=0;if(value&&player.ended)player.seek(0);updatePlayButton();draw(0);}
+ function updatePlayButton(){$('play').textContent=playing?'Ⅱ':'▶';$('play').setAttribute('aria-pressed',String(playing));$('systemStatus').textContent=playing?'RUNNING · FIXED 60 Hz':'READY · LOCAL SVG RUNTIME';}
+ function seek(frame){playing=false;player.seek(frame);overrides={};clock.reset();updatePlayButton();draw(0);}
+ function tick(){if(player.ended){if($('loop').checked){if(++loopDelay>=23){player.play(active);loopDelay=0;}}else setPlaying(false);return;}const events=player.step();for(const e of events){eventLog.push(e);if(eventLog.length>1000)eventLog.shift();if(e.type==='contact')player.freeze(3);}}
+ function frame(now){if(playing){const alpha=clock.advance(now,tick,Number($('speed').value));draw(alpha);}else clock.reset();requestAnimationFrame(frame);}
+ function commitPose(){
+  if(!Object.keys(overrides).length){notify('先暂停并拖动控制点，或调整胸廓与倾角');return false;}
+  undoStack.push(active.toJSON());if(undoStack.length>30)undoStack.shift();const data=active.toJSON(),time=player.frame;
+  for(const[k,v]of Object.entries(overrides)){const keys=data.tracks[k]||[[0,INK.motion.base(selected.id)[k]??0]],index=keys.findIndex(q=>q[0]===time),entry=[time,Array.isArray(v)?v.slice():v,'smooth'];if(index>=0)keys[index]=entry;else keys.push(entry);keys.sort((a,b)=>a[0]-b[0]);data.tracks[k]=keys;}
+  active=registry[active.id]=new Clip(data);player=new Player(active);player.seek(time);overrides={};updateTimeline();draw(0);notify('已写入第 '+time+' 帧 · 请导出 JSON 保存');return true;
+ }
+ function undo(){const data=undoStack.pop();if(!data)return notify('没有可撤销的关键帧编辑');const t=player.frame;active=registry[data.id]=new Clip(data);player=new Player(active);player.seek(t);overrides={};updateTimeline();draw(0);notify('已撤销上一次关键帧编辑');}
+ let drag=null;
+ function beginDrag(e,key){if(!$('editPose').checked)return;playing=false;updatePlayButton();drag={key,id:e.pointerId};e.target.setPointerCapture(e.pointerId);e.preventDefault();}
+ stage.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const pt=stage.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const local=pt.matrixTransform($('actorRoot').getScreenCTM().inverse());let q=[local.x,local.y];if(drag.key.endsWith('w'))q=mat.point(mat.inverse(INK.bodyMatrix(lastPose)),q);overrides[drag.key]=q.map(n=>Math.round(clamp(n,-650,650)*10)/10);draw(0);$('editStatus').textContent='未写入 · '+handNames[drag.key]+'目标 '+overrides[drag.key].join(', ');});
+ const endDrag=()=>{drag=null};stage.addEventListener('pointerup',endDrag);stage.addEventListener('pointercancel',endDrag);stage.addEventListener('lostpointercapture',endDrag);
+ function download(name,text,mime){const blob=new Blob([text],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+ function importClip(data){
+  INK.validateClip(data);const c=profiles.find(p=>p.id===data.character);if(!c)throw Error('动作必须指定八个已支持角色之一');const clip=new Clip(data);registry[clip.id]=clip;if(selected.id!==c.id){selected=c;rebuildActor();}selectClip(clip.id);notify('已导入 '+(clip.data.name||clip.id));return clip;
+ }
+
+ // Character profiles are separate from motions. Import only scalar/vector data;
+ // SVG markup, scripts and unknown fields never enter the renderer from JSON.
+ function exportProfile(){
+  const male=!selected.female;
+  return {version:1,kind:'ink-character-profile',character:selected.id,
+   arm:renderer.c.arm.slice(),leg:renderer.c.leg.slice(),headScale:renderer.c.headScale,
+   rigLengths:(selected.rigLengths||[selected.id==='iori'?67:male?68:64,selected.id==='iori'?76:male?71:67,selected.id==='chun'?100:96,98]).slice(),
+   rigRearShoulder:(selected.rigRearShoulder||[-42,-292]).slice(),rigFrontShoulder:(selected.rigFrontShoulder||[42,-290]).slice(),
+   style:{...renderer.style}};
+ }
+ function importProfile(data){
+  if(!data||data.version!==1||data.kind!=='ink-character-profile')throw Error('角色设置版本或类型无效');
+  const target=profiles.find(c=>c.id===data.character);if(!target)throw Error('未知角色');
+  const vector=(key,size,min,max)=>{const v=data[key];if(!Array.isArray(v)||v.length!==size||v.some(n=>!Number.isFinite(n)||n<min||n>max))throw Error('角色参数 '+key+' 超出允许范围');return v.slice();};
+  const arm=vector('arm',3,2,65),leg=vector('leg',3,2,70),rigLengths=vector('rigLengths',4,15,220),rigRearShoulder=vector('rigRearShoulder',2,-500,150),rigFrontShoulder=vector('rigFrontShoulder',2,-500,150);
+  if(!Number.isFinite(data.headScale)||data.headScale<.5||data.headScale>1.3)throw Error('头部绑定比例超出范围');
+  const style=data.style||{volume:1,head:1};if(!Number.isFinite(style.volume)||style.volume<.75||style.volume>1.3||!Number.isFinite(style.head)||style.head<.8||style.head>1.25)throw Error('预览比例超出范围');
+  // All validation happens before mutating the active profile.
+  Object.assign(target,{arm,leg,rigLengths,rigRearShoulder,rigFrontShoulder,headScale:data.headScale,previewStyle:{volume:style.volume,head:style.head}});
+  if(selected.id!==target.id)selectCharacter(target.id);else{playing=false;rebuildActor();updatePlayButton();draw(0);}
+  notify('已导入 '+target.cn+' 的形体设置 · 动作数据不变');return exportProfile();
+ }
+ $('clipSelect').addEventListener('change',e=>selectClip(e.target.value));$('play').onclick=()=>setPlaying(!playing);$('restart').onclick=()=>seek(0);$('prevFrame').onclick=()=>seek(player.frame-1);$('nextFrame').onclick=()=>seek(player.frame+1);$('scrubber').addEventListener('input',e=>seek(+e.target.value));$('speed').onchange=()=>clock.reset();
+ $('mirror').onclick=()=>{facing*=-1;draw(0);};$('resetView').onclick=()=>{facing=1;zoom=1.19;seek(0);};
+ $('viewModes').addEventListener('click',e=>{const m=e.target.dataset.mode;if(!m)return;setMode(m);});
+ function setMode(m){mode=m;renderer.setMode(m);for(const b of $('viewModes').children){b.classList.toggle('selected',b.dataset.mode===m);b.setAttribute('aria-pressed',String(b.dataset.mode===m));}draw(0);}
+ for(const id of ['onion','showTrail','secondary','editPose'])$(id).addEventListener('change',()=>{if(id==='editPose'&&$(id).checked){playing=false;updatePlayButton();}draw(0);});
+ for(const id of ['volume','headSize'])$(id).addEventListener('input',()=>{const value=+$(id).value;renderer.setStyle(id==='volume'?{volume:value/100}:{head:value/100});selected.previewStyle={...renderer.style};for(const r of ghostRenderers)r.setStyle(renderer.style);$(id==='volume'?'volumeValue':'headValue').textContent=value+'%';draw(0);});
+ for(const id of ['chest','lean'])$(id).addEventListener('input',()=>{playing=false;updatePlayButton();overrides[id]=+$(id).value;draw(0);$('editStatus').textContent='姿势预览已修改 · 写入后保存到动作';});
+ $('commitPose').onclick=commitPose;$('undo').onclick=undo;
+ $('exportClip').onclick=()=>download(active.id.replace(':','-')+'.ink.json',JSON.stringify(active.toJSON(),null,2),'application/json');$('importClip').onclick=()=>$('fileInput').click();
+ $('fileInput').addEventListener('change',async e=>{try{const f=e.target.files[0];if(!f)return;if(f.size>1_000_000)throw Error('JSON 文件不能超过 1 MB');const data=JSON.parse(await f.text());if(data.kind==='ink-character-profile')importProfile(data);else importClip(data);}catch(err){notify('导入失败：'+err.message);}finally{e.target.value='';}});
+ $('exportSVG').onclick=()=>{const svg=node('svg',{xmlns:INK.SVG.NS,viewBox:'0 0 1040 650',width:1040,height:650});const defs=$('artDefs').cloneNode(true),background=node('rect',{width:1040,height:650,fill:'#ede8dc'});svg.append(defs,background,$('actorRoot').cloneNode(true));const style=node('style',{},svg);style.textContent='[data-ink-mode="silhouette"] [data-ink-layer="art"] path:not([fill="none"]),[data-ink-mode="silhouette"] [data-ink-layer="art"] ellipse{fill:#283f3a!important;stroke:#283f3a!important;opacity:1!important}';download(selected.id+'-frame-'+player.frame+'.svg',new XMLSerializer().serializeToString(svg),'image/svg+xml');};
+ $('exportPack').onclick=()=>download(selected.id+'-profile.json',JSON.stringify(exportProfile(),null,2),'application/json');
+ $('helpButton').onclick=()=>$('helpDialog').showModal();$('closeHelp').onclick=()=>$('helpDialog').close();
+ document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)||$('helpDialog').open)return;if(e.code==='Space'){e.preventDefault();setPlaying(!playing);}if(e.code==='ArrowLeft'){e.preventDefault();seek(player.frame-1);}if(e.code==='ArrowRight'){e.preventDefault();seek(player.frame+1);}if((e.ctrlKey||e.metaKey)&&e.key==='z'){e.preventDefault();undo();}});
+ document.addEventListener('visibilitychange',()=>clock.reset());
+ window.INKStudio={get active(){return active},get player(){return player},get renderer(){return renderer},get character(){return selected},get pose(){return lastPose},get playing(){return playing},get events(){return eventLog.slice()},registry,selectCharacter,selectClip,seek,setPlaying,tick,draw,setMode,commitPose,undo,importClip,importProfile,exportProfile,override(p){overrides=copy(p);draw(0);},snapshot(){return player.snapshot();},benchmark(n=240){const samples=[];playing=false;for(let i=0;i<n;i++){const p=sample(i%active.duration);samples.push(renderer.render(p,{frame:i}).cpuMs);}samples.sort((a,b)=>a-b);draw(0);return{n,median:samples[Math.floor(n*.5)],p95:samples[Math.floor(n*.95)],max:samples.at(-1),nodes:renderer.group.querySelectorAll('*').length};}};
+ rebuildActor();selectClip('mai:hishou-ryuuenjin');requestAnimationFrame(frame);
+})();
+
+</script>
+</body></html>

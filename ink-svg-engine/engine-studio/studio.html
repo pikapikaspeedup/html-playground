@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>INK / SVG 格斗动画工作台</title>
+<!--STYLE-->
+</head><body>
+<header class="topbar"><a class="brand" href="#"><span class="mark">i<span>n</span>k.</span><span class="brand-desc">VECTOR FIGHTING<br><strong>ANIMATION SYSTEM</strong></span></a><div class="header-center"><span class="status-dot"></span> SVG RUNTIME <span class="build">0.1 / RESEARCH BUILD</span></div><button id="helpButton" class="quiet">使用说明 <span>?</span></button></header>
+<div class="workspace">
+<aside class="roster"><div class="section-eyebrow">01 / CHARACTER ASSETS</div><h2>角色库<span>08</span></h2><div id="rosterList"></div><div class="roster-footer"><span class="status-dot"></span> 纯 SVG · 离线运行<br><small>角色轮廓、骨骼与动作独立编辑。<br>非官方同人研究原型。</small></div></aside>
+<main>
+<div class="main-heading"><div><div class="section-eyebrow" id="characterTag">MAI / ANIMATION STUDY</div><h1 id="clipName">飞翔龙炎阵</h1><p id="clipDescription"></p></div><div class="heading-tools"><button id="mirror" title="镜像角色">⇄ <span>换边</span></button><button id="resetView" title="重置镜头">⌖ <span>复位</span></button></div></div>
+<div class="stage-shell"><div class="stage-topline"><div class="segmented" id="viewModes"><button data-mode="skin" class="selected">轮廓</button><button data-mode="overlay">骨骼叠加</button><button data-mode="silhouette">剪影</button><button data-mode="rig">骨架</button></div><span class="canvas-label">SVG / RETAINED SCENE</span></div>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 650" role="img" aria-label="可编辑的 SVG 格斗角色与动作舞台">
+<defs id="artDefs"><pattern id="smallGrid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#3f5962" stroke-width=".55" opacity=".07"/></pattern><linearGradient id="floorWash" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ddd8ca"/><stop offset="1" stop-color="#eee9df"/></linearGradient></defs>
+<rect width="1040" height="650" fill="#ede8dc"/><rect width="1040" height="650" fill="url(#smallGrid)"/>
+<text x="34" y="98" class="watermark" id="watermark">MAI</text><text x="36" y="124" class="stage-meta">BODY / SILHOUETTE / TIMING</text>
+<path d="M0 554H1040V650H0Z" fill="url(#floorWash)"/><path d="M0 554H1040" stroke="#888e89" opacity=".35"/><path d="M520 545v18M511 554h18" stroke="#667f78" opacity=".45"/>
+<ellipse id="groundShadow" cx="510" cy="554" rx="132" ry="12" fill="#435451" opacity=".11"/>
+<g id="ghosts" pointer-events="none"></g><g id="actorRoot"></g><g id="fxLayer" pointer-events="none"></g><g id="handles"></g>
+<g transform="translate(34 602)"><circle r="3" fill="#3b7970"/><text x="13" y="4" class="stage-meta" id="stageState">编辑视图 · 可拖动手腕与脚踝</text></g>
+<text x="1002" y="612" text-anchor="end" class="stage-meta" id="drawStats">60 Hz SIM / SVG</text>
+</svg>
+<div class="stage-bottomline"><label><input type="checkbox" id="onion"> 前后帧</label><label><input type="checkbox" id="showTrail" checked> 动作轨迹</label><label><input type="checkbox" id="secondary" checked> 衣发跟随</label><label><input type="checkbox" id="editPose"> 拖动骨骼</label><span id="frameBadge">FRAME 000 / 080</span></div></div>
+<section class="timeline-panel"><div class="transport"><div class="transport-left"><button id="restart" aria-label="回到首帧">↤</button><button id="prevFrame" aria-label="上一帧">‹</button><button id="play" class="play" aria-label="播放或暂停">▶</button><button id="nextFrame" aria-label="下一帧">›</button><label class="speed">速度 <select id="speed"><option value=".25">0.25×</option><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><label><input type="checkbox" id="loop" checked> 循环</label></div><div class="transport-right"><span id="phaseLabel">预备</span><strong id="timeReadout">000<span> / 080 f</span></strong></div></div>
+<div class="scrubber-area"><div class="ruler" id="ruler"></div><input type="range" id="scrubber" min="0" max="80" value="0" step="1" aria-label="动作时间轴"><div id="phaseTrack" class="phase-track"></div><div id="eventTrack" class="event-track"></div></div>
+<div class="timeline-footer"><span><i class="key-dot"></i> <b id="keyCount">0</b> 个关键点 <span class="muted">/</span> <b id="eventCount">0</b> 个事件</span><span>暂停后拖动 → <kbd>写入关键帧</kbd> → 导出 JSON</span></div></section>
+</main>
+<aside class="inspector"><div class="section-eyebrow">02 / MOTION LIBRARY</div><h2>动作编排</h2><select id="clipSelect" aria-label="选择招式"></select><div class="command" id="command"></div><div class="metric-grid"><div><span>预备</span><strong id="startupMetric">22<small>f</small></strong></div><div><span>发力段</span><strong id="activeMetric">23<small>f</small></strong></div><div><span>收势</span><strong id="recoveryMetric">35<small>f</small></strong></div></div><p class="tiny-note">这里是动作编排时长，不是官方招式帧数。试玩版仍使用原游戏判定。</p>
+<div class="inspector-divider"></div><div class="section-eyebrow">03 / DEFORMATION</div><h2>形体与姿势</h2>
+<label class="slider-label">头部比例 <output id="headValue">100%</output><input type="range" id="headSize" min="80" max="125" value="100"></label>
+<label class="slider-label">肢体体积 <output id="volumeValue">100%</output><input type="range" id="volume" min="75" max="130" value="100"></label>
+<label class="slider-label">胸廓扭转 <output id="chestValue">0°</output><input type="range" id="chest" min="-20" max="20" value="0"></label>
+<label class="slider-label">身体倾角 <output id="leanValue">0°</output><input type="range" id="lean" min="-55" max="55" value="0"></label>
+<div class="edit-actions"><button id="commitPose" class="primary">＋ 写入关键帧</button><button id="undo" title="撤销上一次关键帧编辑" aria-label="撤销">↶</button></div><div id="editStatus" class="tiny-note">原始动作未修改</div>
+<div class="inspector-divider"></div><div class="section-eyebrow">04 / PORTABLE DATA</div><div class="export-actions"><button id="exportClip">↓ 动作 JSON</button><button id="importClip">↑ 导入 JSON</button><button id="exportSVG">↓ 当前 SVG</button><button id="exportPack">↓ 角色设置</button></div><input id="fileInput" type="file" accept=".json,application/json" hidden>
+<div class="architecture-note"><span>RIG → POSE → SKIN → SVG</span><p>同一姿势驱动骨骼、轮廓与挂点。事件只在模拟步触发，拖动时间轴不会重复触发攻击。</p></div></aside>
+</div>
+<footer class="app-footer"><span>INK ENGINE <b>0.1</b> <i>/</i> 八角色动画系统研究</span><span id="systemStatus">READY · LOCAL SVG RUNTIME</span><span><kbd>Space</kbd> 播放 <kbd>←</kbd><kbd>→</kbd> 逐帧</span></footer>
+<div class="toast" id="toast" role="status"></div>
+<dialog id="helpDialog"><button id="closeHelp" class="dialog-close">×</button><div class="section-eyebrow">INK / QUICK START</div><h2>先看轮廓，再看动作。</h2><p>选择角色与招式，按空格播放。切换「剪影」检查招式能否只凭姿态辨认；「骨骼叠加」会显示参与变形的骨架。</p><p>暂停，开启「拖动骨骼」，拖动四个手腕／脚踝控制点。调整胸廓与倾角，点击「写入关键帧」，再用「动作 JSON」保存。重新导入即可恢复；「角色设置」另外保存头部、肢体粗细、骨长与挂点配置，也能用「导入 JSON」载入。文件不会自动写回 GitHub。</p><p>「前后帧」叠加临近姿势。「当前 SVG」导出的是这个时刻的矢量画面，不是视频。播放状态和命中停顿只影响预览，编辑器不计算战斗伤害。</p><p class="tiny-note">这是动画系统原型，不是官方 3D 模型。服装与发型沿用仓库矢量素材并重新绑定，尚未为每个极端视角手绘替换图。八神庵为同人客串。</p></dialog>
+<!--SCRIPTS-->
+</body></html>
