@@ -998,6 +998,7 @@ function install(A){
  $('showcase-btn').addEventListener('click',fill);$('select-showcase').addEventListener('click',fill);
  $('lab-play').addEventListener('click',()=>{const f=api.fighters[0];if(f?.ch.id==='mai'&&f.attack?.m.base==='kachosen'&&$('atelier-hold').checked)api.press(0,'HP');});
  fill();
+ if(new URLSearchParams(window.location.search).get('view')==='motion')requestAnimationFrame(()=>$('#select-showcase')?.click());
 }
 function replay(n,freeze){
  if(!api||!root)return;const ch=$('lab-char').value,id=$('lab-move').value;

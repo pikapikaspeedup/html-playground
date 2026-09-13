@@ -8,6 +8,8 @@ REPO = ROOT.parent
 def read(rel: str) -> str:
     p = ROOT / rel
     if not p.exists():
+        p = REPO / 'street-fighter-6' / rel
+    if not p.exists():
         p = REPO / rel
     return p.read_text(encoding='utf-8')
 
