@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f2e9"><meta name="description" content="一只蓝杯，一张订单。一个火柴人在同一间工作室里，教机器预测、检查证据，再把事情做好。原创单镜头 SVG 动画。">
+<title>学会，还是猜对？ · 一只杯子的 AI 实验</title>
+<style>
+:root{--paper:#f5f2e9;--ink:#283b3d;--mute:#87948c;--teal:#177e82;--red:#ce614a;--gold:#d7a538;--font:"Noto Sans CJK SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;color-scheme:light}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--paper);font-family:var(--font);color:var(--ink)}button,input,select{font:inherit}button{cursor:pointer;color:inherit;border:0;background:none;touch-action:manipulation}button:hover{color:var(--teal)}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--teal);outline-offset:5px}button svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}[hidden]{display:none!important}#film{position:relative;height:100dvh;width:100%;overflow:hidden;background:var(--paper)}#screen{position:absolute;inset:0;width:100%;height:100%;touch-action:manipulation}#screen text{font-family:var(--font);user-select:none}#screen .mono{font-family:ui-monospace,"SFMono-Regular",Consolas,monospace}.mast{position:absolute;left:32px;right:32px;top:25px;display:flex;align-items:center;justify-content:space-between;z-index:4;transition:opacity .4s;pointer-events:none}.brand{display:flex;gap:12px;align-items:center;font:650 10px/1.3 system-ui,sans-serif;letter-spacing:2px}.brand-mark{display:grid;place-items:center;width:29px;height:31px;border:1.5px solid var(--ink);transform:rotate(-5deg);font-size:15px;letter-spacing:0;border-radius:3px 3px 10px 10px}.brand small{display:block;margin-top:5px;color:#8b948c;font:8px/1.5 system-ui;letter-spacing:2px}.mast aside{display:flex;align-items:center;gap:15px;pointer-events:auto;font:9px system-ui;letter-spacing:2px;color:#7f8d85}.mast aside .dot{width:5px;height:5px;background:var(--red);border-radius:50%;display:inline-block;margin-right:7px}.round-btn{border:1px solid #9da89d44;border-radius:50%;width:31px;height:31px;display:grid;place-items:center}.round-btn svg{width:15px;height:15px}
+.cover{position:absolute;left:7vw;top:24%;width:48vw;z-index:5;pointer-events:none;transition:opacity .65s,transform .65s}.cover .eyebrow{font:10px system-ui;letter-spacing:4px;color:var(--teal);margin:0 0 24px}.cover h1{font-size:clamp(38px,5.1vw,79px);font-weight:850;line-height:1.18;letter-spacing:-3px;margin:0}.cover h1 em{font-style:normal;color:var(--teal)}.cover .premise{font-size:13px;line-height:1.8;color:#6e7d73;letter-spacing:1px;margin:24px 0}.start{pointer-events:auto;display:flex;align-items:center;gap:16px;padding:0;margin-top:24px;font-size:12px;letter-spacing:2px}.start .circle{display:grid;place-items:center;border-radius:50%;width:52px;height:52px;background:var(--ink);color:var(--paper);transition:background .2s,transform .2s}.start:hover .circle{background:var(--teal);transform:scale(1.08)}.start svg{width:17px;fill:currentColor;stroke:0;margin-left:3px}.runtime{display:block;font:10px ui-monospace,monospace;letter-spacing:1px;color:#98a194;margin-top:26px}.started .cover{opacity:0;transform:translateY(-15px);pointer-events:none}.started .cover *{pointer-events:none}.portrait-tip{display:none}
+.controls{position:absolute;left:32px;right:32px;bottom:max(19px,env(safe-area-inset-bottom));z-index:6;transition:opacity .4s}.track{position:relative;height:20px;display:flex;align-items:center}.track:before{position:absolute;content:"";left:0;right:0;height:2px;background:#62745c24;border-radius:3px}.track .fill{position:absolute;left:0;height:2px;background:var(--teal);width:0;pointer-events:none}.track input{position:absolute;margin:0;left:0;top:0;width:100%;height:20px;appearance:none;background:transparent;cursor:pointer}.track input::-webkit-slider-runnable-track{height:2px;background:transparent}.track input::-webkit-slider-thumb{appearance:none;width:9px;height:9px;border-radius:50%;background:var(--ink);margin-top:-3.5px;opacity:0}.track:hover input::-webkit-slider-thumb,.track input:focus-visible::-webkit-slider-thumb{opacity:1}.track input::-moz-range-track{height:2px;background:transparent}.track input::-moz-range-thumb{width:8px;height:8px;border:0;background:var(--ink);border-radius:50%}.ticks{position:absolute;inset:0;pointer-events:none}.ticks i{position:absolute;top:8px;width:2px;height:4px;background:var(--paper)}.scrub-tip{position:absolute;bottom:26px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:7px 10px;font-size:10px;border-radius:4px;pointer-events:none;white-space:nowrap;opacity:0}.track:hover .scrub-tip{opacity:1}.bar{display:flex;align-items:center;height:41px;gap:15px}.bar button{padding:8px}.bar select{border:0;background:none;padding:7px 3px;font:11px ui-monospace,monospace;color:#6a7a70;cursor:pointer}.time{font:10px ui-monospace,monospace;min-width:112px;letter-spacing:.5px;font-variant-numeric:tabular-nums;color:#718077}.scene-name{font-size:10px;letter-spacing:1px;color:#7b8b7e}.spacer{flex:1}.bar [aria-pressed=true]{color:var(--teal)}.sound .cross{display:none}.sound[aria-pressed=false] .cross{display:block}.idle .mast,.idle .controls,.focus .mast,.focus .controls{opacity:0;pointer-events:none}.idle .controls:focus-within,.idle .mast:focus-within,.focus .controls:focus-within{opacity:1;pointer-events:auto}.focus-exit{position:absolute;top:25px;right:32px;border:1px solid #a1ab9d55;background:#f5f2e9dd;padding:8px 12px;border-radius:18px;z-index:7;display:none;font-size:10px}.focus .focus-exit{display:block}.idle .focus-exit{opacity:0;pointer-events:none}#caption{position:absolute;left:50%;transform:translateX(-50%);bottom:119px;max-width:min(88vw,850px);width:max-content;text-align:center;font-size:clamp(11px,1.05vw,15px);line-height:1.8;padding:4px 14px;border-radius:4px;color:#465c52;background:#f5f2e9ee;pointer-events:none;z-index:3}.no-cc #caption{display:none}.focus #caption,.idle #caption{bottom:40px}.toast{position:absolute;top:86px;left:50%;transform:translateX(-50%);z-index:20;padding:8px 15px;border-radius:5px;background:#283b3deb;color:var(--paper);font-size:11px;opacity:0;pointer-events:none;transition:opacity .2s}.toast.show{opacity:1}.finish{position:absolute;left:50%;top:24%;transform:translateX(-50%);text-align:center;z-index:5;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .6s;width:90%}.ended .finish{opacity:1;visibility:visible}.finish h2{margin:0;font-size:clamp(24px,3.5vw,49px);letter-spacing:-1.5px;line-height:1.5}.finish p{font-size:12px;line-height:1.9;color:#7d8b7f}.finish button{pointer-events:auto;border-bottom:1px solid #a0afa1;font-size:11px;padding:8px 0;margin-top:10px}.drawer{position:fixed;inset:0;z-index:30;background:#283b3d44;backdrop-filter:blur(5px);display:flex;justify-content:flex-end}.drawer article{width:min(540px,100vw);height:100%;overflow:auto;background:var(--paper);padding:34px 32px 50px;box-shadow:-10px 0 70px #283b3d18}.drawer header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.drawer h2{font-size:22px;margin:0;letter-spacing:-.5px}.drawer p{font-size:12px;line-height:1.95;color:#718074}.drawer h3{font-size:13px;margin:26px 0 10px}.drawer a{color:var(--teal);text-underline-offset:3px}.index button{width:100%;display:flex;gap:16px;text-align:left;align-items:center;padding:13px 0;border-bottom:1px solid #a8b1a439}.index b{font:10px monospace;color:var(--teal);white-space:nowrap}.index span{font-size:12px}.index small{display:block;margin-top:5px;line-height:1.7;font-size:10px;color:#8d9789}.fine{border-top:1px solid #a8b1a444;margin-top:24px;padding-top:1px}.ref{font-size:11px;line-height:1.85;margin:8px 0}.lab{border:1px solid #a8b1a444;border-radius:8px;padding:16px;margin-top:20px}.lab-controls{display:flex;gap:9px;flex-wrap:wrap}.lab button{font-size:10px;padding:7px 11px;border:1px solid #a7b2a552;border-radius:20px}.lab button.active{background:var(--ink);border-color:var(--ink);color:var(--paper)}#labSvg{width:100%;height:150px;display:block}.keyline{font:10px/2 monospace;color:#96a18f;margin-top:25px}
+@media(max-width:720px){.mast{left:20px;right:20px;top:20px}.brand{font-size:8px;letter-spacing:1.5px}.brand small{font-size:7px;letter-spacing:1.5px}.mast aside>span{display:none}.controls{left:18px;right:18px;bottom:14px}.bar{gap:7px}.scene-name{display:none}.cover{left:25px;top:24%;width:90vw}.cover h1{font-size:clamp(40px,8.5vw,60px);letter-spacing:-2px}.cover .eyebrow{font-size:8px;letter-spacing:3px}.cover .premise{font-size:11px;margin-top:18px}.runtime{font-size:9px}.portrait-tip{display:block;position:absolute;right:22px;top:82px;font-size:9px;color:#929d8e;z-index:3}.started .portrait-tip{display:none}#caption{bottom:105px;font-size:12px}.drawer article{padding:24px 23px 40px}}
+@media(max-width:520px){.bar{position:relative;gap:1px}.bar button{width:41px;height:44px;flex:0 0 41px;display:grid;place-items:center;padding:10px}.bar button svg{width:18px;height:18px}.bar .time{position:absolute;right:0;top:-37px;min-width:0;font-size:9px}.bar select{width:52px;flex:0 0 52px;padding:6px 2px}.bar #focusBtn{display:none}.track{margin-bottom:6px}.focus-exit{right:20px;top:20px}#caption{bottom:115px}}
+@media(max-height:540px){.mast{top:13px}.controls{bottom:8px}.cover{top:21%;left:30px}.cover h1{font-size:41px}.cover .eyebrow{font-size:8px;margin-bottom:11px}.cover .premise{font-size:10px;margin:12px 0}.cover .runtime{display:none}.start{margin-top:12px}.start .circle{width:36px;height:36px}.bar{height:32px}#caption{bottom:85px;font-size:11px}.portrait-tip{display:none}}
+@media(prefers-reduced-motion:reduce){.cover,.mast,.controls,.finish{transition:none}}
+</style></head>
+<body><main id="film" class="no-cc"><svg id="screen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="一只杯子的 AI 实验。一个火柴人在工作室训练分类器，发现颜色捷径，再用语言模型、外部证据与工具完成包装。"><defs>
+<pattern id="grain" width="47" height="41" patternUnits="userSpaceOnUse"><circle cx="5" cy="9" r=".55" fill="#a6ad9840"/><circle cx="32" cy="29" r=".45" fill="#a6ad9830"/></pattern>
+<pattern id="hatch" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><path d="M0 0V11" fill="none" stroke="#aab4a145" stroke-width="1.1"/></pattern>
+<linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eaf0e6"/><stop offset="1" stop-color="#dde7dd"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#ddb149" stop-opacity=".23"/><stop offset="1" stop-color="#ddb149" stop-opacity="0"/></radialGradient>
+<clipPath id="visionGlass"><rect x="534" y="453" width="330" height="145" rx="8"/></clipPath>
+<clipPath id="languageGlass"><rect x="1416" y="450" width="298" height="155" rx="8"/></clipPath>
+<clipPath id="shippingClip"><rect x="-2000" y="-2000" width="4767" height="6000"/></clipPath>
+<clipPath id="stickerFeed"><rect x="1750" y="548" width="140" height="125"/></clipPath>
+<clipPath id="printerPaper"><rect x="1730" y="400" width="210" height="270"/></clipPath>
+<marker id="tip" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0 0L6 3.5 0 7" fill="none" stroke="#177e82" stroke-width="1.4"/></marker>
+</defs><rect id="bg" width="1600" height="1000" fill="#f5f2e9"/><rect id="texture" width="1600" height="1000" fill="url(#grain)"/><g id="world"><g id="setBack"></g><g id="machineBack"></g><g id="objectsBack"></g><g id="human"></g><g id="objectsFront"></g><g id="fx"></g></g></svg>
+<header class="mast"><div class="brand"><div class="brand-mark">∿</div><div>STICKMAN / AI<small>LEARNING IS NOT GUESSING</small></div></div><aside><span><i class="dot"></i>ONE ROOM · ONE SHOT</span><button class="round-btn" id="infoBtn" title="镜头索引与小实验" aria-label="打开镜头索引与原理说明"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 10V16M12 7V7.5"/></svg></button></aside></header>
+<button class="focus-exit" id="focusExit">显示界面 ↗</button>
+<div class="cover" id="cover"><p class="eyebrow">A SMALL JOB. A BIG QUESTION.</p><h1>学会，<br>还是<em>猜对？</em></h1><p class="premise">把一只蓝杯，完整地寄出去。<br>听起来，应该不难。</p><button class="start" id="startBtn"><span class="circle"><svg viewBox="0 0 24 24"><path d="M5 3L22 12L5 21Z"/></svg></span>让它试试</button><span class="runtime">06:00 / SVG 动画 / 开启声音</span></div>
+<span class="portrait-tip">建议横屏 ↻</span><div id="caption" aria-live="off"></div><div id="toast" class="toast" role="status"></div>
+<div class="finish" id="finish"><h2>不是看起来会。<br>是经得起检验。</h2><p>一只杯子的 AI 实验 · 完</p><button id="replayEnd">重新开工 ↗</button></div>
+<div class="controls"><div class="track" id="track"><div class="fill" id="fill"></div><div class="ticks" id="ticks"></div><input id="seek" type="range" min="0" max="360" step="0.04" value="0" aria-label="动画进度"><div class="scrub-tip" id="scrubTip"></div></div><div class="bar">
+<button id="playBtn" title="播放 / 暂停（空格）" aria-label="播放"><svg id="playIcon" viewBox="0 0 24 24"><path d="M7 4L20 12L7 20Z"/></svg></button><button id="restartBtn" title="重播（R）" aria-label="从头播放"><svg viewBox="0 0 24 24"><path d="M4 9A8 8 0 1 1 5 18M4 3V9H10"/></svg></button><span class="time" id="time">00:00 / 06:00</span><span id="sceneName" class="scene-name">一只蓝杯</span><span class="spacer"></span><select id="speed" aria-label="播放速度"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select><button id="soundBtn" class="sound" aria-pressed="true" aria-label="关闭声音" title="声音（M）"><svg viewBox="0 0 24 24"><path d="M10 5L5 9H2V15H5L10 19ZM14 8Q19 12 14 16M17 5Q25 12 17 19"/><path class="cross" d="M3 3L21 21"/></svg></button><button id="captionBtn" aria-pressed="false" aria-label="打开精简字幕" title="精简字幕（C）"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M10 9H7V15H10M18 9H15V15H18"/></svg></button><button id="focusBtn" aria-pressed="false" aria-label="专注模式" title="专注模式（H）"><svg viewBox="0 0 24 24"><path d="M8 3H3V8M16 3H21V8M3 16V21H8M21 16V21H16"/></svg></button><button id="fullBtn" aria-label="全屏" title="全屏（F）"><svg viewBox="0 0 24 24"><path d="M9 3H3V9M15 3H21V9M3 15V21H9M21 15V21H15M3 3L8 8M21 3L16 8M3 21L8 16M21 21L16 16"/></svg></button>
+</div></div></main>
+<div class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><article><header><h2 id="drawerTitle">把结果放到现实里</h2><button id="closeDrawer" aria-label="关闭"><svg viewBox="0 0 24 24"><path d="M5 5L19 19M19 5L5 19"/></svg></button></header><p>同一只杯子，同一张订单，同一间工作室。下面的索引可以跳转；说明不会出现在正片里。</p><div class="index" id="chapters"></div>
+<section class="lab"><h3 style="margin-top:0">换个颜色，预测还成立吗？</h3><p>与片中同一组真实小网络权重。在未见组合上检查，而不是只看训练成绩。</p><div class="lab-controls" id="labModel"><button data-model="biased" class="active">有偏样本后</button><button data-model="balanced">补充反例后</button></div><svg id="labSvg" viewBox="0 0 450 150" aria-label="本地运行的小型分类器"></svg><div class="lab-controls" id="labObject"><button data-kind="blueCup" class="active">蓝杯</button><button data-kind="redCan">红罐</button><button data-kind="heldout">未训练的黄杯</button><button data-kind="unknown">未知形状</button></div></section>
+<div class="fine"><h3>哪些是真计算？</h3><p>分类器是浏览器本地训练的 2→3→1 tanh / sigmoid 小网络，使用二元交叉熵与反向传播。线条粗细、激活、误差与预测读取实际数值。输入的「颜色 / 把手」是为了说明原理而人为提取的两个特征，不是完整的视觉模型；真实视觉系统通常从像素或图像块学习更多层表示。未知形状只是在这个玩具网络里触发低置信度，真实模型不一定会识别自己不知道。<a href="#ref01">[01]</a> <a href="#ref02">[02]</a></p><p>注意力使用示意 Q/K/V 向量进行实际点积、因果掩码、softmax 与加权混合；结果中的方向分量控制示意的左右放置。向量是人为构造的教学例子，不是从真实语言模型提取的权重。词块为讲故事的示意切分，不对应特定分词器。语言输出是编排好的概率示例，不是正在运行的大语言模型；注意力也不等于可验证的完整推理过程。语言模型已预训练，绝不是前面几个杯子的样本训练出来的。<a href="#ref03">[03]</a> <a href="#ref04">[04]</a></p><p>检索是本地小资料库的词项匹配；工具的重量计算真实执行。RAG 把证据放进上下文，不会在这次调用里改权重；它也不保证证据本身正确。微调属于额外的参数训练，不是换提示词。工具结果进入上下文，形成行动—观察循环；执行权限是系统设计，不是模型的善意。<a href="#ref05">[05]</a> <a href="#ref06">[06]</a> <a href="#ref09">[09]</a></p><p>扩散段用一个有限图案分布的解析去噪器，从固定种子的高斯噪声逐步采样，呈现两种可能结果；不是神经网络文生图，也不是把一幅成品加模糊再倒放。真实条件扩散通常使用训练得到的去噪网络。这里输出的是纸上图像，不是凭空制造实体。<a href="#ref07">[07]</a> <a href="#ref08">[08]</a></p><p>本片聚焦能迁移到实际使用的关键区别：训练与测试、相关性与目标、上下文与参数、生成与证据、建议与执行。不同模型通过一个工作流协作；并非所有 AI 都必须包含片中所有模块。箱子的承重、订单和手册均为虚构道具。</p><h3>原始资料</h3><div id="references"></div><h3>制作说明</h3><p>画面、骨架、动作、连续镜头和声音均由单文件程序生成。画面只使用 SVG；无联网请求、无外部脚本、无追踪。只有一位人类火柴人，机器以模型窗口、扫描器和执行器出现，不被拟人化成一个无所不知的同伴。</p><div class="keyline">SPACE 播放 · ← / → 退进 5 秒 · R 重播<br>C 字幕 · M 声音 · F 全屏 · H 显示界面<br>拖动进度不会改变实验结果 · 所有帧由时间确定</div></div></article></div>
+<script>
+'use strict';
+/*
+  ONE CUP / A continuous SVG film.
+  Architecture: numeric experiments → articulated rig → deterministic tracks →
+  persistent set → choreography → sound → accessible player.
+  No remote resources. No raster artwork. No real LLM is implied.
+*/
+const $=id=>document.getElementById(id);
+const C={paper:'#f5f2e9',ink:'#283b3d',back:'#7b8880',line:'#a6b29f',light:'#dce3d5',mute:'#829382',teal:'#177e82',tealLight:'#c5dfd8',blue:'#4a9fac',red:'#ce614a',redLight:'#edd6c7',gold:'#d7a538',cream:'#ece3cd',white:'#fffdf6'};
+const PI=Math.PI,TAU=PI*2,DURATION=360,FLOOR=800,HS=1.4;
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),mix=(a,b,t)=>a+(b-a)*t,fract=x=>x-Math.floor(x),ss=x=>{x=clamp(x);return x*x*(3-2*x)},smoother=x=>{x=clamp(x);return x*x*x*(x*(x*6-15)+10)},out=x=>1-(1-clamp(x))**3,p=(t,a,b)=>clamp((t-a)/(b-a)),f=x=>Number.isFinite(x)?(+x.toFixed(3)):0;
+const rnd=n=>fract(Math.sin(n*127.13+78.23)*43758.5453),esc=s=>String(s).replace(/[&<>"']/g,a=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[a]));
+const G=(s,tr='',op=1,extra='')=>op<=.00001?'':`<g ${tr?`transform="${tr}"`:''} ${op<.99999?`opacity="${f(op)}"`:''} ${extra}>${s}</g>`;
+const L=(x1,y1,x2,y2,c=C.ink,w=2,extra='')=>`<path d="M${f(x1)} ${f(y1)}L${f(x2)} ${f(y2)}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" ${extra}/>`;
+const P=(d,c=C.ink,w=2,fill='none',extra='')=>`<path d="${d}" fill="${fill}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+const R=(x,y,w,h,fill=C.paper,c=C.line,sw=1.8,r=4,extra='')=>`<rect x="${f(x)}" y="${f(y)}" width="${f(Math.max(0,w))}" height="${f(Math.max(0,h))}" rx="${r}" fill="${fill}" stroke="${c}" stroke-width="${sw}" ${extra}/>`;
+const O=(x,y,r,fill='none',c=C.ink,w=2,extra='')=>`<circle cx="${f(x)}" cy="${f(y)}" r="${f(Math.max(0,r))}" fill="${fill}" stroke="${c}" stroke-width="${w}" ${extra}/>`;
+const E=(x,y,rx,ry,fill=C.ink,op=.08)=>`<ellipse cx="${f(x)}" cy="${f(y)}" rx="${rx}" ry="${ry}" fill="${fill}" opacity="${op}"/>`;
+const T=(x,y,s,size=13,c=C.ink,anchor='middle',extra='')=>`<text x="${f(x)}" y="${f(y)}" font-size="${size}" fill="${c}" text-anchor="${anchor}" ${extra}>${esc(s)}</text>`;
+function arrow(x1,y1,x2,y2,c=C.teal,w=2){let a=Math.atan2(y2-y1,x2-x1),r=7;return L(x1,y1,x2,y2,c,w)+P(`M${f(x2-r*Math.cos(a-.55))} ${f(y2-r*Math.sin(a-.55))}L${f(x2)} ${f(y2)}L${f(x2-r*Math.cos(a+.55))} ${f(y2-r*Math.sin(a+.55))}`,c,w)}
+function poly(pts,c=C.ink,w=2,fill='none',close=false){return P('M'+pts.map(a=>f(a[0])+' '+f(a[1])).join('L')+(close?'Z':''),c,w,fill)}
+function bolt(x,y,r=3){return O(x,y,r,C.paper,C.line,1)+L(x-r*.5,y-r*.5,x+r*.5,y+r*.5,C.line,.8)}
+function check(x,y,s=1,c=C.teal){return G(P('M-10 0L-3 7 12-10',c,3.3),'translate('+f(x)+' '+f(y)+') scale('+s+')')}
+function cross(x,y,s=1,c=C.red){return G(P('M-8-8L8 8M8-8L-8 8',c,3),'translate('+f(x)+' '+f(y)+') scale('+s+')')}
+function lock(x,y,s=.6,c=C.mute){return G(P('M-6-2V-8a6 6 0 0 1 12 0v6',c,2.2)+R(-10,-2,20,15,C.paper,c,2,2)+O(0,4,1.3,c,'none',0)+L(0,5,0,9,c,1.5),`translate(${f(x)} ${f(y)}) scale(${s})`)}
+function ring(x,y,r,q,c=C.teal,w=3){return O(x,y,r,'none',C.light,w)+O(x,y,r,'none',c,w,`stroke-dasharray="${f(TAU*r*clamp(q))} ${f(TAU*r)}" transform="rotate(-90 ${x} ${y})" stroke-linecap="round"`)}
+function burst(x,y,t,c=C.gold,n=9){if(t<0||t>.6)return'';let s='',q=t/.6;for(let i=0;i<n;i++){let a=i/n*TAU+.2,r=12+out(q)*34,l=11*(1-q);s+=L(x+Math.cos(a)*r,y+Math.sin(a)*r,x+Math.cos(a)*(r+l),y+Math.sin(a)*(r+l),c,2)}return G(s,'',1-q)}
+function dust(x,y,t,scale=1){if(t<0||t>.85)return'';let s='';for(let i=0;i<7;i++){let a=rnd(i)*PI,r=(9+43*t)*(rnd(i+18)*.6+.4);s+=O(x+Math.cos(a)*r*scale,y-Math.sin(a)*r*.3,2+3*rnd(i+32),'none',C.mute,1.2)}return G(s,'',(1-t/.85)*.55)}
+function qbez(a,b,c,t){return[(1-t)**2*a[0]+2*(1-t)*t*b[0]+t*t*c[0],(1-t)**2*a[1]+2*(1-t)*t*b[1]+t*t*c[1]]}
+function flow(a,b,t,c=C.teal,n=4){let s='';for(let i=0;i<n;i++){let u=fract(t+i/n);s+=O(mix(a[0],b[0],u),mix(a[1],b[1],u),2.3,c,'none',0,`opacity="${f(Math.sin(u*PI)*.9)}"`)}return s}
+function bezFlow(a,b,c,t,color=C.gold,n=5){let s='';for(let i=0;i<n;i++){let u=fract(t+i/n),z=qbez(a,b,c,u);s+=O(z[0],z[1],2.4,color,'none',0,`opacity="${f(Math.sin(u*PI))}"`)}return s}
+function finiteTrack(keys,t,mode='smooth'){if(!keys.length)return 0;if(t<=keys[0][0])return keys[0][1];if(t>=keys.at(-1)[0])return keys.at(-1)[1];let lo=0,hi=keys.length-1;while(lo+1<hi){let m=(lo+hi)>>1;if(keys[m][0]<=t)lo=m;else hi=m}let a=keys[lo],b=keys[hi],u=p(t,a[0],b[0]);if(mode!=='linear')u=ss(u);return mix(a[1],b[1],u)}
+function pointTrack(keys,t){return [finiteTrack(keys.map(k=>[k[0],k[1]]),t),finiteTrack(keys.map(k=>[k[0],k[2]]),t)]}
+function inertia(u,a=.12){u=clamp(u);if(u<a)return u*u/(2*a*(1-a));if(u>1-a)return 1-(1-u)**2/(2*a*(1-a));return(u-a/2)/(1-a)}
+
+/* 1. Genuine local learning. The intentionally correlated initial dataset gives
+   the network a colour shortcut. Counterexamples break that correlation.
+   The yellow held-out cup NEVER appears in either training set. */
+const biasedData=[{x:[1,.35],y:1},{x:[-1,-.35],y:0},{x:[.85,.32],y:1},{x:[-.9,-.31],y:0}];
+const balancedData=[{x:[1,.35],y:1},{x:[-1,.35],y:1},{x:[1,-.35],y:0},{x:[-1,-.35],y:0},{x:[.1,.30],y:1},{x:[0,-.32],y:0}];
+const tests={blueCup:{x:[-1,.35],label:'蓝杯',kind:'cup',color:C.blue},redCan:{x:[1,-.35],label:'红罐',kind:'can',color:C.red},heldout:{x:[.3,.30],label:'未训练的黄杯',kind:'cup',color:C.gold},unknown:{x:[.5,0],label:'未知形状',kind:'goblet',color:C.tealLight}};
+const clone=n=>({W:n.W.map(x=>x.slice()),b:n.b.slice(),v:n.v.slice(),c:n.c});
+const sigmoid=x=>1/(1+Math.exp(-x));
+function infer(n,x){let z=n.W.map((w,j)=>w[0]*x[0]+w[1]*x[1]+n.b[j]),h=z.map(Math.tanh),logit=h.reduce((sum,a,j)=>sum+a*n.v[j],n.c);return{x,z,h,logit,p:sigmoid(logit)}}
+function trainStep(n,data,lr=.35){let dw=[[0,0],[0,0],[0,0]],db=[0,0,0],dv=[0,0,0],dc=0,loss=0;for(const d of data){let a=infer(n,d.x),e=(a.p-d.y)/data.length;loss+=-(d.y*Math.log(a.p+1e-12)+(1-d.y)*Math.log(1-a.p+1e-12))/data.length;dc+=e;for(let j=0;j<3;j++){dv[j]+=e*a.h[j];let dz=e*n.v[j]*(1-a.h[j]**2);db[j]+=dz;for(let k=0;k<2;k++)dw[j][k]+=dz*d.x[k]}}
+ for(let j=0;j<3;j++){n.v[j]-=lr*dv[j];n.b[j]-=lr*db[j];for(let k=0;k<2;k++)n.W[j][k]-=lr*dw[j][k]}n.c-=lr*dc;return{dw,db,dv,dc,loss}}
+let net={W:[[.612275736,-.766699509],[.125429654,-.170330882],[-.135794788,-.064679149]],b:[0,0,0],v:[-.605995839,-.069579713,-.259563923],c:0};
+const TRAIN_A=[clone(net)],TRAIN_B=[];const GRAD_A=[],GRAD_B=[];
+for(let i=0;i<60;i++){GRAD_A.push(trainStep(net,biasedData));TRAIN_A.push(clone(net))}TRAIN_B.push(clone(net));for(let i=0;i<350;i++){GRAD_B.push(trainStep(net,balancedData));TRAIN_B.push(clone(net))}
+const trained={biased:TRAIN_A.at(-1),balanced:TRAIN_B.at(-1)};
+function interpolatedNet(track,k){k=clamp(k,0,track.length-1);let a=track[Math.floor(k)],b=track[Math.min(track.length-1,Math.ceil(k))],u=fract(k);return{W:a.W.map((r,j)=>r.map((v,i)=>mix(v,b.W[j][i],u))),b:a.b.map((v,i)=>mix(v,b.b[i],u)),v:a.v.map((v,i)=>mix(v,b.v[i],u)),c:mix(a.c,b.c,u)}}
+function netAt(t){if(t<31)return TRAIN_A[0];if(t<55)return interpolatedNet(TRAIN_A,60*ss(p(t,33,55)));if(t<100)return trained.biased;if(t<109)return interpolatedNet(TRAIN_B,350*ss(p(t,100,109)));return trained.balanced}
+function inputAt(t){if(t<30)return[0,0];if(t<57){let i=Math.max(0,Math.floor((t-31)/4.5))%4;return biasedData[clamp(i,0,3)].x}if(t<71)return biasedData[Math.floor((t-57)/2)%4].x;if(t<90)return[-1,.35];if(t<99){let cover=ss(p(t,90.35,91.2))*(1-ss(p(t,94.3,95.3)));return[mix(-1,1,cover),.35]}if(t<110)return balancedData[Math.floor((t-99)*1.25)%6].x;if(t<114)return tests.heldout.x;return t>=347?tests.unknown.x:tests.blueCup.x}
+function bce(n,data){return data.reduce((s,d)=>{let y=infer(n,d.x).p;return s-d.y*Math.log(y+1e-12)-(1-d.y)*Math.log(1-y+1e-12)},0)/data.length}
+function softmax(v,temp=1){let m=Math.max(...v),e=v.map(x=>Math.exp((x-m)/temp)),sum=e.reduce((a,b)=>a+b,0);return e.map(x=>x/sum)}
+const AQ=[1,.7,-.4],AK=[[.05,.1,0],[1.6,1.8,.1],[.3,.1,0],[2.8,1.3,.1],[1.1,.9,-.3],[.2,.2,1.4]],AV=[[.1,.1,0],[1,.7,0],[.4,.2,0],[.9,.3,0],[.8,1,-1],[.1,.5,0]];
+function attentionState(right=false){let sign=right?1:-1,q=[1,.7,.4*sign],keys=AK.map(k=>k.slice()),values=AV.map(v=>v.slice());keys[4][2]=.3*sign;values[4][2]=sign;
+ let logits=keys.map((k,i)=>i>4?-1e9:k.reduce((sum,v,j)=>sum+v*q[j],0)/Math.sqrt(3)),weights=softmax(logits),value=[0,1,2].map(j=>values.reduce((sum,v,i)=>sum+weights[i]*v[j],0));return{q,keys,values,weights,value};}
+const ATT=attentionState(false).weights,ATT_VALUE=attentionState(false).value;
+const directionTarget=right=>1920+(attentionState(right).value[2]<0?-70:80);
+const documents=[{id:'A-01',terms:['A盒','承重','箱型'],title:'A · 小号纸盒',weight:.50,body:'最大总重 0.50 kg',rev:'02'},{id:'B-02',terms:['B盒','承重','箱型'],title:'B · 加固纸盒',weight:1.20,body:'最大总重 1.20 kg',rev:'02'},{id:'R-03',terms:['打印','标签','纸张'],title:'标签打印纸',weight:0,body:'纸宽 80 mm',rev:'01'}];
+function retrieve(query){let words=query.split(/\s+/);return documents.map(d=>({...d,score:words.reduce((s,w)=>s+(d.terms.includes(w)?1:0),0)})).sort((a,b)=>b.score-a.score)}
+const toolWeight=Number((.48+.32).toFixed(2)),toolChecks=documents.slice(0,2).map(d=>toolWeight<=d.weight);
+
+/* 2. A real, tiny reverse diffusion sampler, not a blurred final picture.
+   The data distribution is a finite mixture of three 24×24 cup drawings.
+   Its posterior-mean denoiser is analytic; there is NO trained text-to-image
+   neural network here. DDIM steps use this mean and inferred residual noise.
+   Different Gaussian seeds converge to different members of the distribution. */
+function prng(seed){let s=seed>>>0;return()=>{s=(1664525*s+1013904223)>>>0;return(s+.5)/4294967296}}
+function normal(r){return Math.sqrt(-2*Math.log(Math.max(1e-9,r())))*Math.cos(TAU*r())}
+const DN=24;
+function cupBitmap(style=0){let a=[];for(let y=0;y<DN;y++)for(let x=0;x<DN;x++){let u=x-11,v=y-12,ink=false;
+ let lx=style===1?-6:-7,rx=style===1?5:5,top=style===2?-5:-6,bottom=6;
+ if(y>=12+top&&y<=12+bottom){let shrink=(y-(12+top))/(bottom-top)*1.2,l=lx+shrink,r=rx-shrink;ink=(Math.abs(u-l)<.85||Math.abs(u-r)<.85||Math.abs(v-bottom)<.8&&u>l&&u<r)}
+ ink||=(Math.abs(v-top)<.75&&u>=lx&&u<=rx);
+ let hx=u-(rx+1.5),hy=v-(-.5);ink||=(u>rx-.6&&Math.abs((hx*hx)/13+(hy*hy)/15-1)<.40&&v>=-5&&v<=4);
+ if(style===0)ink||=Math.abs(u+1)<.6&&v>=-2&&v<=2;
+ if(style===1)ink||=((u+1)**2+(v+1)**2<4.3);
+ if(style===2)ink||=((Math.abs(u+1)+Math.abs(v+1)<3.2)&&Math.abs(u+1)+Math.abs(v+1)>1.5);
+ a.push(ink?.9:-.9)}return a}
+const prototypes=[0,1,2].map(cupBitmap);
+function diffusion(seed){let r=prng(seed),x=Array.from({length:DN*DN},()=>normal(r)),frames=[x.slice()],alphas=[];for(let k=0;k<=44;k++){let q=k/44;alphas.push(.00004+(1-.00004)*Math.sin(q*PI/2)**2)}
+ for(let k=0;k<44;k++){let a=alphas[k],an=alphas[k+1],sa=Math.sqrt(a),sn=Math.sqrt(1-a),scores=prototypes.map(mu=>-mu.reduce((s,v,j)=>s+(x[j]-sa*v)**2,0)/(2*(1-a)));let weights=softmax(scores),mean=x.map((_,j)=>weights.reduce((s,w,i)=>s+w*prototypes[i][j],0));x=x.map((v,j)=>Math.sqrt(an)*mean[j]+Math.sqrt(Math.max(0,1-an))*(v-sa*mean[j])/sn);frames.push(x.slice())}
+ return frames}
+const DIFF=[diffusion(199),diffusion(927)];
+function diffusionFrame(which,q){let k=clamp(q)*44,i=Math.floor(k),j=Math.min(44,i+1),u=fract(k);return DIFF[which][i].map((a,n)=>mix(a,DIFF[which][j][n],u))}
+
+/* 3. Art assets. All coordinates are live SVG paths. */
+function mug(x,y,scale=1,color=C.blue,kind='cup',rot=0,dir=1,wrap=0){let s='';
+ if(kind==='can'){s+=R(-21,-55,42,53,color,C.ink,2.4,5)+E(0,-55,21,4,C.paper,1)+P('M-21-54Q0-47 21-54M-19-42H19M-19-12H19',C.ink,1.8)+L(-13,-37,-13,-19,C.white,2.8);}
+ else if(kind==='goblet'){s+=P('M-26-62Q-26-24 0-22Q26-24 26-62ZM0-22V-3M-19-1Q0-7 19-1',C.ink,2.4,C.tealLight)+P('M-18-55Q-18-37-8-32',C.white,3);}
+ else{s+=P('M21-45Q43-47 42-29Q42-13 22-16',C.ink,5.4)+P('M22-44Q40-45 39-30Q39-17 23-18',color,2.8)+P('M-23-55H23L19-7Q18 0 10 0H-11Q-20 0-21-8Z',C.ink,2.5,color)+P('M-22-54Q0-47 22-54',C.ink,1.5)+L(-14,-42,-12,-18,C.white,2.7);}
+ if(wrap>0)s+=G(P('M-28-53L-22-63-12-56 0-65 12-58 25-63 31-53 28 0 17 6-21 4-30-4Z',C.line,1.5,C.paper)+[[-19,-40],[-7,-42],[7,-40],[20,-39],[-19,-24],[-5,-24],[9,-23],[21,-23],[-17,-9],[-2,-7],[13,-8]].map(([a,b])=>O(a,b,4,'none',C.line,1)).join(''),' ',wrap*.97);
+ return G(s,`translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${f(scale*(.54+.46*Math.abs(dir)))} ${scale})`)+(Math.abs(dir)<.001?'':'');
+}
+function mugFacing(x,y,scale,color,kind='cup',rot=0,face=1,wrap=0){ // mirror only an unlettered object, never the actor or set
+ return G(mug(0,0,scale,color,kind,0,Math.abs(face),wrap),`translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${face<0?-1:1} 1)`)}
+function photo(x,y,color=C.red,kind='cup',s=1,angle=0,label=true,back=false){return G(R(-31,-68,62,79,C.white,C.line,1.7,3)+(back?L(-19,-45,19,-45,C.line,1.3)+L(-19,-31,10,-31,C.line,1.3):mug(0,-16,.62,color,kind))+(label?(kind==='cup'?T(0,5,'杯',10,C.teal):T(0,5,'罐',10,C.mute)):'')+bolt(-24,-60,1.7),`translate(${f(x)} ${f(y)}) rotate(${f(angle)}) scale(${s})`)}
+function cardboard(x,y,w=100,h=82,label='A',open=1,rot=0,sticker=false,weight=true){let s='';
+ s+=P(`M${-w/2} ${-h}L${-w/2-30*open} ${-h-22*open}L${-9-18*open} ${-h-27*open}L0 ${-h+8}Z`,C.ink,2,C.cream);
+ s+=P(`M0 ${-h+8}L${w/2+24*open} ${-h-22*open}L${w/2} ${-h}L0 ${-h+15}Z`,C.ink,2,'#e2d5b7');
+ s+=R(-w/2,-h,w,h,C.cream,C.ink,2.3,2)+P(`M0 ${-h}V0`,C.line,1.4);
+ s+=T(-w*.26,-h*.5+5,label,17,C.ink,'middle','font-family="ui-monospace,monospace"');
+ if(weight)s+=T(w*.20,-h*.28,label==='A'?'0.50 kg':'1.20 kg',7.2,C.mute);
+ if(sticker)s+=G(R(-20,-29,40,35,C.white,C.line,1,2)+mug(-2,-5,.39,C.teal),`translate(${w*.23} ${-h*.18}) rotate(-7)`);
+ return G(s,`translate(${f(x)} ${f(y)}) rotate(${f(rot)})`)}
+function book(x,y,s=1,open=1,angle=0){let z=P('M-47-44Q-18-51 0-37Q22-51 48-43V27Q23 20 0 34Q-20 22-47 29Z',C.ink,2.1,C.white)+P('M0-35V32',C.line,1.5);z+=T(-24,-22,'A-01',8,C.gold,'middle','class="mono"')+T(24,-22,'B-02',8,C.gold,'middle','class="mono"')+T(-24,-6,'0.50 kg',7,C.ink,'middle','class="mono"')+T(24,-6,'1.20 kg',7,C.ink,'middle','class="mono"');for(let i=0;i<3;i++)z+=L(-38,5+i*7,-10,8+i*7,C.line,1)+L(10,8+i*7,38,5+i*7,C.line,1);return G(z,`translate(${f(x)} ${f(y)}) rotate(${f(angle)}) scale(${s})`)}
+function receipt(x,y,s=1,lines=['A盒','2.0 kg'],len=1,angle=0,c=C.ink){let h=118*len,z=P(`M-63 0H63V${f(h)}l-7-4-7 4-7-4-7 4-7-4-7 4-7-4-7 4-7-4-7 4-7-4-7 4-7-4-7 4-7-4-7 4-7-4-7 4Z`,C.line,1.4,C.white);lines.forEach((a,i)=>{if(26+i*27<h-7)z+=T(0,26+i*27,a,i===1?19:11,i===1?c:C.mute,'middle',i===1?'font-weight="650"':'')});return G(z,`translate(${f(x)} ${f(y)}) rotate(${f(angle)}) scale(${s})`)}
+function littleScale(x,y,reading='',on=true){return G(R(-67,0,134,23,C.paper,C.ink,2,4)+R(-73,-10,146,10,C.tealLight,C.ink,2,3)+R(-37,4,74,15,on?'#e1ebe0':C.light,C.line,1,2)+T(0,15,reading,10,on?C.teal:C.mute,'middle','class="mono"'),`translate(${x} ${y})`)}
+function orderCard(x,y,done=0,s=1){let z=R(-89,-87,178,131,C.white,C.line,1.8,4)+R(-20,-93,40,10,C.cream,C.ink,1.3,2)+T(-70,-64,'订单 001',10,C.mute,'start','letter-spacing="1"')+mug(-38,8,.7,C.blue)+arrow(-2,-15,26,-15,C.line,1.6)+cardboard(57,10,40,33,'',.6,0,false,false);for(let i=0;i<3;i++)z+=R(-64+i*53,25,10,10,C.paper,C.line,1,1)+(done>i?check(-59+i*53,30,.37):'');return G(z,`translate(${f(x)} ${f(y)}) scale(${s})`)}
+function dial(x,y,value,c=C.teal,r=9){let a=value*.73;return O(x,y,r,C.paper,c,1.4)+L(x,y,x+Math.cos(a)*r*.68,y+Math.sin(a)*r*.68,c,1.6)+O(x,y,1.4,c,'none',0)}
+function tube(d,c=C.line,w=8){return P(d,c,w+2)+P(d,C.paper,w-1)+P(d,c,.9,'none','stroke-dasharray="2 9"')}
+
+/* Persistent geography: no scene cuts, no mirrored scenery, no new obstacle
+   courses. The same shelf, scanner, desk, boxes and exit remain in world space. */
+function buildSet(){let z='';
+ z+=L(-600,FLOOR,2930,FLOOR,C.ink,2.5)+R(-600,FLOOR+9,3530,20,'url(#hatch)','none',0,0);
+ for(let i=0;i<51;i++)z+=L(-590+i*71,FLOOR+42,-573+i*71,FLOOR+42,C.light,1);
+ // Shelf: the initially correlated examples live here, counterexamples in the lower drawer.
+ z+=R(-255,362,351,304,'none',C.line,2,4)+P('M-243 668V794M83 668V794',C.line,3);
+ [458,553,648].forEach(y=>{z+=R(-264,y,370,10,C.cream,C.ink,2,2);for(let i=0;i<3;i++)z+=bolt(-210+i*135,y+5,2)});
+ z+=T(-250,342,'样本架',12,C.mute,'start','letter-spacing="3"');
+ [-176,-81,14].forEach((x,i)=>{z+=mug(x,454,.84,C.red,'cup',i===1?-3:0)+mug(x,549,.82,C.blue,'can')});
+ z+=R(-227,675,295,96,C.paper,C.line,1.7,3)+R(-111,712,64,9,C.cream,C.ink,1.5,3)+T(-78,754,'补充样本',9,C.mute);
+ // A small order trolley, not another knowledge station.
+ z+=R(151,662,161,12,C.cream,C.ink,2,2)+P('M166 676V774M294 676V774M164 735H295',C.line,2.3)+O(176,786,12,C.paper,C.ink,2)+O(287,786,12,C.paper,C.ink,2)+L(307,664,325,574,C.ink,2)+L(325,574,343,574,C.ink,2);
+ // Vision bench.
+ z+=R(323,650,734,18,C.cream,C.ink,2.4,3)+P('M345 670L331 797M1027 670L1044 797M340 751H1038',C.line,3);
+ z+=R(352,610,659,34,C.paper,C.ink,2,17);for(let x=370;x<1000;x+=42)z+=O(x,627,10,C.paper,C.line,1.5)+O(x,627,2,C.line,'none',0);
+ z+=P('M383 606V505Q383 489 399 489H462Q478 489 478 505V606',C.ink,3)+R(408,482,48,18,C.paper,C.ink,2,5)+O(432,491,5,C.tealLight,C.teal,1.5);
+ z+=tube('M448 491H503V446H604',C.line,5);
+ z+=R(514,424,374,190,C.paper,C.ink,2.7,12)+R(534,453,330,145,'url(#glass)',C.line,1.5,8);
+ z+=T(538,442,'VISION',10,C.mute,'start','letter-spacing="2"')+T(850,442,'θ',11,C.mute)+[0,1,2].map(i=>bolt(864+i*0,434+i*79,2)).join('');
+ z+=P('M540 456L591 456 543 503M816 595L861 550',C.white,2,'none','opacity=".6"');
+ z+=R(470,674,53,24,C.paper,C.ink,1.8,4)+T(496,690,'训练',9,C.mute);
+ z+=R(541,674,53,24,C.paper,C.ink,1.8,4)+T(567,690,'推理',9,C.mute);
+ z+=R(615,674,80,24,C.paper,C.line,1.5,4)+T(655,690,'标签',9,C.mute);
+ z+=R(741,674,128,25,C.paper,C.line,1.5,4)+T(758,690,'L',10,C.red);
+ z+=P('M904 609H996',C.ink,3)+P('M916 622H984',C.line,2)+O(1000,618,5,C.paper,C.line,1.5);
+ z+=R(990,676,93,10,C.tealLight,C.ink,2,3)+P('M1005 688V797M1065 688V797',C.line,2.5)+T(1037,718,'杯',11,C.teal);
+ z+=P('M1090 726H1181L1170 799H1104Z',C.line,2,C.paper)+R(1084,719,103,9,C.cream,C.ink,1.7,3)+T(1135,758,'其他',10,C.mute);
+ for(let i=0;i<4;i++)z+=L(1111+i*16,743,1118+i*14,786,C.light,1);
+ // Cable physically links the vision sensor to the packing workbench.
+ z+=tube('M839 698V779H1466V688',C.line,6);
+ // Packing bench, one glass language console and a real downstream actuator.
+ z+=R(1296,650,1060,18,C.cream,C.ink,2.4,3)+P('M1322 670L1308 797M1665 670V797M2300 670L2319 797',C.line,3);
+ z+=R(1379,424,357,192,C.paper,C.ink,2.7,12)+R(1416,450,298,155,'url(#glass)',C.line,1.5,8);
+ z+=T(1400,442,'LANGUAGE',10,C.mute,'start','letter-spacing="1.6"')+T(1700,442,'θ',11,C.mute)+lock(1718,439,.37);
+ z+=R(1406,636,317,12,C.paper,C.ink,1.7,3);for(let i=0;i<15;i++)z+=R(1416+i*20,638,14,5,C.light,C.line,.7,1);
+ z+=R(1742,520,147,110,C.paper,C.ink,2.1,7)+R(1756,538,119,13,C.ink,C.ink,1,4)+O(1869,607,4,C.tealLight,C.teal,1);
+ z+=R(1745,628,170,11,C.cream,C.ink,1.8,2)+T(1815,514,'输出 / 打印',9,C.mute);
+ z+=P('M1380 503h-21v128M1352 618l7 14 8-14',C.line,1.6);
+ z+=R(1396,674,220,25,C.paper,C.line,1.4,4)+T(1407,691,'上下文',9,C.mute,'start')+L(1453,687,1606,687,C.light,2);
+ z+=R(1634,674,93,25,C.paper,C.line,1.4,4)+T(1662,691,'参数',9,C.mute)+lock(1700,687,.45);
+ z+=R(1940,686,219,94,C.paper,C.line,1.6,4)+R(2029,719,49,9,C.cream,C.ink,1.6,3)+T(2050,759,'箱型手册 / REV.02',9,C.mute);
+ z+=R(2186,674,86,38,C.paper,C.ink,2,5)+T(2228,700,'寄出',10,C.mute)+L(2228,713,2228,779,C.line,1.6);
+ // Arm rail overhead, anchored to the bench (the actor never turns into the AI).
+ z+=P('M1794 649V344H2293V650',C.line,3)+R(1778,337,532,18,C.paper,C.ink,2,7);
+ z+=T(2292,324,'执行器',10,C.mute,'end','letter-spacing="2"');
+ z+=tube('M1737 587H1779V779H2200V713',C.line,6);
+ // Packing supplies.
+ z+=O(2264,601,42,C.paper,C.line,1.8)+O(2264,601,14,C.cream,C.line,1.5)+P('M2224 588Q2194 609 2219 648H2278',C.line,1.4,C.paper);
+ for(let i=0;i<7;i++)z+=O(2243+(i%3)*13,585+Math.floor(i/3)*13,4,'none',C.light,1);
+ z+=R(2344,512,72,8,C.cream,C.ink,1.7,2)+P('M2354 521v22m51-22v22',C.line,1.5)+T(2380,435,'下一单',9,C.mute);
+ // Dispatch, established before any action begins.
+ z+=P('M2423 798V318Q2423 300 2440 300H2764Q2783 300 2783 318V798',C.ink,3)+R(2439,318,328,480,C.light,C.line,1.6,5);
+ z+=T(2602,277,'出库',13,C.mute,'middle','letter-spacing="8"');
+ z+=R(2337,650,432,25,C.paper,C.ink,2.3,12);for(let x=2354;x<2756;x+=32)z+=O(x,662,8,C.paper,C.line,1.3)+O(x,662,1.6,C.line,'none',0);
+ z+=P('M2370 677V797M2714 677V797',C.line,2.3);
+ // Small practical details, never a wall of explanatory panels.
+ z+=P('M1410 410v-47M1629 410v-47',C.line,1)+R(1394,334,250,26,C.paper,C.line,1.2,3)+T(1520,351,'预训练模型 · 已载入',10,C.mute,'middle','letter-spacing="1"');
+ z+=P('M2550 222v-31M2535 204l-16-14M2566 204l16-14',C.light,1.3);
+ return z;
+}
+
+/* 4. A new rig: yaw is a real projected turn, never a whole-character scale(-1).
+   Footsteps are planned in WORLD space. Planted feet remain stationary while
+   the body advances; the next leg swings to its next contact. Arm IK binds
+   hands to actual object handles, not to loosely similar stock poses. */
+const POSE={
+ idle:[0,-80,4,-139,0,-23,-78,24,-80,-16,0,16,0,1,-1,-1,-1],
+ curious:[-4,-79,13,-140,13,-23,-79,37,-119,-18,0,18,0,1,1,-1,-1],
+ present:[-7,-80,20,-153,8,26,-114,69,-169,-23,0,22,0,1,1,-1,-1],
+ carry:[-2,-80,8,-139,2,28,-105,74,-134,-17,0,17,0,1,1,-1,-1],
+ protect:[-10,-50,17,-99,15,35,-79,62,-111,-29,0,29,0,1,1,-1,-1],
+ crouch:[-11,-42,13,-93,18,-19,-29,54,-55,-29,0,32,0,1,1,-1,-1],
+ type:[-9,-76,17,-139,17,40,-154,72,-153,-25,0,21,0,1,1,-1,-1],
+ point:[-6,-80,9,-141,6,-23,-87,77,-152,-22,0,21,0,1,1,-1,-1],
+ think:[-5,-79,0,-139,-14,-30,-84,22,-166,-20,0,19,0,1,1,-1,-1],
+ inspect:[-13,-76,26,-151,22,-15,-78,58,-124,-30,0,27,0,1,1,-1,-1],
+ cheer:[0,-84,1,-145,-2,-45,-205,49,-205,-24,0,24,0,-1,1,-1,-1],
+ proud:[0,-81,0,-144,-9,-36,-106,37,-105,-21,0,22,0,1,-1,-1,-1],
+ recoil:[-15,-70,-35,-125,-24,-57,-157,4,-167,-28,0,23,0,1,1,-1,-1],
+ catch:[-17,-39,14,-85,-3,39,-48,68,-87,-34,0,35,0,1,1,-1,-1],
+ holdlow:[-10,-59,9,-113,9,31,-73,70,-103,-29,0,27,0,1,1,-1,-1],
+ pull:[-18,-75,-15,-137,-13,42,-143,62,-151,-37,0,22,0,1,1,-1,-1],
+ aha:[0,-83,1,-143,-4,-28,-100,42,-179,-19,0,20,0,1,1,-1,-1],
+ question:[0,-78,3,-139,-12,-61,-131,63,-128,-22,0,23,0,1,-1,-1,-1],
+ receive:[-5,-79,13,-140,12,33,-126,68,-141,-22,0,23,0,1,1,-1,-1],
+ read:[-5,-80,8,-141,16,23,-129,69,-135,-22,0,22,0,1,1,-1,-1],
+ compare:[0,-80,0,-140,-4,-69,-141,70,-141,-23,0,23,0,1,-1,-1,-1],
+ peel:[-7,-79,15,-150,13,37,-117,76,-166,-25,0,24,0,1,1,-1,-1],
+ nod:[0,-80,4,-139,20,-24,-81,31,-99,-18,0,18,0,1,1,-1,-1],
+ fold:[-12,-71,22,-127,27,43,-119,69,-127,-27,0,26,0,1,1,-1,-1],
+ halt:[-12,-75,-9,-134,-15,-28,-99,56,-160,-28,0,27,0,1,1,-1,-1],
+ crossarms:[0,-81,1,-141,-7,22,-113,-19,-126,-21,0,22,0,1,-1,-1,-1],
+ peek:[-14,-76,27,-151,26,-18,-86,58,-154,-32,0,27,0,1,1,-1,-1],
+ sketch:[-4,-80,14,-144,19,37,-134,60,-150,-21,0,22,0,1,1,-1,-1],
+ speak:[0,-80,5,-140,-5,-22,-81,28,-165,-21,0,20,0,1,1,-1,-1],
+ wipe:[-15,-74,20,-145,8,-31,-95,77,-163,-31,0,21,0,1,1,-1,-1],
+ impatient:[3,-80,-1,-139,-10,-32,-102,38,-104,-21,0,26,-3,1,-1,-1,-1],
+ stick:[-12,-77,20,-139,13,46,-121,80,-139,-29,0,24,0,1,1,-1,-1],
+ wave:[0,-80,3,-142,-5,-26,-82,37,-204,-19,0,21,0,1,1,-1,-1]
+};
+const POSE_KEYS=[];
+function pk(t,name,d=.32){POSE_KEYS.push({t,name,d})}
+[
+ [0,'curious'],[3.1,'present'],[4.3,'carry'],[7.0,'curious'],[8.4,'protect'],[10,'crouch'],[12,'carry'],[13.1,'present'],[14.3,'idle'],[18.25,'type'],[19.5,'nod'],[23.8,'crouch'],[24.8,'carry'],[29.2,'present'],[31.1,'curious'],[32.6,'type'],[34.1,'point'],[36.8,'think'],[40,'inspect'],[43.5,'point'],[46.5,'think'],[50.2,'inspect'],[53.5,'curious'],[55.1,'cheer'],[57.6,'proud'],[59.4,'idle'],[63,'present'],[65,'carry'],[70.15,'present'],[71.5,'point'],[77.1,'recoil',.18],[79.16,'catch',.15],[80.2,'holdlow'],[81,'carry'],[88.5,'present'],[90,'peel'],[92,'curious'],[93.0,'aha'],[94.4,'pull'],[96.3,'think'],[99,'type'],[100.5,'point'],[103,'inspect'],[106,'curious'],[109,'present'],[114.2,'present'],[115.3,'carry'],[122.35,'present'],[123.5,'idle'],[128,'type'],[130.6,'inspect'],[134,'point'],[138,'curious'],[141.9,'type'],[146,'point'],[152.5,'nod'],[159.3,'question'],[160.3,'speak'],[162,'question'],[164,'idle'],[170,'receive'],[172.5,'curious'],[176,'read'],[183,'read'],[187,'compare'],[190,'peel'],[192.8,'recoil'],[193.8,'question'],[194.5,'crouch'],[196.0,'holdlow'],[197.1,'compare'],[198,'carry'],[203.8,'present'],[205.4,'point'],[209,'inspect'],[213,'think'],[216,'receive'],[219.5,'read'],[221.2,'fold'],[222.5,'nod'],[225,'peel'],[228.5,'present'],[231,'inspect'],[234,'nod'],[236,'idle'],[239.2,'present'],[240,'carry'],[241.3,'present'],[242.8,'curious'],[245.6,'fold'],[249,'curious'],[251,'recoil'],[253,'halt'],[255.7,'crossarms'],[258.4,'peek'],[261.2,'nod'],[265.8,'peek'],[268.7,'read'],[272,'think'],[275,'sketch'],[277.3,'speak'],[279,'idle'],[285,'impatient'],[287.4,'wipe'],[290,'think'],[292,'crossarms'],[296.1,'inspect'],[300,'impatient'],[302.8,'curious'],[307,'receive'],[310,'receive'],[312,'compare'],[313,'carry'],[318,'stick'],[320.5,'nod'],[324,'peek'],[326,'fold'],[328.1,'read'],[332.5,'type'],[334.2,'nod'],[337,'wave'],[343.5,'cheer'],[345.15,'present'],[346.2,'carry'],[349,'think'],[351,'aha'],[352.3,'inspect']
+].forEach(a=>pk(...a));
+function poseAt(t){let i=0;while(i<POSE_KEYS.length-1&&POSE_KEYS[i+1].t<=t)i++;let b=POSE_KEYS[i],a=POSE_KEYS[Math.max(0,i-1)],u=ss(p(t,b.t,b.t+b.d)),aa=POSE[a.name],bb=POSE[b.name],v=aa.map((x,j)=>mix(x,bb[j],u));let breath=Math.sin(t*2.0)*.7;v[3]+=breath;if(b.name==='impatient'){let q=Math.max(0,Math.sin(t*8));v[12]-=q*5;v[3]+=Math.sin(t*1.3)*1.5}if(b.name==='wave'){v[7]+=Math.sin(t*7)*12;v[8]+=Math.cos(t*7)*3}if(b.name==='nod')v[4]+=Math.sin((t-b.t)*5)*7*Math.exp(-(t-b.t)*1.2);let crouched=['protect','crouch','catch','holdlow','fold'].includes(b.name),prevCrouched=['protect','crouch','catch','holdlow','fold'].includes(a.name);let rise=mix(prevCrouched?0:8,crouched?0:8,u);v[1]-=rise;v[3]-=rise;v[6]-=rise;v[8]-=rise;return{name:b.name,v}}
+const MOVES=[];let rootCursor=165;
+function walk(a,b,x,run=false){let x0=rootCursor,dir=Math.sign(x-x0)||1,N=Math.max(2,2*Math.ceil(Math.abs(x-x0)/(run?172:136)));MOVES.push({a,b,x0,x1:x,dir,N,run});rootCursor=x}
+[
+ [15.0,18.2,453],[20.3,23.8,-40],[25.8,29.1,415],[38.8,39.8,485],[56,57.3,415],[60.2,62.7,190],[66,70,415],[73.1,77.4,850],[77.85,79.2,1088,true],[81.8,87.9,355],[97.1,98.2,476],[109.8,114.2,1000],[116.1,122.4,1955],[124.1,127.5,1690],[156,159,1980],[166,169,1760],[179,182.8,2185],[193.6,194.4,2110],[198,202.7,1780],[237.2,239.2,1955],[240.6,241.7,1895],[244.2,245.4,1805],[262,265.5,2165],[280,284.5,1765],[291,291.9,1815],[313.4,317.8,2185],[327,328.2,2215],[341.5,343.5,2395],[346.6,348.4,2240]
+].forEach(a=>walk(...a));
+const TURN_EVENTS=MOVES.map(m=>({t:m.a-.72,d:.62,a:m.dir===1?0:PI}));
+function turn(t,dir,d=.58){TURN_EVENTS.push({t,d,a:dir===1?0:dir===-1?PI:PI/2})}
+[[0,1],[18.3,1],[24,-1],[29.4,1],[57.5,1],[63.2,1],[79.3,1],[88.15,1],[93.1,0],[94.0,1],[99,1],[114.3,1],[128,-1],[134,1],[141.8,-1],[146,1],[160.0,-1],[174.5,1],[183.3,-1],[188,0],[190,-1],[203.0,1],[206.0,-1],[215.9,1],[220,-1],[224.5,1],[230.5,-1],[245.6,1],[265.7,1],[277,-1],[284.8,-1],[292,-1],[305,1],[311.8,0],[313.0,1],[318.1,1],[328.2,0],[331.9,1],[343.6,1],[348.6,1],[351,0],[351.9,1]].forEach(a=>turn(...a));
+TURN_EVENTS.sort((a,b)=>a.t-b.t);
+function yawAt(t){let prev=0;for(const e of TURN_EVENTS){if(t<e.t)break;let target=prev+Math.atan2(Math.sin(e.a-prev),Math.cos(e.a-prev));if(t<=e.t+e.d)return mix(prev,target,ss(p(t,e.t,e.t+e.d)));prev=target}return prev}
+function rootAt(t){let x=165,move=null;for(const m of MOVES){if(t<m.a)break;if(t<=m.b){x=mix(m.x0,m.x1,inertia(p(t,m.a,m.b)));move=m;break}x=m.x1}return{x,y:FLOOR,move}}
+function plannedFeet(m,u,x){let q=inertia(u),s=Math.min(m.N-1e-7,q*m.N),j=Math.floor(s),a=s-j,d=m.dir,leg=j%2,feet=[];
+ const startPose=poseAt(m.a).v,endPose=poseAt(m.b).v;const initial=k=>m.x0+d*startPose[k===0?9:11]*HS;
+ const target=k=>{let l=k%2;if(k>=m.N-2)return m.x1+d*endPose[l===0?9:11]*HS;return m.x0+d*((k+1)*Math.abs(m.x1-m.x0)/m.N+18*HS)};
+ for(let k=0;k<2;k++){let prev=j-1;if(prev%2!==k)prev--;let start=prev>=0?target(prev):initial(k),xx=start,yy=FLOOR,phase=0;
+  if(k===leg){let z=ss(p(a,.10,.88));xx=mix(start,target(j),z);yy-=Math.sin(z*PI)*(m.run?42:25)*HS;phase=z}
+  feet.push({x:xx,y:yy,stance:k!==leg||a<.10||a>.88,phase})}
+ return feet}
+function humanBase(t){let root=rootAt(t),yaw=yawAt(t),co=Math.cos(yaw),si=Math.sin(yaw),pv=poseAt(t),v=pv.v.slice(),velocity=0,feet=null,moveMix=0;
+ if(root.move){let m=root.move,u=p(t,m.a,m.b),d=.002;velocity=(mix(m.x0,m.x1,inertia(clamp(u+d)))-mix(m.x0,m.x1,inertia(clamp(u-d))))/((Math.min(1,u+d)-Math.max(0,u-d))*(m.b-m.a));let fade=ss(p(u,0,.10))*(1-ss(p(u,.90,1))),q=inertia(u)*m.N,bob=Math.sin(q*TAU)*1.5;
+ let walkPose=POSE.idle.slice();walkPose[0]=m.run?-8:0;walkPose[1]=-85-bob+(m.run?8:0);walkPose[2]=m.run?23:8;walkPose[3]=(m.run?-138:-145)-bob;walkPose[4]=m.run?11:3;let pump=Math.sin(q*PI)*(m.run?30:20);walkPose[5]=-pump-4;walkPose[6]=-88-Math.abs(pump)*.45;walkPose[7]=pump+7;walkPose[8]=-87-Math.abs(pump)*.45;
+ for(let j=0;j<v.length;j++)v[j]=mix(v[j],walkPose[j],fade);feet=plannedFeet(m,u,root.x);moveMix=fade;
+ }
+ const proj=(x,y,depth=0)=>[root.x+(co*x+si*depth)*HS,root.y+y*HS];
+ let st={...root,yaw,co,si,v,pose:pv.name,velocity,moveMix,proj,hip:proj(v[0],v[1]),shoulder:proj(v[2],v[3]),lh:proj(v[5],v[6],-6),rh:proj(v[7],v[8],6),feet:feet?feet.map(a=>[a.x,a.y]):[proj(v[9],v[10],-5),proj(v[11],v[12],5)],footMeta:feet,mood:'normal'};
+ return st;
+}
+function carryCup(s,t){let low=(t>8&&t<12.5)?ss(p(t,8,9.2))*(1-ss(p(t,11.5,12.5)))*25:0;return{x:s.x+s.co*45*HS,y:s.y-104*HS+low*HS,face:s.co,rot:s.move?Math.sin(t*6)*1.2:0,owner:'human'}}
+function cupState(t,s){let cp=carryCup(s,t),lerpFrom=(a,q,to=cp)=>({x:mix(a.x,to.x,ss(q)),y:mix(a.y,to.y,ss(q)),face:mix(a.face??1,to.face??1,ss(q)),rot:mix(a.rot??0,to.rot??0,ss(q)),owner:'human'}),fixed=(x,y,owner='set',rot=0)=>({x,y,face:1,rot,owner}),at=(keys)=>{let a=pointTrack(keys,t);return fixed(a[0],a[1],'robot')};
+ if(t<3.2)return fixed(230,662);
+ if(t<4.25)return lerpFrom(fixed(230,662),p(t,3.2,4.25));
+ if(t<13.1)return cp;
+ if(t<14.2)return lerpFrom(cp,p(t,13.1,14.2),fixed(230,662));
+ if(t<64)return fixed(230,662);
+ if(t<65)return lerpFrom(fixed(230,662),p(t,64,65));
+ if(t<70.2)return cp;
+ if(t<71.3)return lerpFrom(cp,p(t,70.2,71.3),fixed(432,610));
+ if(t<72.2)return fixed(432,610);
+ if(t<77.7)return fixed(mix(432,1000,inertia(p(t,72.2,77.7))),610,'belt');
+ if(t<78.7){let u=p(t,77.7,78.7);return fixed(mix(1000,1080,u),610+58*u*u,'fall',20*u)}
+ if(t<79.35){let u=p(t,78.7,79.35);return fixed(1080+44*u,668+72*u*u,'fall',20+22*u)}
+ if(t<80.85)return lerpFrom(fixed(1124,740,'human',42),p(t,79.35,80.85));
+ if(t<89)return cp;
+ if(t<90)return lerpFrom(cp,p(t,89,90),fixed(432,610));
+ if(t<109.8)return fixed(432,610);
+ if(t<113.55)return fixed(mix(432,1000,inertia(p(t,109.8,113.55))),610,'belt');
+ if(t<114.3){let u=p(t,113.55,114.3);return fixed(mix(1000,1037,u),610+66*u*u,'fall',-12*Math.sin(u*PI))}
+ if(t<115.2)return lerpFrom(fixed(1037,676),p(t,114.3,115.2));
+ if(t<122.3)return cp;
+ if(t<123.4)return lerpFrom(cp,p(t,122.3,123.4),fixed(2000,650));
+ if(t<135.4)return fixed(2000,650);
+ if(t<140.8)return at([[135.4,2000,650],[136.55,2000,566],[139.15,directionTarget(false),566],[140.8,directionTarget(false),640]]);
+ if(t<147.8)return fixed(directionTarget(false),640);
+ if(t<152.5)return at([[147.8,directionTarget(false),640],[148.8,directionTarget(false),557],[151.1,directionTarget(true),557],[152.5,directionTarget(true),650]]);
+ if(t<239.3)return fixed(2000,650);
+ if(t<239.85)return lerpFrom(fixed(2000,650),p(t,239.3,239.85));
+ if(t<241.2)return cp;
+ if(t<242.2)return lerpFrom(cp,p(t,241.2,242.2),fixed(1850,640));
+ if(t<250.1)return fixed(1850,640);
+ if(t<261)return at([[250.1,1850,640],[251,1870,625],[253.4,1870,625],[255.2,1870,525],[258.5,2230,525],[261,2230,638]]);
+ return fixed(boxBX(t),638,'boxed');
+}
+function unknownState(t,s){let carried={x:s.x+s.co*45*HS,y:s.y-104*HS,owner:'human'},lerp=(a,b,q)=>({x:mix(a.x,b.x,ss(q)),y:mix(a.y,b.y,ss(q)),owner:'human'});
+ if(t<345.2)return{x:2380,y:512,owner:'set'};
+ if(t<346.15)return lerp({x:2380,y:512},carried,p(t,345.2,346.15));
+ if(t<348.7)return carried;
+ if(t<349.4)return lerp(carried,{x:2280,y:650},p(t,348.7,349.4));
+ return{x:2280,y:650,owner:'set'};
+}
+function boxBX(t){return mix(2230,2860,inertia(p(t,335.2,343.3)))}
+function paperHold(s,t,kind='wrong'){
+ let r={x:s.x+s.co*47*HS,y:s.y-165*HS,rot:s.co*5,scale:.72};
+ if(kind==='wrong'){let q=ss(p(t,183.4,185.2));r.x=mix(r.x,s.x+30,q);r.y=mix(r.y,612,q);r.rot=mix(r.rot,-6,q)}return r;
+}
+function receiptState(s,t,right=false){let r=paperHold(s,t,right?'right':'wrong'),q=ss(p(t,right?218:175.7,right?218.8:176.8));r={x:mix(1815,r.x,q),y:mix(541,r.y,q),rot:r.rot*q,scale:mix(.85,.72,q)};
+ if(right&&t>221.2){let q=ss(p(t,221.2,222.2));r={x:mix(r.x,1744,q),y:mix(r.y,698,q),rot:mix(r.rot,-7,q),scale:mix(r.scale,.5,q)}}return r;
+}
+function paperGrip(r,side){let a=r.rot*PI/180,x=side*61*r.scale,y=64*r.scale;return[r.x+x*Math.cos(a)-y*Math.sin(a),r.y+x*Math.sin(a)+y*Math.cos(a)]}
+function bookState(t,s){if(t<195.3)return null;if(t<196.3){let q=ss(p(t,195.3,196.3));return{x:mix(2050,s.x+s.co*42*HS,q),y:mix(713,s.y-106*HS,q),scale:.69,owner:'human',angle:mix(0,-8,q)}}if(t<203.6)return{x:s.x+s.co*43*HS,y:s.y-106*HS,scale:.69,owner:'human',angle:s.co*5};if(t<205){let q=ss(p(t,203.6,205));return{x:mix(s.x+s.co*43*HS,1815,q),y:mix(s.y-106*HS,605,q),scale:mix(.69,.8,q),angle:mix(s.co*5,0,q),owner:'human'}}return{x:1815,y:605,scale:.8,angle:0,owner:'set'}}
+function stickerHold(s,which,t){if(which===0)return{x:s.x+s.co*47*HS,y:s.y-124*HS,rot:s.co*7};return{x:s.x-51*HS,y:s.y-133*HS,rot:-11}}
+function stickerState(s,t,which=0){
+ let r={...stickerHold(s,which,t),scale:.72},a=which?311.4:309.2,b=which?312.2:310.2,u=ss(p(t,a,b));
+ r={x:mix(1815,r.x,u),y:mix(591,r.y,u),rot:r.rot*u,scale:mix(.85,.72,u)};
+ if(which&&t>=313.2){let u=ss(p(t,313.2,314.15));r={x:mix(r.x,s.shoulder[0]-s.co*7,u),y:mix(r.y,s.shoulder[1]+19,u),rot:mix(r.rot,-8*s.co,u),scale:mix(r.scale,.245,u)}}
+ if(!which&&t>=318.1){let u=ss(p(t,318.1,319));r={x:mix(r.x,boxBX(t)+28,u),y:mix(r.y,616,u),rot:mix(r.rot,-6,u),scale:mix(r.scale,.70,u)}}
+ let rot=r.rot*PI/180,x=(which?-27:20)*r.scale,y=25*r.scale;r.grip=[r.x+x*Math.cos(rot)-y*Math.sin(rot),r.y+x*Math.sin(rot)+y*Math.cos(rot)];return r;
+}
+function checklistState(s,t,final=false){let a=final?328:268,b=final?332.6:278,out=ss(p(t,a,a+.7)),inside=ss(p(t,b-.7,b)),u=out*(1-inside),target=final?[s.x-47*HS,s.y-164*HS]:[s.x+s.co*55*HS,s.y-142*HS];return{x:mix(s.hip[0]+6*s.co,target[0],u),y:mix(s.hip[1]+6,target[1],u),scale:mix(.10,final?.54:.51,u)};}
+function paperBallState(t,s){let x=s.x+45,y=665;if(t>=197){let q=pointTrack([[197,2155,665],[197.28,2160,621],[197.55,2055,605]],t);[x,y]=q}if(t>=197.55){let q=qbez([2055,605],[1905,357],[1765,781],p(t,197.55,199.05));[x,y]=q}return{x,y,rot:(t-193.6)*117};}
+function peeledLabel(t){let q=ss(p(t,190,192.4)),x=mix(2102,2164,q),y=mix(618,587,q),rot=-37*q;if(t>193){let u=p(t,193,195.1);x=mix(2164,2240,u);y=587+211*u*u;rot=mix(-37,360,u)}return{x,y,rot};}
+// The colour sleeve is a physical folded sheet on the front lip of the
+// bench. It is picked up, unfolded around this same cup, then put back.
+function sleeveState(t){
+ let x=353,y=646,rot=0,sy=.12;
+ if(t>=90.3&&t<91.2){let u=ss(p(t,90.3,91.2));x=mix(353,432,u);y=mix(646,582,u);sy=mix(.12,1,u)}
+ else if(t>=91.2&&t<94.3){x=432;y=582;sy=1}
+ else if(t>=94.3&&t<95.3){let u=ss(p(t,94.3,95.3));x=mix(432,371,u);y=mix(582,611,u);rot=55*u;sy=1}
+ else if(t>=95.3&&t<96.2){let u=ss(p(t,95.3,96.2));x=mix(371,353,u);y=mix(611,646,u);rot=55*(1-u);sy=mix(1,.12,u)}
+ let a=rot*PI/180,grip=[x-22*Math.cos(a)+12*sy*Math.sin(a),y-22*Math.sin(a)-12*sy*Math.cos(a)];
+ return{x,y,rot,sy,grip,held:t>=90.3&&t<96.2};
+}
+function binding(s,which,target,w=1){if(!target||w<=0)return;let a=which==='l'?s.lh:s.rh;a[0]=mix(a[0],target[0],clamp(w));a[1]=mix(a[1],target[1],clamp(w))}
+function bindWindow(s,t,a,b,which,pt,fade=.18){if(t<a||t>b)return;binding(s,which,pt,ss(p(t,a,a+fade))*(1-ss(p(t,b-fade,b))))}
+const CONTACT_WARNINGS=[];
+function applyHands(s,t,cu){
+ if(cu.owner==='human'){
+  let ang=cu.rot*PI/180,fc=cu.face<0?-1:1,offset=(x,y)=>[cu.x+x*Math.cos(ang)-y*Math.sin(ang),cu.y+x*Math.sin(ang)+y*Math.cos(ang)];
+  binding(s,'r',offset(32*fc*(.54+.46*Math.abs(cu.face)),-30));binding(s,'l',offset(-12*fc*(.54+.46*Math.abs(cu.face)),-1));
+ }
+ bindWindow(s,t,18.2,19.2,'r',[496,686]);
+ if(t>24&&t<29.3){binding(s,'r',[s.x+s.co*56*HS,s.y-106*HS]);binding(s,'l',[s.x+s.co*22*HS,s.y-96*HS])}
+ bindWindow(s,t,29.35,30.7,'r',[436,603]);bindWindow(s,t,32.6,33.55,'r',[496,686]);
+ bindWindow(s,t,40.1,42.2,'r',[538,596]);
+ if(t>=90&&t<=96.4){let sheet=sleeveState(t);binding(s,'l',sheet.grip,ss(p(t,90,90.3))*(1-ss(p(t,96.2,96.4))));binding(s,'r',[466,580],ss(p(t,90,90.5))*(1-ss(p(t,94.3,94.75))))}
+ bindWindow(s,t,99,100.4,'r',[496,686]);bindWindow(s,t,103.2,105,'r',[489,627]);
+ for(let [a,b] of [[128,131],[142,145]])if(t>=a&&t<=b){binding(s,'r',[1666+Math.sin(t*17)*7,640+Math.max(0,Math.sin(t*13))*4]);binding(s,'l',[1626+Math.sin(t*15)*5,640+Math.max(0,Math.cos(t*11))*4])}
+ if(t>=175.7&&t<193.6){let r=receiptState(s,t);binding(s,'r',paperGrip(r,1));binding(s,'l',paperGrip(r,-1),1-ss(p(t,183.4,185.2)))}
+ if(t>=190&&t<193.0){let r=peeledLabel(t),a=r.rot*PI/180;binding(s,'l',[r.x-25*Math.cos(a),r.y-25*Math.sin(a)],ss(p(t,190,190.2))*(1-ss(p(t,192.8,193))))}
+ bindWindow(s,t,194.5,195.5,'l',[2050,723]);
+ let bk=bookState(t,s);if(bk&&bk.owner==='human'){binding(s,'l',[bk.x-31,bk.y+11]);if(t>=197.8)binding(s,'r',[bk.x+31,bk.y+11])}
+ if(t>=193.6&&t<197.55){let r=paperBallState(t,s),start=paperGrip(receiptState(s,t),1),u=ss(p(t,193.6,193.95));binding(s,'r',[mix(start[0],r.x,u),mix(start[1],r.y,u)])}
+ if(t>=197.55&&t<197.8){let r=pointTrack([[197.55,2055,605],[197.8,2020,651]],t);binding(s,'r',r,1-ss(p(t,197.7,197.8)))}
+ if(t>=218&&t<=222.2){let r=receiptState(s,t,true);binding(s,'r',paperGrip(r,1));binding(s,'l',paperGrip(r,-1),1-ss(p(t,220.9,221.6)))}
+ bindWindow(s,t,225,227.2,'r',[1850,585]);
+ bindWindow(s,t,246,249.0,'r',[1882,610]);bindWindow(s,t,246,249.0,'l',[1834,624]);
+ bindWindow(s,t,265.9,267.9,'r',[2190,579]);
+ bindWindow(s,t,287.4,289.4,'l',[1702+Math.sin(t*9)*8,590+Math.cos(t*9)*5]);
+ if(t>=309.2&&t<319.3){let r=stickerState(s,t,0);binding(s,'r',r.grip,1-ss(p(t,319.1,319.3)));if(t>=311.4&&t<314.35){let l=stickerState(s,t,1);binding(s,'l',l.grip,1-ss(p(t,314.15,314.35)))}}
+ bindWindow(s,t,324,325.9,'r',[2230,574]);
+ if(t>=268&&t<278||t>=328&&t<332.6){let c=checklistState(s,t,t>=328),w=ss(p(t,t>=328?328:268,t>=328?328.16:268.16));binding(s,'r',[c.x+74*c.scale,c.y+34*c.scale],w);binding(s,'l',[c.x-74*c.scale,c.y+34*c.scale],w)}
+ bindWindow(s,t,332.5,334.0,'r',[2228,693]);
+ if(t>=345.2&&t<349.4){let g=unknownState(t,s);binding(s,'r',[g.x+8,g.y-20]);binding(s,'l',[g.x-13,g.y-34])}
+ if(t>=349.5){binding(s,'r',[2261,630],ss(p(t,349.5,350.2)));s.mood='think'}
+ if((t>77&&t<81)||(t>191.9&&t<194)||(t>251&&t<254))s.mood='shock';
+ else if((t>53.8&&t<59)||(t>109&&t<115)||(t>93&&t<94.3)||(t>333&&t<345))s.mood='happy';
+ else if((t>35&&t<40)||(t>90&&t<96)||(t>184&&t<197)||(t>285&&t<295))s.mood='think';
+ return s;
+}
+function joint(a,b,l1,l2,bend){let dx=b[0]-a[0],dy=b[1]-a[1],dist=Math.max(.0001,Math.hypot(dx,dy)),d=Math.min(dist,l1+l2-.03),u=(l1*l1-l2*l2+d*d)/(2*d),h=Math.sqrt(Math.max(0,l1*l1-u*u));return[a[0]+dx/dist*u-dy/dist*h*bend,a[1]+dy/dist*u+dx/dist*h*bend]}
+function limb(a,k,b,c,w){let u=.17,pre=[mix(k[0],a[0],u),mix(k[1],a[1],u)],post=[mix(k[0],b[0],u),mix(k[1],b[1],u)];return P(`M${f(a[0])} ${f(a[1])}L${f(pre[0])} ${f(pre[1])}Q${f(k[0])} ${f(k[1])} ${f(post[0])} ${f(post[1])}L${f(b[0])} ${f(b[1])}`,c,w)}
+function gazeTarget(s,t){
+ if(t<15)return[230,627];if(t<29)return t<20?[650,520]:[-78,640];
+ if(t<60){let q=fract((t-33)/2.7);return q<.37?[563,515]:q<.65?[670,525]:[811,525]}
+ if(t<89){let c=cupState(t,s);return[c.x,c.y-28]}
+ if(t<98)return(t<91.4||t>94.2)?[432,580]:[811,525];
+ if(t<115)return t>109?[488,568]:[811,525];
+ if(t<124)return[2000,625];if(t<156){if(t>134&&t<141.5||t>146){let c=cupState(t,s);return[c.x,c.y-33]}return[1565,505]}
+ if(t<175.7)return[1566,534];if(t<190){let r=receiptState(s,t);return t>183.5&&Math.sin(t*1.7)>0?[2100,622]:[r.x,r.y+40]}
+ if(t<194)return[2100,624];if(t<205){let b=bookState(t,s);return b?[b.x,b.y]:[2050,722]}
+ if(t<237){if(t>=218&&t<222.2){let r=receiptState(s,t,true);return[r.x,r.y+35]}return[1566,526]}
+ if(t<251)return[1850,649];if(t<263){let c=cupState(t,s);return[c.x,c.y-26]}
+ if(t>=268&&t<278){let c=checklistState(s,t);return[c.x,c.y]}if(t<273)return[2230,622];if(t<282)return[1566,526];if(t<307)return[1566,525];
+ if(t<314){let r=stickerHold(s,t>311.9&&Math.sin(t*3)>0?1:0,t);return[r.x,r.y]}
+ if(t>=328&&t<332.6){let c=checklistState(s,t,true);return[c.x,c.y]}if(t<334)return[2230,624];if(t<345)return[2600,625];let g=unknownState(t,s);return[g.x,g.y-33];
+}
+function drawHuman(s,t){let v=s.v,dir=s.co>=0?1:-1,hip=s.hip,sh=s.shoulder;
+ let lh=s.lh,rh=s.rh,kl=joint(hip,s.feet[0],48*HS,48*HS,-dir),kr=joint(hip,s.feet[1],48*HS,48*HS,-dir),el=joint(sh,lh,45*HS,45*HS,(v[13]>=0?1:-1)*dir),er=joint(sh,rh,45*HS,45*HS,(v[14]>=0?1:-1)*dir);
+ let z=E(s.x+3,FLOOR+3,29,3.5,C.ink,.07);
+ // rear limbs; toe direction follows yaw, even during a stationary turn.
+ z+=limb(sh,el,lh,C.back,6.5)+limb(hip,kl,s.feet[0],C.back,7.0);
+ z+=P(`M${f(s.feet[0][0]-3*s.co)} ${f(s.feet[0][1])}l${f(11*s.co)} ${f(s.footMeta?.[0].stance?0:-2*Math.sin((s.footMeta?.[0].phase||0)*PI))}`,C.back,6.5);
+ z+=P(`M${f(sh[0])} ${f(sh[1])}Q${f(mix(sh[0],hip[0],.4)-3*s.co)} ${f(mix(sh[1],hip[1],.45))} ${f(hip[0])} ${f(hip[1])}`,C.ink,9.2);
+ z+=limb(hip,kr,s.feet[1],C.ink,8)+P(`M${f(s.feet[1][0]-3*s.co)} ${f(s.feet[1][1])}l${f(12*s.co)} ${f(s.footMeta?.[1].stance?0:-2*Math.sin((s.footMeta?.[1].phase||0)*PI))}`,C.ink,7.3);
+ z+=limb(sh,er,rh,C.ink,7.0)+O(lh[0],lh[1],3,C.back,'none',0)+O(rh[0],rh[1],3.6,C.ink,'none',0);
+ let tilt=v[4]*PI/180,head=[sh[0]+Math.sin(tilt)*13*s.co,sh[1]-37],blink=(fract(t/4.7)>.949&&fract(t/4.7)<.985)||(fract((t+.2)/11.8)>.973);
+ z+=L(sh[0],sh[1],head[0],head[1]+20,C.ink,7.4)+O(head[0],head[1],24,C.paper,C.ink,6.0);
+ let target=gazeTarget(s,t),gx=clamp((target[0]-head[0])/110,-1,1)*2.2,gy=clamp((target[1]-head[1])/100,-1,1)*2.5;
+ let ex=head[0]+s.co*11+s.si*6+gx,ey=head[1]-2+gy,ex2=head[0]+s.co*11-s.si*6+gx,mc=head[0]+s.co*9;
+ if(blink)z+=L(ex-2.5,ey,ex+2.5,ey,C.ink,1.7);else z+=O(ex,ey,s.mood==='shock'?2.8:2.1,C.ink,'none',0);
+ if(Math.abs(s.si)>.25){let a=clamp((Math.abs(s.si)-.25)/.65);z+=G(blink?L(ex2-2,ey,ex2+2,ey,C.ink,1.5):O(ex2,ey,1.8,C.ink,'none',0),'',a)}
+ if(s.mood==='shock')z+=O(mc,head[1]+8,3.0,'none',C.ink,1.5)+L(ex-4,ey-7,ex+4,ey-8,C.ink,1.7);
+ else if(s.mood==='happy')z+=P(`M${f(mc-4)} ${f(head[1]+6)}q4 5 8-1`,C.ink,1.6);
+ else if(s.mood==='think')z+=L(ex-5,ey-6,ex+3,ey-8,C.ink,1.7)+L(mc-3,head[1]+8,mc+3,head[1]+7,C.ink,1.3);
+ else z+=P(`M${f(mc-3)} ${f(head[1]+8)}q3 1 6-.5`,C.ink,1.3);
+ // The scarf trails velocity rather than blindly pointing the same way forever.
+ let wind=clamp(s.velocity/130,-1.8,1.8),tail=-s.co*13-wind*13+Math.sin(t*6)*1.5;
+ z+=P(`M${f(sh[0]-10)} ${f(sh[1]-7)}Q${f(sh[0])} ${f(sh[1]-3)} ${f(sh[0]+10)} ${f(sh[1]-7)}`,C.gold,4.8)+P(`M${f(sh[0]-s.co*6)} ${f(sh[1]-5)}q${f(tail)} ${f(8-Math.abs(wind)*3)} ${f(tail-3*s.co)} ${f(19-Math.abs(wind)*7)}l${f(9*s.co)}-2`,C.gold,3.5);
+ if(!(t>=268&&t<278||t>=328&&t<332.6))z+=G(R(-6,-9,12,16,C.white,C.line,.9,1)+L(-3,-4,3,-4,C.line,.8)+L(-3,0,1,0,C.line,.8),`translate(${f(s.hip[0]+6*s.co)} ${f(s.hip[1]+6)}) rotate(${f(s.co*8)})`);
+ if(t>=314.15)z+=stickerPaper(sh[0]-s.co*7,sh[1]+19,1,.245,-8*s.co);
+ return z;
+}
+function frontFingers(s,cu){if(cu.owner!=='human')return'';return O(s.rh[0],s.rh[1],3.8,C.ink,'none',0)+P(`M${f(s.rh[0]-2)} ${f(s.rh[1]-4)}q6-2 7 3`,C.ink,2.8)+O(s.lh[0],s.lh[1],3.3,C.back,'none',0)}
+
+/* 5. One continuous camera in the persistent room. */
+const CAMERA=[
+ [0,-320,610,1980],[1,-300,610,1980],[4,340,615,1450],[7,1180,590,2600],[9.7,450,640,1500],[13,380,625,1230],[18,600,630,1100],[23,80,590,1050],[29,535,595,1120],[33,640,605,850],[40,680,574,780],[51,680,574,780],[56,670,615,1100],[63,365,626,1030],[70,560,610,1050],[75,825,644,1090],[78,1000,687,890],[79.35,1090,723,660],[81,1070,704,800],[86,630,640,1100],[90,690,591,1050],[94,690,591,1050],[99,610,604,1040],[105,650,578,810],[109,660,605,1130],[114,965,655,1050],[117,1310,603,1500],[122,1850,595,1430],[127,1690,583,1270],[131,1580,570,820],[136,1755,587,1110],[140,1810,600,1370],[143,1585,577,910],[150,1825,600,1380],[156,1960,604,1250],[162,1730,579,1230],[168,1615,565,980],[176,1785,633,1000],[183,2070,646,1030],[190,2120,653,810],[198,1940,671,1100],[204,1740,592,1080],[210,1595,574,910],[218,1720,610,1110],[227,1680,585,1080],[237,1860,603,1360],[245,1935,604,1230],[250,1890,600,1100],[254,1955,555,1110],[260,2130,586,1150],[266,2230,618,1050],[274,2120,630,1100],[281,1855,606,1210],[287,1650,569,950],[297,1595,548,820],[305,1710,600,1030],[312,1840,655,930],[318,2220,634,1000],[326,2240,613,930],[332,2290,654,1140],[339,2440,604,1330],[344,2500,600,1530],[348,2330,630,1120],[352,2280,614,950],[355,1995,540,2280],[360,1995,535,2400]
+];
+function camCurve(t,col){let i=0;while(i<CAMERA.length-2&&CAMERA[i+1][0]<t)i++;let a=CAMERA[i],b=CAMERA[i+1],u=p(t,a[0],b[0]),h=b[0]-a[0];
+ const slope=j=>{if(j===0||j>=CAMERA.length-1)return 0;let z=CAMERA[j-1],v=CAMERA[j],w=CAMERA[j+1],d1=(v[col]-z[col])/(v[0]-z[0]),d2=(w[col]-v[col])/(w[0]-v[0]);if(d1*d2<=0)return 0;let h1=v[0]-z[0],h2=w[0]-v[0];return(3*(h1+h2))/((2*h2+h1)/d1+(h2+2*h1)/d2)};
+ let u2=u*u,u3=u2*u;return(2*u3-3*u2+1)*a[col]+(u3-2*u2+u)*h*slope(i)+(-2*u3+3*u2)*b[col]+(u3-u2)*h*slope(i+1)}
+function cameraAt(t){return{x:camCurve(t,1),y:camCurve(t,2),w:camCurve(t,3)}}
+const CHAPTERS=[
+ {start:0,end:24,title:'一只蓝杯',sub:'目标不是「像 AI」，是把订单做好'},
+ {start:24,end:72,title:'从示范里学',sub:'输入 → 预测 → 与标签比较 → 反向传播'},
+ {start:72,end:118,title:'它学的，竟然是颜色',sub:'相关性捷径、反例、未参与训练的测试'},
+ {start:118,end:160,title:'同一句话，换一个字',sub:'预训练、token、位置与注意力；上下文不是参数'},
+ {start:160,end:202,title:'像真的，不等于是真的',sub:'下一 token 概率，不能替代事实凭据'},
+ {start:202,end:240,title:'先翻手册，再回答',sub:'RAG：检索、引用、核对；参数仍然冻结'},
+ {start:240,end:282,title:'碰到现实，听取结果',sub:'工具执行、测量、计算、失败反馈与重新规划'},
+ {start:282,end:322,title:'给随机性一个方向',sub:'条件扩散、迭代去噪、不同种子与不同结果'},
+ {start:322,end:360,title:'最后一道工序，是检验',sub:'完成条件、执行授权、未知输入与人工复核'}
+];
+const chapterAt=t=>CHAPTERS.find(s=>t>=s.start&&t<s.end)||CHAPTERS.at(-1);
+const GEN_WORDS=['A盒','可','承重','2.0','kg'];
+const GEN_ALTS=[['A盒','B盒','未知'],['可','不宜','可能'],['承重','存放','容纳'],['2.0','0.5','1.2'],['kg','g','件']];
+const GEN_PROBS=[[.58,.30,.12],[.66,.17,.17],[.68,.19,.13],[.55,.27,.18],[.89,.08,.03]];
+const INVISION=[[563,494],[563,561]],HIDDEN=[[670,478],[670,525],[670,572]],OUTVISION=[811,525];
+function neuron(x,y,a,r=12){let c=a<0?C.gold:C.teal;return O(x,y,r,C.paper,C.ink,1.6)+O(x,y,r-3,c,'none',0,`opacity="${f(Math.abs(a)*.37)}"`)+T(x,y+3.4,a.toFixed(1),7.8,C.ink,'middle','class="mono"')}
+function visionWindow(t){let n=netAt(t),inp=inputAt(t),a=infer(n,inp),learning=(t>=33&&t<=55)||(t>=100&&t<=109),active=t>18.7,z='',cycle=fract((t-(t<70?33:100))/2.7),q=infer(n,inp).p;
+ if(!active)return O(700,526,19,'none',C.line,1.5)+T(700,532,'?',22,C.mute);
+ // Weights are data, not decorative random wires.
+ for(let i=0;i<2;i++)for(let j=0;j<3;j++){let A=INVISION[i],B=HIDDEN[j],w=n.W[j][i],col=i?C.gold:C.teal;z+=L(...A,...B,col,Math.min(4.5,.9+Math.abs(w)*.65),'opacity=".44"');let mid=[mix(A[0],B[0],.40),mix(A[1],B[1],.40)];z+=dial(...mid,w*3,col,5.1);if(Math.abs(w)>.06)z+=T(mid[0],mid[1]+13,(w>0?'+':'')+w.toFixed(1),5.9,C.mute,'middle','class="mono"');
+  if(learning&&cycle<.37){let u=cycle/.37;z+=O(mix(A[0],B[0],u),mix(A[1],B[1],u),3,col,'none',0)}
+  if(learning&&cycle>.75){let u=(cycle-.75)/.25;z+=O(mix(B[0],A[0],u),mix(B[1],A[1],u),2.7,C.red,'none',0)}
+ }
+ for(let j=0;j<3;j++){let A=HIDDEN[j],B=OUTVISION,w=n.v[j];z+=L(...A,...B,C.ink,Math.min(4,.7+Math.abs(w)*.55),'opacity=".4"');let mid=[mix(A[0],B[0],.60),mix(A[1],B[1],.60)];z+=dial(...mid,w*2.3,C.ink,5.0);
+  if(learning&&cycle>=.37&&cycle<.63){let u=(cycle-.37)/.26;z+=O(mix(A[0],B[0],u),mix(A[1],B[1],u),3,C.teal,'none',0)}
+  if(learning&&cycle>=.65&&cycle<=.8){let u=p(cycle,.65,.8);z+=O(mix(B[0],A[0],u),mix(B[1],A[1],u),2.7,C.red,'none',0)}
+ }
+ // A colour chip and a handle trace make the simplified features tangible.
+ z+=O(563,494,13,t>=347?C.tealLight:(t>=110&&t<114)?C.gold:(inp[0]>=0?C.red:C.blue),C.ink,1.4)+O(563,561,13,C.paper,C.ink,1.4)+P('M557 553h7q13 8 0 16h-7',C.gold,2.1)+T(542,487,'色',7,C.mute)+T(542,556,'柄',7,C.mute);
+ z+=T(564,517,inp[0].toFixed(2),7,C.mute,'middle','class="mono"')+T(563,585,inp[1].toFixed(2),7,C.mute,'middle','class="mono"');
+ HIDDEN.forEach((pt,j)=>z+=neuron(...pt,a.h[j],11));
+ z+=O(...OUTVISION,23,C.paper,C.ink,1.8)+ring(811,525,18,q,C.teal,3.0)+T(811,528,Math.round(q*100)+'%',8,C.teal,'middle','class="mono"')+T(811,562,'P(杯)',8,C.mute);
+ z+=T(670,594,'tanh',6.8,C.mute)+T(811,580,'sigmoid',6.8,C.mute);
+ if(t<72||learning){let yi=learning?(t<70?biasedData[Math.max(0,Math.floor((t-31)/4.5))%4]?.y:balancedData[Math.floor((t-99)*1.25)%6]?.y):inp[1]>0?1:0;yi=yi??1;z+=O(850,585,8,C.paper,C.gold,1.3)+T(850,587.5,String(yi),6.4,C.gold,'middle','class="mono"')+L(834,531,850,577,C.line,1.1);if(learning&&cycle>.63&&cycle<.80)z+=O(850,mix(545,584,p(cycle,.63,.8)),2.3,C.red,'none',0)}
+ z=G(z,'',1,'clip-path="url(#visionGlass)"');
+ // A visibly separate loss loop only operates during parameter training.
+ let loss=bce(n,t<100?biasedData:balancedData);
+ z+=T(806,691,loss.toFixed(3),10,C.red,'middle','class="mono"');
+ if(learning){z+=P('M851 596v50H539V602',C.red,1.5,'none','stroke-dasharray="4 5"')+bezFlow([851,596],[821,656],[542,642],t*.38,C.red,6);z+=R(469,673,55,26,C.tealLight,C.teal,1.8,4)+T(497,690,'训练',9,C.teal)}
+ else{z+=lock(875,442,.43)+R(541,674,53,24,C.tealLight,C.teal,1.6,4)+T(567,690,'推理',9,C.teal)}
+ return z;
+}
+function tokenChip(x,y,word,w=37,alpha=1,c=C.teal){return G(R(x-w/2,y-14,w,24,C.paper,c,1.2,3)+T(x,y+2,word,9.5,C.ink),``,alpha)}
+function attentionWindow(t){let z='',q=ss(p(t,127.9,130.1)),right=t>=143,words=['把','蓝杯','放在','红罐',right?'右边':'左边','。'];
+ const xs=[1437,1487,1537,1587,1637,1683],query=4,att=attentionState(right),weights=att.weights;
+ for(let i=0;i<6;i++){let drop=out(p(t,128+i*.19,129+i*.19));z+=tokenChip(xs[i],mix(439,482,drop),words[i],i===5?24:42,drop,i===4?C.gold:C.teal);z+=T(xs[i],511,String(i+1),7,C.mute,'middle','class="mono"');for(let k=0;k<3;k++){let val=att.values[i][k],mag=Math.abs(val);z+=L(xs[i]-15,539,xs[i]+14,539,C.line,.6)+R(xs[i]-13+k*9,val<0?539:539-17*mag,5,Math.max(1,17*mag),val<0?C.gold:C.teal,'none',0,1,`opacity="${f(.35+.4*mag)}"`)}}
+ const outPt=[1580,583];
+ for(let i=0;i<6;i++){let weight=weights[i],a=[xs[i],543];z+=P(`M${a[0]} ${a[1]}Q${a[0]} 576 ${outPt[0]} ${outPt[1]}`,i===4?C.gold:C.teal,.45+weight*7,'none',`opacity="${f(weight?(.25+weight)*q:0)}"`);if(t>130&&weight>0)z+=bezFlow(a,[a[0],576],outPt,t*.42+i*.13,i===4?C.gold:C.teal,Math.max(1,Math.round(weight*9)));if(t>130)z+=T(xs[i],557,Math.round(weight*100)+'%',6.6,C.mute,'middle','class="mono"')}
+ z+=O(...outPt,11,C.paper,C.teal,1.7)+P(`M${outPt[0]-6} ${outPt[1]}h12m-6-6v12`,C.teal,1.2)+T(1530,589,'加权混合',7,C.mute,'end');
+ // Decoder-only causal masking: the selected position cannot use a later token.
+ z+=G(R(1669,515,28,51,'url(#hatch)',C.line,1,3)+lock(1683,577,.40),``,ss(p(t,131.4,132.5)));
+ if(t>134)z+=arrow(1596,583,1704,583,C.teal,1.6)+T(1661,578,(att.value[2]>0?'+':'')+att.value[2].toFixed(2),7,C.gold,'middle','class="mono"');
+ return G(z,'',1,'clip-path="url(#languageGlass)"');
+}
+function generationWindow(t){let z='',k=clamp(Math.floor((t-162)/2.7),0,4),u=fract((t-162)/2.7),probs=softmax(GEN_PROBS[k].map(Math.log));
+ z+=T(1430,468,'已有上下文',7,C.mute,'start');let count=clamp(Math.floor((t-162)/2.7),0,5);for(let i=0;i<count;i++)z+=tokenChip(1444+i*54,488,GEN_WORDS[i],48,1,C.line);
+ z+=T(1430,520,'下一块',7,C.mute,'start');
+ for(let i=0;i<3;i++){let y=534+i*23,sel=i===0&&u>.64;z+=R(1515,y-12,76,20,sel?C.tealLight:C.paper,sel?C.teal:C.line,1,3)+T(1553,y+2,GEN_ALTS[k][i],9,sel?C.teal:C.mute)+R(1601,y-8,80*probs[i],9,i===0?C.teal:C.line,'none',0,2)+T(1697,y+1,Math.round(probs[i]*100)+'%',7,C.mute,'end','class="mono"');if(sel)z+=check(1497,y-1,.33)}
+ z+=P('M1701 584v14h-267v-89',C.gold,1.2,'none','stroke-dasharray="3 5"');
+ if(u>.67){let pt=qbez([1553,534],[1753,625],[1450+Math.min(4,k)*54,488],p(u,.67,1));z+=O(...pt,4,C.gold,'none',0)}
+ return G(z,'',1,'clip-path="url(#languageGlass)"');
+}
+function ragWindow(t){let z='',isB=t>=225,rank=retrieve((isB?'B盒':'A盒')+' 承重'),get=ss(p(t,isB?226:208,isB?229:212));
+ z+=tokenChip(1480,470,isB?'B盒 · 承重':'A盒 · 承重',108,1,C.gold)+T(1687,470,'检索',8,C.mute,'end');
+ for(let i=0;i<3;i++){let d=rank[i],x=1460+i*98,y=524,selected=i===0;let lift=(selected?-5:0)*get;z+=G(R(-37,-35,75,79,C.white,selected?C.gold:C.line,selected?1.8:1,3)+T(0,-19,d.id,8,selected?C.gold:C.mute,'middle','class="mono"')+T(0,1,d.id==='R-03'?'80 mm':d.weight.toFixed(2)+' kg',10,C.ink,'middle','class="mono"')+L(-22,14,22,14,C.light,1.5)+L(-22,21,9,21,C.light,1.5)+R(-25,30,50*(d.score/2),3,selected?C.gold:C.line,'none',0,1),`translate(${x} ${f(y+lift)})`);if(selected&&get>.3)z+=check(x+28,y-27+lift,.4,C.gold)}
+ if(t>=211){let d=rank[0],x=mix(1460,1567,get),y=mix(555,591,get);z+=G(R(-71,-12,142,23,C.paper,C.gold,1.4,3)+T(0,3,d.id+' · '+d.weight.toFixed(2)+' kg',9,C.ink,'middle','class="mono"'),`translate(${f(x)} ${f(y)})`)+L(1660,591,1705,591,C.gold,1.4)}
+ return G(z,'',1,'clip-path="url(#languageGlass)"');
+}
+function toolWindow(t){let z='',stage=t<243?0:t<249?1:t<251?2:t<254?3:t<261?4:5;
+ const rows=[['weigh()','等待测量'],['weigh()',(t<248?'0.48':'0.80')+' kg'],['check(0.8 ≤ 0.5)','false → B盒'],['move(B)','BLOCKED'],['raise(); move(B)','绕过障碍'],['observe()','已入盒 ✓']];let [cmd,result]=rows[stage];
+ z+=T(1432,469,'工具请求',8,C.mute,'start')+R(1430,483,266,34,C.paper,C.gold,1.4,4)+T(1563,504,cmd,12,C.ink,'middle','class="mono"');
+ z+=arrow(1558,522,1558,538,C.gold,1.4)+T(1432,548,'工具返回',8,C.mute,'start')+R(1430,556,266,34,stage===3?C.redLight:C.tealLight,stage===3?C.red:C.teal,1.4,4)+T(1563,578,result,12,stage===3?C.red:C.teal,'middle','class="mono"');
+ z+=P('M1705 574v-73h-8',C.teal,1.4,'none','stroke-dasharray="3 4"');return G(z,'',1,'clip-path="url(#languageGlass)"');
+}
+// Quantized opacity affects only drawing, never the sampler. Each bucket is a
+// compound SVG path rather than hundreds of DOM rectangles, keeping actual
+// denoising animation fluid on smaller devices. Finished labels are cached.
+const finalPixelPaths=new Map();
+function pixelPaths(q,which){
+ if(q>=.999999&&finalPixelPaths.has(which))return finalPixelPaths.get(which);
+ let pixels=diffusionFrame(which,q),buckets=Array.from({length:32},()=>[]);
+ for(let j=0;j<DN;j++)for(let i=0;i<DN;i++){let k=Math.round(clamp((pixels[j*DN+i]+.95)/1.9)*31);if(k)buckets[k].push(`M${i} ${j}h1.012v1.012h-1.012z`)}
+ let z=buckets.map((d,k)=>d.length?`<path d="${d.join('')}" fill="${C.ink}" opacity="${f(k/31)}"/>`:'').join('');
+ if(q>=.999999)finalPixelPaths.set(which,z);return z;
+}
+function pixelArt(x,y,size,q,which=0,bg=true){return (bg?R(x-4,y-4,size+8,size+8,C.white,C.line,.8,2):'')+G(pixelPaths(q,which),`translate(${f(x)} ${f(y)}) scale(${f(size/DN)})`)}
+function diffusionWindow(t){let z='',q=ss(p(t,283.6,305.5));
+ z+=T(1475,467,'seed · 199',7.5,C.mute,'middle','class="mono"')+T(1638,467,'seed · 927',7.5,C.mute,'middle','class="mono"');
+ z+=pixelArt(1429,478,109,q,0)+pixelArt(1593,478,109,q,1);
+ z+=T(1566,513,'ε̂',14,C.teal)+P('M1550 535a16 16 0 1 1 28 10l-1-9m1 9-9-2',C.teal,1.6)+T(1566,573,String(Math.round(44*(1-q))).padStart(2,'0'),9,C.mute,'middle','class="mono"');
+ z+=R(1430,595,270,3,C.light,'none',0,1)+R(1430,595,270*q,3,C.teal,'none',0,1);return G(z,'',1,'clip-path="url(#languageGlass)"');
+}
+function languageWindow(t){let z='';if(t<124){z+=O(1567,525,26,'none',C.line,1.6)+P('M1555 519h23M1555 528h15M1555 537h21',C.line,1.5);if(t>118)z+=ring(1567,525,33,p(t,118,125),C.teal,2.2)}
+ else if(t<128){z+=T(1565,503,'把蓝杯放在红罐左边',13,C.ink)+L(1440,521,1691,521,C.line,1)+T(1565,559,'已载入 · 预训练参数',8,C.mute)+lock(1677,555,.56)}
+ else if(t<156)z+=attentionWindow(t);
+ else if(t<162)z+=T(1566,520,'A盒能装吗？',17,C.ink)+T(1566,558,'输入 → 上下文',9,C.mute);
+ else if(t<179)z+=generationWindow(t);
+ else if(t<203)z+=T(1566,499,'建议使用 A盒',12,C.ink)+T(1566,541,'2.0 kg',24,C.teal,'middle','class="mono"')+T(1566,577,'来源：—',8,C.mute);
+ else if(t<237)z+=ragWindow(t);
+ else if(t<280)z+=toolWindow(t);
+ else if(t<307){z+=diffusionWindow(t);z+=R(1397,430,280,16,C.paper,'none',0,0)+T(1400,442,'IMAGE · εθ',10,C.teal,'start','letter-spacing="1.5"')}
+ else if(t<322)z+=T(1566,497,'两个种子，两张结果',10,C.mute)+pixelArt(1465,519,70,1,0)+pixelArt(1598,519,70,1,1);
+ else if(t<334)z+=T(1566,491,'包装完成',13,C.ink)+T(1566,535,'等待寄出授权',16,C.gold)+lock(1566,575,.65,C.gold);
+ else if(t<347)z+=check(1566,522,1.2)+T(1566,566,'工具已执行',11,C.teal);
+ else{let prob=infer(trained.balanced,tests.unknown.x).p;z+=T(1566,508,'?',29,C.gold)+T(1566,542,'P(杯) = '+Math.round(prob*100)+'%',13,C.mute,'middle','class="mono"')+T(1566,575,'待人工复核',10,C.gold)}
+ // Stable frozen parameter seals: prompts, evidence and tools do not pulse a training loop.
+ if(t>=124)z+=lock(1718,439,.37)+(t<280||t>=307?O(1701,685,2,C.teal,'none',0):O(1701,685,2,C.gold,'none',0));
+ if(t>=203&&t<237){let d=retrieve((t>=225?'B盒':'A盒')+' 承重')[0];z+=R(1452,677,157,17,C.paper,C.gold,1.2,2)+T(1530,689,d.id+' · '+d.weight.toFixed(2)+' kg',8,C.gold,'middle','class="mono"')+flow([1454,686],[1605,686],t*.2,C.gold,4)}
+ return z;
+}
+function badgeScore(t){if(t<55.3||t>=101)return'';let x=884,y=396,rot=-7,alpha=1;if(t>96.5){let u=p(t,96.5,100.6);x+=50*u;y+=395*u*u;rot+=220*u;alpha=1-ss(p(u,.82,1))}return G(O(0,0,38,C.white,C.gold,1.8)+O(0,0,32,'none',C.gold,.8,'stroke-dasharray="2 3"')+T(0,3,'4 / 4',17,C.ink,'middle','class="mono"')+T(0,18,'训练样本',7,C.mute),`translate(${f(x)} ${f(y)}) rotate(${f(rot)})`,alpha)}
+
+function diverter(t){let q=t<70?.74:infer(netAt(t),inputAt(t)).p,u=ss(p(q,.3,.7)),x=mix(1080,1037,u),y=mix(668,676,u),col=q>.5?C.teal:C.red;
+ let z=P(`M1000 615L${f(x)} ${f(y+5)}`,C.ink,5)+P(`M1000 613L${f(x)} ${f(y+3)}`,C.cream,2.5)+O(1000,615,7,C.paper,C.ink,1.5)+O(x,y+5,4,C.paper,C.ink,1.5);
+ z+=P('M871 587h37v-13h48v30',C.line,1.3)+O(956,599,5,t>=70?col:C.light,C.line,1.2);
+ if(t>=70&&t<116){z+=flow([874,587],[907,587],t*.9,col,3)+O(x+14,y-13,12,C.paper,col,1.2)+(q>.5?check(x+14,y-13,.46):cross(x+14,y-13,.44))}return z;
+}
+
+function scanner(t){let act=(t>=30&&t<64)||(t>70.8&&t<77)||(t>=90&&t<96)||(t>=99&&t<114),z='';if(act){let xx=420+Math.sin(t*3)*23;z+=P(`M432 501L${f(xx-29)} 610H${f(xx+29)}Z`,'none',0,C.teal)+R(xx-1,547,2,60,C.teal,'none',0,0)+L(400,607,464,607,C.teal,1.4);z=G(z,'',.10)+L(xx,550,xx,605,C.teal,1,'opacity=".5"');z+=flow([449,491],[503,491],t*.9,C.teal,4)}return z}
+function roboticArm(t,cu){let active=(t>=132&&t<154)||(t>=243.8&&t<264)||(t>=322&&t<327)||(t>=347),end=[2110,492],grip=1,bx=2110;
+ if(t>=132&&t<135.4){end=pointTrack([[132,2110,492],[134.6,2000,572],[135.4,2000,572]],t);grip=1-ss(p(t,134.5,135.4))}
+ else if(t>=135.4&&t<140.8){end=[cu.x,cu.y-78];grip=0}
+ else if(t>=140.8&&t<147.8){end=pointTrack([[140.8,1850,562],[141.4,1850,562],[142.7,1960,480],[146.4,1960,480],[147.8,1850,562]],t);grip=t<141.5?ss(p(t,140.8,141.5)):1-ss(p(t,147,147.8))}
+ else if(t>=147.8&&t<152.5){end=[cu.x,cu.y-78];grip=0}
+ else if(t>=152.5&&t<154){end=pointTrack([[152.5,2000,572],[153,2000,572],[154,2110,492]],t);grip=ss(p(t,152.5,153.1))}
+ else if(t>=243.8&&t<250.1){end=pointTrack([[243.8,2110,492],[245.2,2264,525],[245.7,2264,525],[247.9,1850,522],[249.1,1850,562],[250.1,1850,562]],t);grip=t<245.7?1-ss(p(t,245.2,245.7)):0}
+ else if(t>=250.1&&t<261){end=[cu.x,cu.y-78];grip=0}
+ else if(t>=261&&t<264){end=pointTrack([[261,2230,560],[261.8,2230,560],[264,2110,492]],t);grip=ss(p(t,261,261.8))}
+ else if(t>=322&&t<327){end=pointTrack([[322,2110,492],[323.4,2230,521],[325.4,2230,521],[327,2110,492]],t);grip=1}
+ else if(t>=348.9){end=pointTrack([[348.9,2110,492],[350,2335,471]],t);grip=1}
+ bx=clamp(end[0]+(end[0]<2000?35:-35),1810,2276);let base=[bx,367],kn=joint(base,end,159,150,1),finger=25+grip*10,z='';
+ z+=R(bx-37,342,74,26,C.cream,C.ink,2,5)+O(bx-21,354,7,C.paper,C.line,1.3)+O(bx+21,354,7,C.paper,C.line,1.3);
+ z+=limb(base,kn,end,C.ink,17)+limb(base,kn,end,C.paper,11)+O(...base,12,C.paper,C.ink,2)+O(...kn,11,C.cream,C.ink,2)+O(...end,8,C.paper,C.ink,2);
+ z+=R(end[0]-16,end[1]-2,32,15,C.paper,C.ink,1.7,4)+P(`M${f(end[0]-12)} ${f(end[1]+10)}L${f(end[0]-finger)} ${f(end[1]+25)}v31l7 3M${f(end[0]+12)} ${f(end[1]+10)}L${f(end[0]+finger)} ${f(end[1]+25)}v31l-7 3`,C.ink,3.5);
+ z+=O(end[0],end[1]+5,3,active?C.teal:C.line,'none',0);
+ if(t>=245.7&&t<248){let q=ss(p(t,247.5,248));z+=G(P('M-32 35l9-9 10 7 13-9 14 8 13-5 9 12-5 55-11-7-12 8-13-8-11 6-13-6Z',C.line,1.3,C.paper)+[[-20,48],[-5,48],[10,48],[23,49],[-20,64],[-5,64],[10,64],[23,64]].map(a=>O(...a,4,'none',C.light,1)).join(''),`translate(${f(end[0])} ${f(end[1])})`,1-q)}
+ return z;
+}
+function speech(s,t,a,b,text){if(t<a||t>b)return'';let u=ss(p(t,a,a+.22))*(1-ss(p(t,b-.22,b))),x=s.x+14,y=s.shoulder[1]-112,w=text.length*13+30;return G(R(x-w/2,y-23,w,42,C.white,C.line,1.4,13)+P(`M${x-6} ${y+19}l-6 13 20-13`,C.line,1.4,C.white)+T(x,y+4,text,12.5,C.ink),'',u)}
+
+/* 6. Object choreography. Every carry has an owner and every release has a
+   trajectory. The original blue cup persists all the way into the same box. */
+function trainingProps(t,s){let z='';
+ if(t>=24&&t<29.35){for(let i=0;i<4;i++)z+=photo(s.x+s.co*(39*HS+i*1.5),s.y-105*HS-i*2,i%2?C.blue:C.red,i%2?'can':'cup',.66,s.co*(5+i*2))}
+ if(t>=29.35&&t<31.0){let q=ss(p(t,29.35,30.6));z+=photo(mix(s.x+s.co*43*HS,432,q),mix(s.y-106*HS,602,q),C.red,'cup',mix(.66,.82,q),0)}
+ if(t>=31&&t<64){let k=Math.floor((t-31)/4.5),u=fract((t-31)/4.5),kind=k%2?'can':'cup',color=k%2?C.blue:C.red,x=mix(345,479,ss(p(u,.02,.83)));z+=photo(x,602,color,kind,.82,0,true);if(u>.8)z+=G(photo(960+26*p(u,.8,1),665,color,kind,.5,7),'',1-ss(p(u,.95,1)))}
+ if(t>=98.1&&t<109.5){let q=ss(p(t,98.1,99)),set=[[C.red,'cup'],[C.blue,'cup'],[C.blue,'can'],[C.red,'can']];set.forEach((a,i)=>z+=G(photo(285+(i%2)*72,564+Math.floor(i/2)*68,a[0],a[1],.76,(i%2?1:-1)*5),``,q));if(t>99.3)z+=L(312,510,374,510,C.gold,1.4)+T(344,497,'反例',10,C.gold)}
+ if(t>=108.9&&t<113.7){let q=ss(p(t,108.9,109.7)),u=ss(p(t,112.6,113.7));z+=G(photo(mix(404,488,q),591,C.gold,'cup',.80,0,false)+R(453,611,77,18,C.paper,C.gold,1,2)+T(491,623,'未参与训练',7.9,C.gold),``,q*(1-u));if(t>110.8)z+=G(check(488,530,.6),``,1-u)}
+ return z;
+}
+function papersAtStart(t){let z='';if(t<7.6)return'';for(let i=0;i<9;i++){let start=7.8+i*.18,u=p(t,start,start+1.5),x=mix(231,120+i*21,u)+Math.sin(u*TAU+i)*35*(1-u),y=410+385*u*u,angle=u*(i%2?-1:1)*60+Math.sin(u*12+i)*14*(1-u);if(t<start)continue;z+=G(R(-24,-26,48,59,C.white,C.line,1,2)+mug(0,9,.36,C.blue)+T(0,24,'00'+(i+2),6,C.mute,'middle','class="mono"'),`translate(${f(x)} ${f(y)}) rotate(${f(angle)}) scale(1 ${f(u>=1?.13:1)})`)}return z}
+function boxBack(x,y,h=78,open=1){return P(`M${f(x-58)} ${y-h}L${f(x-86*open)} ${y-h-23*open}L${f(x-9)} ${y-h-20*open}L${x} ${y-h+6}Z`,C.ink,2,C.cream)+P(`M${x} ${y-h+6}L${f(x+78*open)} ${y-h-24*open}L${f(x+58)} ${y-h}L${x} ${y-h+15}Z`,C.ink,2,'#e3d6b6')+R(x-56,y-h,112,h,C.cream,C.ink,2,1)+P(`M${f(x-51)} ${y-15}q30-9 44 0t55 1`,C.line,1.3,C.paper)}
+function boxFront(x,y,h=78,closed=0,sticker=false){let z=R(x-58,y-h+18,116,h-18,C.cream,C.ink,2.1,2)+T(x-28,y-24,'B',18,C.ink,'middle','class="mono"')+T(x+23,y-11,'1.20 kg',8,C.mute,'middle','class="mono"')+L(x,y-h+18,x,y,C.line,1.3);
+ if(closed>0){let q=ss(closed);z+=P(`M${f(x-58)} ${y-h+18}L${f(x-60+60*q)} ${f(y-h-20+28*q)}L${f(x+60-60*q)} ${f(y-h-20+28*q)}L${f(x+58)} ${y-h+18}Z`,C.ink,2,C.cream)+G(R(x-6,y-h+8,12,30,C.gold,'none',0,0,'opacity=".55"'),'',q)}
+ if(sticker)z+=stickerPaper(x+28,y-34,0,.70,-6);
+ return z}
+function stickerPaper(x,y,which=0,scale=1,rot=0){return G(R(-35,-36,70,77,C.white,C.line,1.2,3)+pixelArt(-28,-29,56,1,which,false)+P('M24 41l11-11h-11Z',C.line,.8,C.paper),`translate(${f(x)} ${f(y)}) rotate(${f(rot)}) scale(${scale})`)}
+function roomProps(t,s,cu){let back='',front='',fx='',wrap=ss(p(t,247.5,248.5));
+ back+=orderCard(229,489,t>343?3:0,.84)+papersAtStart(t);
+ back+=trainingProps(t,s);
+ // The actuator's reference can later becomes the real obstacle in its route.
+ back+=mug(1920,650,.90,C.red,'can');
+ back+=littleScale(1850,650,t<242.8?'—':t<248?'0.48 kg':'0.80 kg',t>=242.8);
+ if(t>=243&&t<250)back+=ring(1850,682,5,ss(p(t,243,249)),C.teal,1.5);
+ // Box A's manufacturer's label is initially obscured by a peelable inventory label.
+ back+=cardboard(2100,650,90,75,'A',1,0,false,false);
+ back+=R(2069,606,63,29,C.white,C.line,1.1,2)+T(2100,624,'0.50 kg',12,C.ink,'middle','class="mono"');
+ if(t<190.1)back+=R(2071,604,61,30,C.cream,C.line,1.1,2)+T(2102,624,'A-01',9,C.mute,'middle','class="mono"');
+ else {let r=peeledLabel(t);front+=G(R(-29,-13,58,27,C.cream,C.line,1,2)+T(0,4,'A-01',9,C.mute,'middle','class="mono"'),`translate(${f(r.x)} ${f(r.y)}) rotate(${f(r.rot)}) scale(1 ${f(1-.87*ss(p(t,194.85,195.1)))})`)}
+ // B has a rear and a front layer; it occludes the SAME mug after placement.
+ let bx=boxBX(t),closed=ss(p(t,323,324.4));back+=G(boxBack(bx,650,78,1-closed*.76),'',1,'clip-path="url(#shippingClip)"');
+ let mugArt=mugFacing(cu.x,cu.y,1,C.blue,'cup',cu.rot,cu.face,wrap);
+ if(cu.owner==='human')front+=mugArt;else back+=G(mugArt,'',1,cu.owner==='boxed'?'clip-path="url(#shippingClip)"':'');
+ let sleeve=sleeveState(t),sleeveArt=G(P('M-24-22H22L19 20H-21Z',C.red,1.1,C.red)+L(-16,-14,-15,10,C.redLight,2),`translate(${f(sleeve.x)} ${f(sleeve.y)}) rotate(${f(sleeve.rot)}) scale(1 ${f(sleeve.sy)})`);
+ if(sleeve.held)front+=sleeveArt+O(...s.lh,3.2,C.back,'none',0);else back+=sleeveArt;
+ back+=G(boxFront(bx,650,78,closed,t>=319),``,1,'clip-path="url(#shippingClip)"');
+ // Dispatch shutter slides continuously; the parcel is occluded by the far wall.
+ let shutter=ss(p(t,334.2,336.4));if(t>343.3)shutter=1-ss(p(t,344.4,345.8));
+ let panelH=480*(1-shutter);back+=R(2441,318,324,panelH,C.cream,C.line,1.3,3);for(let y=339;y<798;y+=27)if(y<318+panelH)back+=L(2447,y,2759,y,C.line,1.1);
+ if(t>=334.2&&t<343.5)back+=P('M2578 430l25-25 25 25M2603 405v88',C.teal,3);
+ if(t>=343.2&&t<347.0)fx+=G(O(2603,509,33,C.paper,C.teal,1.6)+check(2603,509,1.2)+T(2603,557,'已出库',12,C.teal),``,ss(p(t,343.2,343.7))*(1-ss(p(t,346.5,347))));
+ // A physical safety relay: the shipping request cannot close it on its own.
+ let permit=ss(p(t,333.65,334.15));front+=L(2212,685,2245,685,permit>.5?C.teal:C.gold,2)+P(`M2212 685L${f(mix(2239,2245,permit))} ${f(mix(668,685,permit))}`,permit>.5?C.teal:C.gold,2.4)+O(2212,685,3,C.paper,C.ink,1.4)+O(2245,685,3,C.paper,C.ink,1.4);
+ if(t>=327&&t<334)fx+=G(lock(2228,638,.7,C.gold)+T(2228,615,'授权寄出？',10,C.gold),``,ss(p(t,327,328)));
+ // False completion is not accepted: the worker checks cup, protection and weight.
+ if(t>=268&&t<278){let c=checklistState(s,t);front+=orderCard(c.x,c.y,t>=270?2:1,c.scale)+O(...s.rh,3.6,C.ink,'none',0)+O(...s.lh,3.1,C.back,'none',0)}
+ if(t>=328&&t<332.6){let c=checklistState(s,t,true);front+=orderCard(c.x,c.y,3,c.scale)+O(...s.rh,3.6,C.ink,'none',0)+O(...s.lh,3.1,C.back,'none',0)}
+ // Printed language is a physical receipt, not an abstract bridge or magic key.
+ if(t>=163.5&&t<175.7){let len=ss(p(t,163.5,175.2));back+=receipt(1815,541,.85,['建议 · A盒','2.0 kg','来源：—'],len,0,t>=192?C.red:C.teal)}
+ if(t>=175.7&&t<193.6){let r=receiptState(s,t);front+=receipt(r.x,r.y,r.scale,['建议 · A盒','2.0 kg','来源：—'],1,r.rot,C.teal);front+=O(...s.rh,3.8,C.ink,'none',0);if(t<183.6)front+=O(...s.lh,3.3,C.back,'none',0);if(t>=192)front+=G(P('M-43 49L43 37',C.red,2.3),`translate(${f(r.x)} ${f(r.y)}) rotate(${r.rot}) scale(.72)`,ss(p(t,192,192.6)))}
+ // The wrong answer becomes a paper ball, with a real throw and a landing.
+ if(t>=193.6&&t<199.05){let r=paperBallState(t,s),q=ss(p(t,193.6,194.5));if(t<194.5){let old=receiptState(s,t);front+=G(receipt(0,0,mix(.72,.16,q),['建议 · A盒','2.0 kg','来源：—']),`translate(${f(mix(old.x,r.x,q))} ${f(mix(old.y,r.y-12,q))}) rotate(${f(mix(old.rot,31,q))})`,1-q)}
+ front+=G(P('M-10-6l8-5 10 5 3 9-8 8-13-4Z',C.line,1.1,C.white)+P('M-8-4l11 7-5 7M2-9l-3 8',C.line,.8),`translate(${f(r.x)} ${f(r.y)}) rotate(${f(r.rot)})`,ss(p(t,193.6,194.3)));if(t<197.55)front+=O(...s.rh,3.6,C.ink,'none',0)}
+ back+=P('M1740 748H1792L1786 799H1747Z',C.line,1.5,C.paper)+L(1737,748,1795,748,C.ink,2);if(t>=199.05)back+=P('M1755 780l8-7 12 5-4 10-14-1Z',C.line,1.1,C.white);
+ let bk=bookState(t,s);if(bk){let art=book(bk.x,bk.y,bk.scale,1,bk.angle);if(bk.owner==='human')front+=art;else back+=art;if(t>=225&&t<227.5)front+=G(P('M0-35Q32-67 37-40V21Q13 26 0 33Z',C.line,1.2,C.white),`translate(1815 605) scale(${f(.8*(1-ss(p(t,225,227.5)))*2-.8)} .8)`)}
+ if(t>=204.6&&t<237){back+=P('M1815 587H1763V651H1722',C.gold,1.3,'none','stroke-dasharray="3 6"')+bezFlow([1815,587],[1757,602],[1722,651],t*.3,C.gold,4)}
+ if(t>=213&&t<218){back+=receipt(1815,541,.85,['A-01 · REV.02','0.50 kg','检索来源 [A-01]'],ss(p(t,213,217.6)),0,C.teal)}
+ if(t>=218&&t<222.2){let r=receiptState(s,t,true);front+=receipt(r.x,r.y,r.scale,['A-01 · REV.02','0.50 kg','检索来源 [A-01]'],1,r.rot,C.teal)+O(...s.rh,3.7,C.ink,'none',0);if(t<221)front+=O(...s.lh,3.3,C.back,'none',0)}
+ if(t>=222.2){back+=receipt(1744,698,.5,['A-01 · REV.02','0.50 kg','已核对'],1,-7,C.teal);back+=bolt(1745,700,3)}
+ // Tool messages travel in the opposite direction from sensor feedback.
+ if(t>=242.8&&t<=262){let err=t>=251&&t<254;back+=flow([1779,779],[2200,779],t*.26,C.gold,10)+flow([2200,788],[1779,788],t*.23,err?C.red:C.teal,10)}
+ if(t>=249&&t<251.5){fx+=G(T(2100,547,'0.80 > 0.50',12,C.red,'middle','class="mono"')+cross(2100,574,.55),``,ss(p(t,249,249.4))*(1-ss(p(t,251,251.5))))+G(check(2230,553,.75),``,ss(p(t,249.5,250.0)))}
+ if(t>=250.9&&t<254.7){let op=ss(p(t,250.9,251.3))*(1-ss(p(t,254.2,254.7)));fx+=G(L(1898,585,1898,647,C.red,1.7,'stroke-dasharray="4 4"')+P('M1884 583l14-22 14 22Z',C.red,1.5,C.paper)+T(1898,579,'!',11,C.red)+T(1940,571,'BLOCKED',8,C.red,'middle','class="mono"'),``,op)}
+ if(t>=254.4&&t<259){let u=ss(p(t,254.4,255.2));fx+=G(P('M1870 605V522H2186',C.teal,1.3,'none','stroke-dasharray="5 8"')+arrow(2186,522,2216,522,C.teal,1.5),``,u*(1-ss(p(t,258.3,259)))*.5)}
+ // Two independently seeded images are printed and physically compared.
+ if(t>=306.4&&t<309.2){let q=ss(p(t,306.4,308.4));back+=G(stickerPaper(1815,mix(521,591,q),0,.85),``,q,'clip-path="url(#stickerFeed)"')}
+ if(t>=309.2&&t<319){let r=stickerState(s,t,0);front+=stickerPaper(r.x,r.y,0,r.scale,r.rot)+O(...s.rh,3.4,C.ink,'none',0)}
+ if(t>=310.2&&t<311.4){let q=ss(p(t,310.2,311.4));back+=G(stickerPaper(1815,mix(521,591,q),1,.85),'',1,'clip-path="url(#stickerFeed)"')}
+ if(t>=311.4&&t<314.15){let r=stickerState(s,t,1);front+=stickerPaper(r.x,r.y,1,r.scale,r.rot)+O(...s.lh,3.0,C.back,'none',0)}
+ if(t>=319&&t<320)fx+=burst(2260,616,t-319,C.gold,7);
+ // The next item has a novel silhouette, not merely another colour.
+ let gob=unknownState(t,s),gobArt=mug(gob.x,gob.y,.9,C.tealLight,'goblet');if(gob.owner==='human')front+=gobArt+O(...s.rh,3.7,C.ink,'none',0)+O(...s.lh,3.3,C.back,'none',0);else back+=gobArt;
+ if(t>=350){let q=ss(p(t,350,350.7));fx+=G(P('M2335 488L2255 638H2305Z','none',0,C.gold),'',q*.065);fx+=G(R(2315,535,68,53,C.paper,C.gold,1.2,8)+T(2349,553,'53% · ?',12,C.gold,'middle','class="mono"')+T(2349,574,'待复核',9,C.gold),``,q)}
+ if(t>=349.5){let q=ss(p(t,349.5,350.2));front+=G(O(2281,602,23,'#ffffff33',C.ink,2.7)+O(2281,602,18,'none',C.line,.9)+L(2265,620,2259,633,C.ink,6),``,q)}
+ // One-line requests are dialogue, never explanatory slide captions.
+ fx+=speech(s,t,160.0,164.0,'A盒能装吗？')+speech(s,t,277.0,279.4,'画个杯子贴纸。');
+ if(t>=273&&t<276)fx+=G(O(s.x+12,s.shoulder[1]-82,32,C.white,C.line,1.2)+mug(s.x+8,s.shoulder[1]-65,.62,C.teal)+O(s.x+7,s.shoulder[1]-39,4,C.white,C.line,1)+O(s.x+5,s.shoulder[1]-24,2.5,C.white,C.line,.8),'',ss(p(t,273,273.4))*(1-ss(p(t,275.6,276))));
+ fx+=burst(1124,740,t-79.35,C.gold,11)+dust(1080,800,t-79.27,1.5)+burst(1037,676,t-114.3,C.teal,7)+burst(2100,615,t-192.1,C.red,7)+burst(2230,585,t-261.1,C.teal,7);
+ fx+=frontFingers(s,cu);
+ return{back,front,fx};
+}
+
+/* 7. Foley is scheduled from the same film clock, including the world-space
+   foot contacts. It never starts before a deliberate user gesture. */
+const SFX=[];
+function cue(at,kind,gain=1,extra=0){SFX.push({at,kind,gain,extra})}
+for(const m of MOVES){for(let j=0;j<m.N;j++){let q=(j+.88)/m.N,lo=0,hi=1;for(let k=0;k<24;k++){let mid=(lo+hi)/2;if(inertia(mid)<q)lo=mid;else hi=mid}cue(m.a+(m.b-m.a)*(lo+hi)/2,'step',m.run?.78:.43,j%2)}}
+[
+ [3.35,'clink',.65],[7.8,'paper',.65],[8.7,'paper',.55],[10,'thud',.3],[14.1,'clink',.5],
+ [18.7,'switch'],[24.2,'drawer',.55],[25.1,'paper',.6],[30,'paper',.6],[33,'switch'],
+ [55.3,'success',.7],[64.8,'clink',.45],[71.1,'clink',.55],[71.8,'scan'],[77.2,'reject',.6],[78.5,'slide',.7],[79.35,'catch',1.0],[80.5,'clink',.35],
+ [89.8,'clink',.5],[90.55,'paper',.7],[91.2,'scan',.6],[92.5,'correct',.5],[95.0,'paper',.6],[95.4,'reject',.45],[97,'paper',.55],[99.8,'switch'],[109.1,'success',.5],[110.8,'scan',.4],[114.3,'clink',.7],[115,'clink',.4],
+ [123.2,'clink',.6],[125,'switch',.7],[128.4,'key'],[129.1,'key',.7],[129.6,'key',.9],[130.3,'scan',.6],[133.2,'servo',.45],[135.4,'grip',.5],[140.7,'clink',.55],[142.3,'key'],[143.1,'key'],[143.6,'scan',.65],[148,'grip',.6],[152.4,'clink',.6],
+ [162.1,'key'],[164.8,'key'],[167.5,'key'],[170.2,'key'],[172.9,'key'],[174.8,'print',.7],[175.9,'paper'],[190.1,'peel',.8],[192.1,'doubt',.7],[193.7,'paper',.6],[195,'drawer',.7],[197.3,'paper',.8],[198.8,'thud',.3],[204.8,'paper',.5],[207.8,'scan',.6],[213,'print',.65],[217.8,'correct',.45],[218.3,'paper',.6],[225.5,'paper'],[228.6,'correct',.6],
+ [242.1,'clink',.65],[243.8,'correct',.6],[247.0,'paper',.75],[248.7,'paper',.6],[249.4,'key',.65],[250.2,'grip'],[251.05,'bump',.7],[251.35,'reject',.7],[254,'servo',.7],[258.7,'servo',.4],[261.1,'thud',.5],[261.3,'correct',.7],[267.1,'paper',.6],[274.6,'idea',.7],[279.2,'key',.8],[283.4,'scan',.7],[287.8,'key',.5],[289,'key',.5],[305.1,'success',.7],[306.6,'print',.8],[309.3,'paper'],[310.5,'print',.6],[311.6,'paper',.7],[318.5,'peel',.65],[319,'correct',.55],
+ [323.6,'fold',.7],[324.9,'fold',.7],[328.9,'paper',.6],[333.75,'switch'],[334.2,'success',.85],[335.8,'servo',.5],[343.0,'bell',.55],[345.7,'clink',.5],[349.4,'clink',.5],[350.05,'scan',.5],[350.4,'doubt',.7],[350,'key',.3],[356.5,'end',.65]
+].forEach(a=>cue(...a));
+for(let at=33.5;at<55;at+=2.7){cue(at,'scan',.23);cue(at+1.45,'reverse',.23)}
+for(let at=100.4;at<109;at+=1.1){cue(at,'scan',.24);cue(at+.55,'reverse',.22)}
+for(let at=284;at<304;at+=.8)cue(at,'grain',.12+(304-at)*.007,304-at);
+for(let at=7.95;at<9.3;at+=.25)cue(at,'paper',.28);
+SFX.sort((a,b)=>a.at-b.at);
+const AUDIO_MASTER=1.15;
+class FilmAudio{
+ constructor(){this.ctx=null;this.master=null;this.enabled=true;this.nodes=new Set();this.nextMusic=0}
+ async init(){if(!this.ctx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;try{this.ctx=new AC();this.master=this.ctx.createGain();this.master.gain.value=AUDIO_MASTER;const comp=this.ctx.createDynamicsCompressor();comp.threshold.value=-13;comp.knee.value=16;comp.ratio.value=3;this.master.connect(comp);comp.connect(this.ctx.destination);this.noiseBuffer=this.ctx.createBuffer(1,this.ctx.sampleRate*2,this.ctx.sampleRate);let a=this.noiseBuffer.getChannelData(0),r=prng(1907);for(let i=0;i<a.length;i++)a[i]=r()*2-1}catch(e){return false}}try{await this.ctx.resume();return true}catch(e){return false}}
+ register(n){this.nodes.add(n);n.onended=()=>this.nodes.delete(n);return n}
+ tone(freq,dur,gain=.2,type='sine',delay=0,endFreq=null){if(!this.ctx||!this.enabled)return;let now=this.ctx.currentTime+delay+(this.baseTime||0),o=this.register(this.ctx.createOscillator()),g=this.ctx.createGain();o.type=type;o.frequency.setValueAtTime(Math.max(20,freq),now);if(endFreq)o.frequency.exponentialRampToValueAtTime(Math.max(20,endFreq),now+dur);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(Math.max(.0002,gain),now+.007);g.gain.exponentialRampToValueAtTime(.0001,now+dur);o.connect(g);g.connect(this.master);o.start(now);o.stop(now+dur+.015)}
+ noise(dur,gain=.15,hp=700,lp=5500,delay=0){if(!this.ctx||!this.enabled)return;let now=this.ctx.currentTime+delay+(this.baseTime||0),n=this.register(this.ctx.createBufferSource()),h=this.ctx.createBiquadFilter(),l=this.ctx.createBiquadFilter(),g=this.ctx.createGain();n.buffer=this.noiseBuffer;h.type='highpass';h.frequency.value=hp;l.type='lowpass';l.frequency.value=lp;g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(Math.max(.0002,gain),now+.009);g.gain.exponentialRampToValueAtTime(.0001,now+dur);n.connect(h);h.connect(l);l.connect(g);g.connect(this.master);n.start(now,(fract(now*.731))*1);n.stop(now+dur+.015)}
+ fire(e){if(!this.enabled||!this.ctx)return;let g=e.gain,ton=(f,d,a=.2,ty='sine',de=0,ef=null)=>this.tone(f,d,a*g,ty,de,ef),noi=(d,a=.1,h=700,l=6000,de=0)=>this.noise(d,a*g,h,l,de);
+ switch(e.kind){
+ case'step':noi(.074,.17,200,1600);ton(85+e.extra*12,.09,.13,'sine',0,55);break;
+ case'clink':ton(1360,.6,.14);ton(2117,.31,.042);ton(3091,.17,.015);noi(.023,.06,2000,8000);break;
+ case'paper':noi(.32,.22,1100,6100);noi(.11,.08,1600,7100,.1);break;
+ case'peel':noi(.48,.21,2300,6800);for(let i=0;i<7;i++)noi(.035,.075,600,5500,i*.041);break;
+ case'fold':noi(.17,.18,850,4300);ton(120,.1,.08,'sine',.09,70);break;
+ case'thud':ton(105,.2,.23,'sine',0,49);noi(.14,.15,80,600);break;
+ case'catch':ton(112,.19,.28,'sine',0,46);noi(.18,.27,160,2400);ton(1350,.35,.1,'sine',.06);ton(1900,.23,.05,'sine',.08);break;
+ case'bump':ton(200,.14,.16,'triangle',0,97);noi(.075,.23,200,1600);break;
+ case'switch':noi(.035,.12,800,4500);ton(320,.09,.15,'triangle',0,170);ton(800,.12,.07,'sine',.055);break;
+ case'key':ton(610,.065,.09,'triangle',0,340);noi(.035,.04,2200,6500);break;
+ case'scan':ton(560,.14,.09,'sine',0,1240);ton(1420,.13,.045,'sine',.11,1780);break;
+ case'reverse':ton(1180,.16,.065,'sine',0,440);break;
+ case'slide':noi(.45,.2,160,1800);ton(410,.4,.06,'sine',0,700);break;
+ case'drawer':noi(.54,.23,150,2100);ton(156,.4,.055,'triangle',0,80);noi(.07,.15,150,1600,.46);break;
+ case'grip':ton(410,.18,.07,'triangle',0,200);noi(.07,.1,200,2800,.13);break;
+ case'servo':ton(157,.85,.04,'triangle',0,208);ton(317,.8,.017,'sine',0,421);noi(.65,.045,200,1400);break;
+ case'print':for(let i=0;i<7;i++){ton(148+i%2*41,.1,.048,'triangle',i*.12);noi(.08,.065,700,3100,i*.12)}break;
+ case'reject':ton(330,.18,.14,'triangle');ton(246,.3,.11,'triangle',.14);break;
+ case'correct':ton(659,.18,.12);ton(988,.35,.12,'sine',.10);break;
+ case'success':[587.33,739.99,880,1174.66].forEach((v,i)=>ton(v,.64,.095,'sine',i*.105));break;
+ case'doubt':ton(392,.5,.16,'sine',0,370);ton(415.3,.56,.09,'sine',.025,391);break;
+ case'idea':ton(1046,.54,.11);ton(1568,.42,.08,'sine',.12);break;
+ case'bell':ton(1174.66,1.6,.16);ton(2349.3,.9,.025);break;
+ case'grain':noi(.55,.13,500+e.extra*90,6000);ton(470+(20-e.extra)*18,.15,.009);break;
+ case'end':[146.83,220,293.66,369.99,440,587.33].forEach((v,i)=>ton(v,3,.08,'sine',i*.13));break;
+ }
+ }
+ music(at){if((at>73&&at<100)||(at>188&&at<201)||(at>249&&at<256)||at>354)return;let h=at<55?[146.83,220,293.66,349.23]:at<118?[164.81,220,293.66,329.63]:at<240?[146.83,196,293.66,392]:at<322?[174.61,220,349.23,440]:[146.83,220,293.66,369.99];let idx=Math.floor(at/3.5);this.tone(h[idx%4],2.8,.022);if(idx%2===0)this.tone(h[(idx+1)%4]*2,1.8,.012,'sine',.28)}
+ update(a,b){if(!this.enabled||!this.ctx||b-a>1)return;for(const e of SFX)if(e.at>a&&e.at<=b)this.fire(e);let u=Math.floor(a/3.5),v=Math.floor(b/3.5);if(v!==u)this.music(b)}
+ stop(){for(const n of this.nodes){try{n.stop()}catch(e){}}this.nodes.clear()}
+ set(on){this.enabled=on;if(!on)this.stop();if(this.master)this.master.gain.setTargetAtTime(on?AUDIO_MASTER:0,this.ctx.currentTime,.08)}
+}
+const audio=new FilmAudio();
+
+/* Subtitles are optional and deliberately sparse. The visible experiment is
+   the main explanation; these are not a replacement for the action. */
+const CAPTIONS=[
+ [0,7,'一份订单：把这只蓝杯，完整地寄出去。'],[8,14,'一份，又一份。他决定教机器帮忙。'],
+ [24,31,'他给出示范，也给出正确标签。'],[33,40,'输入经过带权重的连接，得到一个预测。'],[40,47,'预测和标签不一样，误差就从输出向前层传回。'],[47,55,'沿着让误差减小的方向，逐步更新参数。'],[55.5,62,'训练样本全答对了。它真的学会了吗？'],
+ [71,79.1,'从没见过的蓝杯，却被分进了「其他」。'],[85.5,90,'保持杯子和参数不变，只换掉颜色。'],[90.7,94.2,'红色：它说是杯子。'],[94.8,98.5,'换回蓝色：它又改口了。它学到了颜色捷径。'],[100,108.5,'加入反例，打破颜色与标签的错误关联。'],[110,114,'再用没参加训练的黄杯检验。'],
+ [123,128,'现在接入的是另一个、已经预训练的语言模型。'],[129,133.7,'词块带着位置，通过注意力结合相关上下文。'],[136,141.5,'「左边」的参照对象是红罐。'],[142,149,'只改一个字，动作就不同；这次没有更新模型参数。'],
+ [161,168,'语言模型逐个预测下一 token。'],[169,176,'这些词很容易接在一起，但它还没有查过真实的箱子。'],[188,194,'真实标签：0.50 kg。不是它说的 2.0 kg。'],[194,198,'生成出来的数字，不等于查到的事实。'],
+ [204,210,'把箱型手册接入检索，而不是让它继续猜。'],[211,218,'相关段落进入上下文，回答可以追溯到来源。'],[224,232,'换一种箱子，检索另一条规格；权重仍然不动。'],
+ [241,246,'让秤来测量，让计算器来做算术。'],[247,250.8,'连包装一共 0.80 kg：A不够，B可以。'],[251,254,'指令遇到了真实障碍。工具返回「受阻」。'],[254.5,261,'把结果放回上下文，抬高路径，再执行。'],[265,271,'判断有没有完成，要看现实结果，不看回答好不好听。'],
+ [283,289,'图像模型从随机噪声出发。'],[290,298,'在条件引导下，反复估计并去除噪声。'],[299,305,'同样的条件，不同随机种子，可以得到不同图像。'],[309,316,'模型生成候选，使用者选择合适的一张。'],
+ [327,334,'检查实物、重量与包装。发货之前，必须得到授权。'],[344,352,'遇到没验证过的形状，留下人工复核的位置。'],[353,360,'不是看起来会，是经得起检验。']
+];
+const REFERENCES=[
+ ['01','神经网络与反向传播','Google · Machine Learning Crash Course','https://developers.google.com/machine-learning/crash-course/neural-networks/backpropagation'],
+ ['02','训练集、验证集与测试集','Google · Machine Learning Crash Course','https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets'],
+ ['03','Attention Is All You Need','Vaswani et al. · 2017','https://arxiv.org/abs/1706.03762'],
+ ['04','Language Models are Few-Shot Learners','Brown et al. · 2020','https://arxiv.org/abs/2005.14165'],
+ ['05','Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks','Lewis et al. · 2020','https://arxiv.org/abs/2005.11401'],
+ ['06','ReAct: Synergizing Reasoning and Acting in Language Models','Yao et al. · 2022','https://arxiv.org/abs/2210.03629'],
+ ['07','Denoising Diffusion Probabilistic Models','Ho et al. · 2020','https://arxiv.org/abs/2006.11239'],
+ ['08','Denoising Diffusion Implicit Models','Song et al. · 2020','https://arxiv.org/abs/2010.02502'],
+ ['09','Training language models to follow instructions with human feedback','Ouyang et al. · 2022','https://arxiv.org/abs/2203.02155']
+];
+const stamp=t=>`${Math.floor(Math.max(0,t)/60).toString().padStart(2,'0')}:${Math.floor(Math.max(0,t)%60).toString().padStart(2,'0')}`;
+let filmTime=0,playing=false,started=false,rate=1,viewH=1000,portrait=false,lastFrame=0,raf=0,lastUI=0,idleTimer=0,toastTimer=0,wasPlaying=false,labModel='biased',labKind='blueCup',dragging=false,wasScrubPlaying=false;
+const dom={film:$('film'),screen:$('screen'),world:$('world'),back:$('objectsBack'),front:$('objectsFront'),human:$('human'),machine:$('machineBack'),fx:$('fx')};
+function resize(){let w=Math.max(1,window.innerWidth),h=Math.max(1,window.innerHeight);portrait=h>w*1.16;viewH=1600*h/w;dom.screen.setAttribute('viewBox',`0 0 1600 ${viewH}`);$('bg').setAttribute('height',viewH);$('texture').setAttribute('height',viewH);render(filmTime,true)}
+// Stable machine layers avoid rebuilding the untouched classifier while the
+// language or image model runs. SVG remains editable vector geometry throughout.
+const markupCache=new WeakMap();let machineLayers=[];
+function putSVG(el,markup){if(markupCache.get(el)!==markup){el.innerHTML=markup;markupCache.set(el,markup)}}
+function render(t,forceUI=false){t=clamp(Number(t)||0,0,DURATION);let s=humanBase(t),cu=cupState(t,s);applyHands(s,t,cu);let props=roomProps(t,s,cu),cam=cameraAt(t),scale=1600/(cam.w*(portrait?.91:1)),cy=viewH*(portrait?.61:.52);
+ dom.world.setAttribute('transform',`translate(800 ${f(cy)}) scale(${f(scale)}) translate(${-f(cam.x)} ${-f(cam.y)})`);
+ if(!machineLayers.length){dom.machine.innerHTML='<g></g>'.repeat(6);machineLayers=[...dom.machine.children]}
+ let components=[visionWindow(t),languageWindow(t),scanner(t),diverter(t),roboticArm(t,cu),badgeScore(t)];components.forEach((html,i)=>putSVG(machineLayers[i],html));
+ putSVG(dom.back,props.back);putSVG(dom.human,drawHuman(s,t));putSVG(dom.front,props.front);putSVG(dom.fx,props.fx);
+ if(forceUI||t>=DURATION||Math.abs(t-lastUI)>.095){lastUI=t;$('fill').style.width=(100*t/DURATION)+'%';if(!dragging)$('seek').value=t;$('time').textContent=stamp(t)+' / 06:00';$('sceneName').textContent=chapterAt(t).title;$('seek').setAttribute('aria-valuetext',stamp(t)+'，'+chapterAt(t).title);let line=CAPTIONS.find(c=>t>=c[0]&&t<c[1]);$('caption').textContent=line?line[2]:'';$('caption').style.opacity=line?'1':'0';dom.film.classList.toggle('ended',t>=356.5)}
+ return{s,cu,cam};
+}
+function updatePlayUI(){$('playIcon').innerHTML=playing?'<path d="M8 5V19M16 5V19" stroke-width="3.4"/>':'<path d="M7 4L20 12L7 20Z"/>';$('playBtn').setAttribute('aria-label',playing?'暂停':'播放');$('playBtn').setAttribute('title',(playing?'暂停':'播放')+'（空格）')}
+function tick(now){if(!playing){raf=0;return}let dt=lastFrame?Math.max(0,(now-lastFrame)/1000):0;lastFrame=now;let before=filmTime;filmTime=Math.min(DURATION,filmTime+dt*rate);audio.update(before,filmTime);render(filmTime);if(filmTime>=DURATION){pause();dom.film.classList.remove('idle');return}raf=requestAnimationFrame(tick)}
+function markStarted(){if(!started){started=true;dom.film.classList.add('started');$('cover').inert=true;$('cover').setAttribute('aria-hidden','true')}}
+async function play(){markStarted();if(filmTime>=DURATION)filmTime=0;if(playing)return;playing=true;lastFrame=0;updatePlayUI();showUI();raf=requestAnimationFrame(tick);if(audio.enabled){let ok=await audio.init();if(!ok)toast('当前浏览器未开启音频；画面可正常播放')}}
+function pause(){playing=false;if(raf)cancelAnimationFrame(raf);raf=0;lastFrame=0;audio.stop();updatePlayUI();dom.film.classList.remove('idle');clearTimeout(idleTimer)}
+function toggle(){playing?pause():play()}
+function seekTo(t,keepPlaying=true){audio.stop();filmTime=clamp(Number(t)||0,0,DURATION);markStarted();lastFrame=0;render(filmTime,true);if(!keepPlaying)pause();showUI()}
+function restart(){seekTo(0,false);play()}
+function toast(text){$('toast').textContent=text;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2200)}
+function showUI(){dom.film.classList.remove('idle');clearTimeout(idleTimer);if(playing&&!dragging&&$('drawer').hidden)idleTimer=setTimeout(()=>{if(playing&&!document.querySelector('.controls:focus-within'))dom.film.classList.add('idle')},2700)}
+function soundToggle(){audio.set(!audio.enabled);$('soundBtn').setAttribute('aria-pressed',String(audio.enabled));$('soundBtn').setAttribute('aria-label',audio.enabled?'关闭声音':'开启声音');if(audio.enabled&&playing)audio.init();showUI()}
+function captionsToggle(){let off=dom.film.classList.toggle('no-cc');$('captionBtn').setAttribute('aria-pressed',String(!off));$('captionBtn').setAttribute('aria-label',off?'打开精简字幕':'关闭精简字幕');toast(off?'字幕已关闭':'字幕已开启');showUI()}
+function focusToggle(){let on=dom.film.classList.toggle('focus');$('focusBtn').setAttribute('aria-pressed',String(on));showUI()}
+async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else if(dom.film.requestFullscreen)await dom.film.requestFullscreen();else toast('此浏览器不支持全屏；可旋转到横屏观看')}catch(e){toast('浏览器未允许全屏；不影响播放')}}
+function updateLab(){let test=tests[labKind],n=trained[labModel],a=infer(n,test.x),q=a.p,c=q>.7?C.teal:q<.3?C.red:C.gold;
+ let z=mug(66,107,1.3,test.color,test.kind)+T(66,137,test.label,11,C.ink)+arrow(112,75,156,75,C.line,1.7);let hidden=[39,75,111];for(let i=0;i<3;i++){z+=L(172,58,231,hidden[i],n.W[i][0]>0?C.teal:C.gold,1+Math.abs(n.W[i][0])*.6);z+=L(172,94,231,hidden[i],n.W[i][1]>0?C.teal:C.gold,1+Math.abs(n.W[i][1])*.6);z+=L(231,hidden[i],280,75,n.v[i]>0?C.teal:C.gold,1+Math.abs(n.v[i])*.5);z+=neuron(231,hidden[i],a.h[i],9)}z+=neuron(172,58,test.x[0],8)+neuron(172,94,test.x[1],8)+O(281,75,10,C.paper,C.ink,1.5)+arrow(295,75,322,75,C.line,1.5)+ring(378,69,35,q,c,4)+T(378,77,(q*100).toFixed(1)+'%',18,c,'middle','font-family="monospace"')+T(378,125,'P（杯子）',11,C.mute);$('labSvg').innerHTML=z;
+ document.querySelectorAll('#labModel button').forEach(b=>b.classList.toggle('active',b.dataset.model===labModel));document.querySelectorAll('#labObject button').forEach(b=>b.classList.toggle('active',b.dataset.kind===labKind));}
+function openDrawer(){wasPlaying=playing;pause();$('drawer').hidden=false;dom.film.inert=true;updateLab();$('closeDrawer').focus()}
+function closeDrawer(resume=true){$('drawer').hidden=true;dom.film.inert=false;$('infoBtn').focus();if(resume&&wasPlaying)play();wasPlaying=false}
+$('setBack').innerHTML=buildSet();
+$('chapters').innerHTML=CHAPTERS.map(c=>`<button data-time="${c.start}" aria-label="跳到 ${stamp(c.start)} ${c.title}"><b>${stamp(c.start)}</b><span>${c.title}<small>${c.sub}</small></span></button>`).join('');
+$('ticks').innerHTML=CHAPTERS.slice(1).map(c=>`<i style="left:${c.start/DURATION*100}%"></i>`).join('');
+$('references').innerHTML=REFERENCES.map(r=>`<div class="ref" id="ref${r[0]}"><a href="${r[3]}" target="_blank" rel="noopener noreferrer">[${r[0]}] ${r[1]}</a><br><span style="color:#899685">${r[2]}</span></div>`).join('');
+$('startBtn').onclick=()=>{play();$('startBtn').blur()};$('playBtn').onclick=toggle;$('restartBtn').onclick=restart;$('replayEnd').onclick=restart;
+$('soundBtn').onclick=soundToggle;$('captionBtn').onclick=captionsToggle;$('focusBtn').onclick=focusToggle;$('focusExit').onclick=focusToggle;$('fullBtn').onclick=fullscreen;
+$('speed').onchange=e=>{rate=Number(e.target.value)||1;lastFrame=0;audio.stop();showUI()};
+$('infoBtn').onclick=openDrawer;$('closeDrawer').onclick=()=>closeDrawer();$('drawer').onclick=e=>{if(e.target===$('drawer'))closeDrawer()};
+$('chapters').onclick=e=>{let b=e.target.closest('button[data-time]');if(!b)return;closeDrawer(false);seekTo(+b.dataset.time,false);play()};
+$('labModel').onclick=e=>{let b=e.target.closest('[data-model]');if(b){labModel=b.dataset.model;updateLab()}};$('labObject').onclick=e=>{let b=e.target.closest('[data-kind]');if(b){labKind=b.dataset.kind;updateLab()}};
+$('seek').addEventListener('pointerdown',()=>{dragging=true;wasScrubPlaying=playing;pause()});
+$('seek').addEventListener('input',e=>{filmTime=+e.target.value;markStarted();render(filmTime,true);audio.stop();showUI()});
+const endScrub=()=>{if(!dragging)return;dragging=false;if(wasScrubPlaying)play();wasScrubPlaying=false};window.addEventListener('pointerup',endScrub);window.addEventListener('pointercancel',endScrub);
+$('track').addEventListener('pointermove',e=>{let b=$('track').getBoundingClientRect(),q=clamp((e.clientX-b.left)/b.width),t=q*DURATION;$('scrubTip').textContent=stamp(t)+' · '+chapterAt(t).title;$('scrubTip').style.left=(clamp(q,.06,.94)*100)+'%'});
+dom.screen.addEventListener('click',()=>{if(!started)return;showUI();toggle()});dom.film.addEventListener('pointermove',showUI,{passive:true});dom.film.addEventListener('pointerdown',showUI,{passive:true});
+window.addEventListener('resize',resize);document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)pause()});
+document.addEventListener('keydown',e=>{if(!$('drawer').hidden){if(e.key==='Escape'){e.preventDefault();closeDrawer()}else if(e.key==='Tab'){let a=[...$('drawer').querySelectorAll('button,a[href]')].filter(x=>x.offsetParent!==null),first=a[0],last=a.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}return}if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;let k=e.key.toLowerCase();if([' ','arrowleft','arrowright','r','c','m','f','h'].includes(k))e.preventDefault();if(k===' ')toggle();else if(k==='arrowleft')seekTo(filmTime-5);else if(k==='arrowright')seekTo(filmTime+5);else if(k==='r')restart();else if(k==='c')captionsToggle();else if(k==='m')soundToggle();else if(k==='f')fullscreen();else if(k==='h')focusToggle();showUI()});
+
+// A deterministic inspection API. It is also useful for exports, education,
+// regression tests and observing exactly the weights seen in the film.
+window.CupFilm={duration:DURATION,seek:(t,clean=false)=>{seekTo(t,false);if(clean){dom.film.classList.add('focus','idle');$('focusExit').style.display='none'}},frame:(t)=>{filmTime=clamp(t,0,DURATION);return render(filmTime)},state:t=>{let s=humanBase(t),cu=cupState(t,s);applyHands(s,t,cu);return{s,cu,camera:cameraAt(t),probability:infer(netAt(t),inputAt(t)).p}},play,pause,tests:()=>({biased:Object.fromEntries(Object.entries(tests).map(([k,d])=>[k,infer(trained.biased,d.x).p])),balanced:Object.fromEntries(Object.entries(tests).map(([k,d])=>[k,infer(trained.balanced,d.x).p])),initialLoss:bce(TRAIN_A[0],biasedData),biasedLoss:bce(trained.biased,biasedData),balancedLoss:bce(trained.balanced,balancedData),toolWeight,toolChecks,attention:ATT,attentionValue:ATT_VALUE,attentionRight:attentionState(true),directionTargets:[directionTarget(false),directionTarget(true)],heldOutLeak:balancedData.some(d=>d.x.every((v,i)=>v===tests.heldout.x[i])),diffusionDistinct:DIFF[0].at(-1).some((v,i)=>Math.abs(v-DIFF[1].at(-1)[i])>.2)}),soundEvents:SFX,moves:MOVES,ready:true};
+// Offline audio export uses precisely the same foley synthesis and cue times.
+window.CupFilm.exportAudio=async(start=0,duration=DURATION)=>{
+ const sr=44100,Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!Offline)throw new Error('OfflineAudioContext is not supported');
+ start=clamp(Number(start)||0,0,DURATION);duration=clamp(Number(duration)||1,.1,DURATION-start||.1);let ctx=new Offline(1,Math.ceil(sr*duration),sr),a=new FilmAudio();a.ctx=ctx;a.master=ctx.createGain();a.master.gain.value=AUDIO_MASTER;let comp=ctx.createDynamicsCompressor();comp.threshold.value=-13;comp.knee.value=16;comp.ratio.value=3;a.master.connect(comp);comp.connect(ctx.destination);a.noiseBuffer=ctx.createBuffer(1,sr*2,sr);let data=a.noiseBuffer.getChannelData(0),r=prng(1907);for(let i=0;i<data.length;i++)data[i]=r()*2-1;
+ for(let e of SFX)if(e.at>=start&&e.at<start+duration){a.baseTime=e.at-start;a.fire(e)}
+ for(let at=Math.ceil(start/3.5)*3.5;at<start+duration;at+=3.5){a.baseTime=at-start;a.music(at)}
+ let b=await ctx.startRendering(),pcm=b.getChannelData(0),buf=new ArrayBuffer(44+pcm.length*2),v=new DataView(buf),str=(p,s)=>{for(let i=0;i<s.length;i++)v.setUint8(p+i,s.charCodeAt(i))};str(0,'RIFF');v.setUint32(4,36+pcm.length*2,true);str(8,'WAVE');str(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,sr,true);v.setUint32(28,sr*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);str(36,'data');v.setUint32(40,pcm.length*2,true);
+ for(let i=0;i<pcm.length;i++){let fade=Math.min(1,i/441,(pcm.length-1-i)/441),x=clamp(pcm[i]*fade,-1,1);v.setInt16(44+i*2,x<0?x*32768:x*32767,true)}
+ let bytes=new Uint8Array(buf),bin='';for(let i=0;i<bytes.length;i+=24576)bin+=String.fromCharCode(...bytes.subarray(i,i+24576));return btoa(bin);
+};
+resize();updateLab();updatePlayUI();
+
+</script></body></html>

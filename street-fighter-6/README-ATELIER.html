@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Street Fighter SVG — Atelier / Eight Fighters | html-playground</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Street Fighter SVG — Atelier / Eight Fighters" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="HTML 作品集：雨停之前、甄嬛 SVG 剧场、街霸 6" />
+<meta property="og:description" content="HTML 作品集：雨停之前、甄嬛 SVG 剧场、街霸 6" />
+<link rel="canonical" href="https://pikapikaspeedup.github.io/html-playground/README-ATELIER.html" />
+<meta property="og:url" content="https://pikapikaspeedup.github.io/html-playground/README-ATELIER.html" />
+<meta property="og:site_name" content="html-playground" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Street Fighter SVG — Atelier / Eight Fighters" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"HTML 作品集：雨停之前、甄嬛 SVG 剧场、街霸 6","headline":"Street Fighter SVG — Atelier / Eight Fighters","url":"https://pikapikaspeedup.github.io/html-playground/README-ATELIER.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/html-playground/assets/css/style.css?v=f38977c5a46a420a9e91695fa74e5ab5e2749038">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/html-playground/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="https://pikapikaspeedup.github.io/html-playground/">html-playground</a></h1>
+      
+
+      <h1 id="street-fighter-svg--atelier--eight-fighters">Street Fighter SVG — Atelier / Eight Fighters</h1>
+
+<p>八角色 SVG 模型与动作重绘版。在仓库提交 <code class="language-plaintext highlighter-rouge">5b6e73f24cdf410e8e1786a65d8ca5862d133ec4</code> 的游戏基础上修改，保留原有对战、选人、练习、双人、自动观战、街机、教学、手柄及触控实现。其他 HTML 作品不修改。</p>
+
+<h2 id="运行">运行</h2>
+
+<p>直接打开 <code class="language-plaintext highlighter-rouge">dist/street-fighter-6-atelier.html</code>：单个 HTML，全部 JavaScript、角色 SVG 与两个舞台 SVG 已内嵌，无网络依赖。也可运行 <code class="language-plaintext highlighter-rouge">python3 -m http.server 8000</code>，访问 <code class="language-plaintext highlighter-rouge">http://localhost:8000/street-fighter-6.html</code> 使用模块版。</p>
+
+<p>进入「动作鉴赏」，选角色和招式，点击「播放招式」。支持 0.5 / 0.25 倍慢放、定格、逐帧、特写，以及拖动时间轴。时间轴重新运行合法前置条件和真实模拟，不是视频或直接摆一个假姿势。「舞·蓄力花蝶扇」用于比较普通扇与蓄力扇；「精简特效」方便检查骨架轮廓。</p>
+
+<p>P1：WASD 移动；J/K/L 轻中重拳，U/I/O 轻中重脚；Q 招架、E 斗气冲击、F 斗气迸发、V 投技。P2：方向键；小键盘 1/2/3 拳、4/5/6 脚、0 招架、点号斗气冲击、Enter 迸发、加号投技。H 招式表，P 暂停。经典模式按面向自动镜像搓招。辅助输入、手机八方向摇杆沿用原系统。</p>
+
+<h2 id="本版修改">本版修改</h2>
+
+<p>八人分别绘制头脸、发型、正背面服装、手脚与附件；细分肢体明暗和折线，调整肩髋与头身比例。人物与战斗特效仍是可编辑 SVG 路径，没有引入人物位图、视频或 Canvas。</p>
+
+<p>40 个必杀家族、24 个 SA 时间轴及八神两段葵花追加共 66 条独立命名动作。普通技与扩展派生在角色姿态基础上继续分化。轻中重/OD 共用该招式的动作家族，变体并非 522 条分别手绘动画。</p>
+
+<p>隆：腰侧聚气、双掌送波、上勾拳；肯：火焰旋转、回身下扫与三段升龙；春丽：开放掌形、腿部回弹、倒立旋转；嘉米：低位水平钻进、团身翻转、单脚俯冲；卢克：拳肩蓄力、转髋重拳、前臂后坐；蛛俐：高抬腿、脚跟下劈、风水引擎眼部动作；舞：扇投、旋身扫火、上踢后翻、侧手翻肘击；八神：低身爪切、贴地紫炎、分段葵花。</p>
+
+<p>特效根据真实骨架历史姿势生成拳脚轨迹，区分气压、火舌、扇刃、钻流、沙尘与爪痕。渲染和攻击判定共用姿态来源；修复下蹲双重压低、乱花蝶扇多余近身伤害、时间轴与定格按钮状态不同步。</p>
+
+<h2 id="不知火舞--sf6-规则修正">不知火舞 / SF6 规则修正</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>招式</th>
+      <th>经典输入</th>
+      <th>实现</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>花蝶扇</td>
+      <td>236P</td>
+      <td>三种投扇速度；按住 P 蓄力后不能被拳脚击落，接触后弹起并实际下落</td>
+    </tr>
+    <tr>
+      <td>龙炎舞</td>
+      <td>214P</td>
+      <td>转身扫扇火焰，不再混成升龙</td>
+    </tr>
+    <tr>
+      <td>飞翔龙炎阵</td>
+      <td>623K</td>
+      <td>上升踢击与后空翻，判定随脚而非扇面</td>
+    </tr>
+    <tr>
+      <td>必杀忍蜂</td>
+      <td>236K</td>
+      <td>侧手翻接肘击，OD 命中后腾空可继续追击</td>
+    </tr>
+    <tr>
+      <td>鼯鼠之舞</td>
+      <td>空中 214P</td>
+      <td>身体斜撞，不是嘉米式俯冲踢</td>
+    </tr>
+    <tr>
+      <td>乱花蝶扇</td>
+      <td>OD 蓄力花蝶扇出手后 6P</td>
+      <td>限定取消窗口分两拍追加两把扇子，不允许独立发动</td>
+    </tr>
+    <tr>
+      <td>SA1 阳炎之舞</td>
+      <td>236236P</td>
+      <td>原地双侧火柱，发动补至五枚火焰库存</td>
+    </tr>
+    <tr>
+      <td>SA2 超必杀忍蜂</td>
+      <td>236236K</td>
+      <td>地面/空中火焰肘冲，可穿过飞行道具</td>
+    </tr>
+    <tr>
+      <td>SA3 炎舞仇樱 / CA</td>
+      <td>214214P</td>
+      <td>多段扇舞，低生命升级 CA，不消耗火焰库存</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>已有火焰库存时，成功发动必杀或 SA1/SA2 消耗一枚并强化；不合法输入不扣库存。回合重置清空。伤害、帧数、强化幅度为本游戏改编，不声称与官方逐帧一致。原自定义派生保留，并明确标为「同人扩展派生」。八神庵是自定义跨界角色，不冒充官方 SF6 角色。</p>
+
+<p>核对资料：Capcom France《Mai rejoint Street Fighter 6》（2025-02-06），https://www.capcomfrance.fr/sortie-mai/ ；游戏内指令与 Capcom Mai Gameplay Guide 对照。未使用官方人物模型或贴图。</p>
+
+<h2 id="修改与构建">修改与构建</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">src/atelier-art.js</code>：色板、肢体、手脚、附件；<code class="language-plaintext highlighter-rouge">src/models/head.js</code> 与 <code class="language-plaintext highlighter-rouge">torso.js</code>：八人独立头脸/服装。</li>
+  <li><code class="language-plaintext highlighter-rouge">src/atelier-motion.js</code>：纯函数时间轴采样、普通技与派生；<code class="language-plaintext highlighter-rouge">src/characters/*.js</code>：每人的必杀/超必杀关键帧。</li>
+  <li><code class="language-plaintext highlighter-rouge">src/mai-sf6.js</code>：舞的输入、火焰库存、蓄力扇、追投及空中追击。</li>
+  <li><code class="language-plaintext highlighter-rouge">src/atelier-fx.js</code>：招式特效和飞行道具；<code class="language-plaintext highlighter-rouge">src/atelier-studio.js</code>：鉴赏与时间轴。</li>
+  <li><code class="language-plaintext highlighter-rouge">src/upstream/</code>：固定版本原引擎/页面；<code class="language-plaintext highlighter-rouge">tools/apply_atelier.py</code>：构建期接入点，有原文件 SHA 校验和替换断言；不在运行时改写源码。</li>
+</ul>
+
+<p>执行 <code class="language-plaintext highlighter-rouge">python3 tools/build.py</code> 重新生成根目录引擎/页面及离线 HTML。只需 Python 3.10+ 标准库。不要只改生成后的 <code class="language-plaintext highlighter-rouge">game.js</code>：下次构建会覆盖。更换上游版本时，应先审核 <code class="language-plaintext highlighter-rouge">apply_atelier.py</code> 的接入点。</p>
+
+<h2 id="测试">测试</h2>
+
+<p>安装测试依赖 <code class="language-plaintext highlighter-rouge">python3 -m pip install playwright</code>，再运行 <code class="language-plaintext highlighter-rouge">python3 -m playwright install chromium</code>、<code class="language-plaintext highlighter-rouge">python3 tests/run.py</code>。已有浏览器可用 <code class="language-plaintext highlighter-rouge">CHROMIUM=/path/to/chromium python3 tests/run.py</code>。报告写入 <code class="language-plaintext highlighter-rouge">test-results/report.json</code>。</p>
+
+<p>自动检查分为 39 个机制场景与全部 522 个招式条目的合法启动、完整模拟和 SVG 数值有效性。后者不等于每一招都经过官方帧数据验证，也不作为美术品质认证。测试使用真实游戏脚本内嵌浏览器文档执行，不依赖外部服务器。发布检查范围见 <code class="language-plaintext highlighter-rouge">docs/QA-ATELIER.md</code>。</p>
+
+<p>本项目为非官方 2D SVG 同人格斗改编；角色及招式相关权利属于各自权利人。</p>
+
+
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>
